@@ -5,7 +5,7 @@ public interface IControllable
     public void FireWeapon();
 }
 
-public enum MovementCommands
+public enum ShipCommands
 {
     Acceleration,
     Deceleration,

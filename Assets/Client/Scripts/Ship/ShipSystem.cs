@@ -17,15 +17,22 @@ public class ShipSystem : MonoBehaviour
     private MovementHandler m_MovementHandler;
 
 
-    public void Initialization()
+    public void Initialization(PlayerShip playerShip)
     {
+        playerShip.Event_ShipMoving.AddListener(MovementCommands);
         m_WeaponSystem.Shoot.AddListener(PlaySound);
-
+        m_MovementHandler = GetComponent<MovementHandler>();
+        m_MovementHandler.Initialization();
     }
 
     private void PlaySound(AudioClip sound)
     {
         m_SoundsSystem.Play(sound);
+    }
+
+    private void MovementCommands(Vector2 axis)
+    {
+        m_MovementHandler.Movement(axis);
     }
 
     private void OnDisable()

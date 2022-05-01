@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using System;
 
 public class InputsControl : MonoBehaviour
 {
-    public UnityEvent<Vector2,bool> Event_MousePosition;
+    public UnityEvent<Vector2> Event_Movement;
     //public UnityEvent<> Event_MovementButtons;
 
     public static InputsControl instance = null;
@@ -44,9 +45,12 @@ public class InputsControl : MonoBehaviour
     {
         //m_TouchControls.InGame.TouchInputs.started += ctx => StartTouch(ctx);
         //m_TouchControls.InGame.TouchInputs.canceled += ctx => EndTouch(ctx);
-
+        m_PCControls.InGame.Movement.started += ctx => MovementStarted(ctx);
 
     }
 
-    
+    private void MovementStarted(InputAction.CallbackContext ctx)
+    {
+        Event_Movement?.Invoke(ctx.ReadValue<Vector2>());
+    }
 }

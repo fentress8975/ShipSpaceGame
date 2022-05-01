@@ -83,7 +83,7 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Down"",
                     ""id"": ""4c2eab96-9555-442d-a878-39ef49f433dd"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyBoard&Mouse"",
@@ -94,7 +94,7 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Left"",
                     ""id"": ""65b79cbc-dc29-4cc2-83bb-7a14008cdb4a"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyBoard&Mouse"",
@@ -105,7 +105,7 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Right"",
                     ""id"": ""665c608b-5611-496f-b5e6-c9df00862b76"",
-                    ""path"": """",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyBoard&Mouse"",

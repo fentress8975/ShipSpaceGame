@@ -5,30 +5,28 @@ public class MovementHandler : MonoBehaviour
 
     public void Initialization()
     {
-
+        
     }
 
-
-
-    private void Acceleration()
+    public void Movement(Vector2 axis)
     {
-        transform.position += transform.position + Vector3.forward * Time.deltaTime;
+
+        Acceleration(axis.x);
+        Rotate(axis.y);
+        
     }
 
-    private void Deceleration()
+
+    private void Acceleration(float x)
     {
-        transform.position += transform.position + Vector3.back * Time.deltaTime;
+        transform.position += transform.position + Vector3.forward * x * Time.deltaTime;
     }
 
-    private void RotateLeft()
+    private void Rotate(float x)
     {
-        transform.rotation = Quaternion.AngleAxis(1f, Vector3.up);
+        transform.rotation = Quaternion.AngleAxis(x, Vector3.up);
     }
 
-    private void RotateRight()
-    {
-        transform.rotation = Quaternion.AngleAxis(-1f, Vector3.up);
-    }
 
 }
 
