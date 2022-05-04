@@ -16,7 +16,7 @@ public class WeaponsSystem : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(FireWeapon());
+        //StartCoroutine(FireWeapon());
     }
 
     public IEnumerator FireWeapon()

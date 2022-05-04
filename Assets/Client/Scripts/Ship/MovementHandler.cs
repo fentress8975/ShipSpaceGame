@@ -3,7 +3,7 @@ using UnityEngine;
 public class MovementHandler : MonoBehaviour
 {
 
-    public void Initialization()
+    public void Initialization(ShipSystem ship)
     {
         
     }

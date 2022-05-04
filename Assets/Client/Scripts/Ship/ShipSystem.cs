@@ -5,24 +5,21 @@ using UnityEngine;
 [RequireComponent(typeof(ShipSounds))]
 [RequireComponent(typeof(MovementHandler))]
 
-public class ShipSystem : MonoBehaviour
+public class ShipSystem : MonoBehaviour, IShipResource
 {
+
     [SerializeField]
     private WeaponsSystem m_WeaponSystem;
     [SerializeField]
     private EngineSystem m_EngineSystem;
     [SerializeField]
     private ShipSounds m_SoundsSystem;
-    [SerializeField]
-    private MovementHandler m_MovementHandler;
 
+    
 
-    public void Initialization(PlayerShip playerShip)
+    public void Initialization()
     {
-        playerShip.Event_ShipMoving.AddListener(MovementCommands);
         m_WeaponSystem.Shoot.AddListener(PlaySound);
-        m_MovementHandler = GetComponent<MovementHandler>();
-        m_MovementHandler.Initialization();
     }
 
     private void PlaySound(AudioClip sound)
@@ -30,13 +27,21 @@ public class ShipSystem : MonoBehaviour
         m_SoundsSystem.Play(sound);
     }
 
-    private void MovementCommands(Vector2 axis)
-    {
-        m_MovementHandler.Movement(axis);
-    }
-
     private void OnDisable()
     {
         m_WeaponSystem.Shoot.RemoveListener(PlaySound);
     }
+
+    public ShipSystemHealth ShipSystemsHealth()
+    {
+
+        throw new System.NotImplementedException();
+    }
+}
+
+public struct ShipSystemHealth
+{
+    public float EngineHealth;
+    public float WeaponsHealth;
+    public float HullHealth;
 }

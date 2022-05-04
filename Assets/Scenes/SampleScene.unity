@@ -703,7 +703,6 @@ MonoBehaviour:
   m_WeaponSystem: {fileID: 1483612079}
   m_EngineSystem: {fileID: 1483612082}
   m_SoundsSystem: {fileID: 1483612083}
-  m_MovementHandler: {fileID: 0}
 --- !u!1 &1520776807
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,6 +732,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc1144909f2356e46b12509c3570d0ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Event_Movement:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1520776809
 Transform:
   m_ObjectHideFlags: 0
@@ -922,4 +924,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c982586e03763ec42b900c5546f5ecbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Event_ShipMoving:
+    m_PersistentCalls:
+      m_Calls: []
   m_ShipSystem: {fileID: 1483612084}
