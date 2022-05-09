@@ -5,13 +5,13 @@ using System;
 
 public class InputsControl : MonoBehaviour
 {
-    public UnityEvent<Vector2> Event_Movement;
-    //public UnityEvent<> Event_MovementButtons;
+    public UnityEvent<Vector2, bool> Event_Movement;
+    public UnityEvent<Vector2> Event_MousePosition;
 
     public static InputsControl instance = null;
     
-   // private TouchControls m_TouchControls;
     private PCControls m_PCControls;
+    private Vector2 m_MousePosition;
 
 
 
@@ -25,32 +25,37 @@ public class InputsControl : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //m_TouchControls = new TouchControls();
         m_PCControls =  new PCControls();
     }
 
     private void OnEnable()
     {
-       //m_TouchControls.Enable();
        m_PCControls?.Enable();
     }
 
     private void OnDisable()
     {
-       //m_TouchControls?.Disable();
        m_PCControls?.Disable();
     }
 
     private void Start()
     {
-        //m_TouchControls.InGame.TouchInputs.started += ctx => StartTouch(ctx);
-        //m_TouchControls.InGame.TouchInputs.canceled += ctx => EndTouch(ctx);
-        m_PCControls.InGame.Movement.started += ctx => MovementStarted(ctx);
+        m_PCControls.InGame.Movement.performed += ctx => MovementStarted(ctx, true);
+        m_PCControls.InGame.Movement.canceled += ctx => MovementStarted(ctx, false);
+        m_PCControls.InGame.MousePosition.performed += ctx => MousePosition(ctx);
 
     }
 
-    private void MovementStarted(InputAction.CallbackContext ctx)
+    private void MousePosition(InputAction.CallbackContext ctx)
     {
-        Event_Movement?.Invoke(ctx.ReadValue<Vector2>());
+        Debug.Log(ctx.ReadValue<Vector2>());
+        m_MousePosition = ctx.ReadValue<Vector2>();
+        Event_MousePosition?.Invoke(m_MousePosition);
+    }
+
+    private void MovementStarted(InputAction.CallbackContext ctx, bool isMoving)
+    {
+        Debug.Log($"x = {ctx.ReadValue<Vector2>().x}, y = {ctx.ReadValue<Vector2>().y}");
+        Event_Movement?.Invoke(ctx.ReadValue<Vector2>(), isMoving);
     }
 }

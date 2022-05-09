@@ -3,7 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(WeaponsSystem))]
 [RequireComponent(typeof(EngineSystem))]
 [RequireComponent(typeof(ShipSounds))]
-[RequireComponent(typeof(MovementHandler))]
 
 public class ShipSystem : MonoBehaviour, IShipResource
 {

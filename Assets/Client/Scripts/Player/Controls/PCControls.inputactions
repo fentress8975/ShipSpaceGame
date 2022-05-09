@@ -28,7 +28,7 @@
                 {
                     "name": "",
                     "id": "0c416b5c-d438-4fe9-82be-d97cd88c3d54",
-                    "path": "<Mouse>/position",
+                    "path": "<Pointer>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyBoard&Mouse",
