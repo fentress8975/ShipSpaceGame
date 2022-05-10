@@ -50,7 +50,7 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0c416b5c-d438-4fe9-82be-d97cd88c3d54"",
-                    ""path"": ""<Pointer>/position"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyBoard&Mouse"",
@@ -120,18 +120,7 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
         {
             ""name"": ""KeyBoard&Mouse"",
             ""bindingGroup"": ""KeyBoard&Mouse"",
-            ""devices"": [
-                {
-                    ""devicePath"": ""<Keyboard>"",
-                    ""isOptional"": false,
-                    ""isOR"": false
-                },
-                {
-                    ""devicePath"": ""<Mouse>"",
-                    ""isOptional"": true,
-                    ""isOR"": false
-                }
-            ]
+            ""devices"": []
         }
     ]
 }");

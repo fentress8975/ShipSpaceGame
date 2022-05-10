@@ -26,6 +26,7 @@ public class InputsControl : MonoBehaviour
             Destroy(gameObject);
         }
         m_PCControls =  new PCControls();
+        m_PCControls.Enable();
     }
 
     private void OnEnable()
@@ -42,8 +43,8 @@ public class InputsControl : MonoBehaviour
     {
         m_PCControls.InGame.Movement.performed += ctx => MovementStarted(ctx, true);
         m_PCControls.InGame.Movement.canceled += ctx => MovementStarted(ctx, false);
-        m_PCControls.InGame.MousePosition.performed += ctx => MousePosition(ctx);
 
+        m_PCControls.InGame.MousePosition.performed += ctx => MousePosition(ctx);
     }
 
     private void MousePosition(InputAction.CallbackContext ctx)
