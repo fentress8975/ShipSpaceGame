@@ -3,50 +3,46 @@
 
 public class RotationHandler : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject m_GamePlane;
-    private Plane m_Plane;
+    private Plane m_GamePlane;
     private Vector3 m_LockAt;
     private Camera m_MainCamera;
     public void Initialization(ShipSystem ship)
     {
-        InputsControl.instance.Event_MousePosition.AddListener(Rotation);
-        m_Plane = new Plane(m_GamePlane.transform.up, m_GamePlane.transform.position);
+        InputsControl.instance.Event_MousePosition.AddListener(RotationCalculator);
+        m_GamePlane = new Plane(transform.up, transform.position);
         m_MainCamera = Camera.main;
     }
 
     private void OnDestroy()
     {
-        InputsControl.instance.Event_MousePosition.RemoveListener(Rotation);
+        InputsControl.instance.Event_MousePosition.RemoveListener(RotationCalculator);
     }
 
-    private void Rotation(Vector2 x)
+    private void RotationCalculator(Vector2 x)
     {
-        GetPositionOnGamePlane(x);
-        transform.LookAt(m_LockAt);
-        
+        GetTargetDirection(x);
+
     }
-    private void GetPositionOnGamePlane(Vector2 x)
+    private void GetTargetDirection(Vector2 x)
     {
         Vector3 position = m_MainCamera.ScreenToWorldPoint(x);
         Vector3 direction = m_MainCamera.transform.forward;
         Ray ray = new Ray(position, direction);
-        if (m_Plane.Raycast(ray, out float distance))
+        if (m_GamePlane.Raycast(ray, out float distance))
         {
             position += (direction*distance);
             m_LockAt = position;
-
         }
     }
 
-    private void Start()
+    private void Rotate()
     {
-        
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(m_LockAt), Time.time * 2f);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-
+        Rotate();
     }
 
     private void OnDrawGizmos()

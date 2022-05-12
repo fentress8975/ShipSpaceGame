@@ -1,6 +1,6 @@
 ﻿public interface IShipResource
 {
-    public ShipSystemHealth ShipSystemsHealth();
+    public float GetModuleHealth();
 }
 
 

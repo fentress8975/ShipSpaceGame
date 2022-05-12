@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Weapons", menuName = "Ship/Weapons", order = 0)]
+[CreateAssetMenu(fileName = "Weapon", menuName = "ShipModules/Weapon", order = 0)]
 public class ShipWeaponSO : ScriptableObject
 {
     public enum WeaponType
@@ -12,6 +12,7 @@ public class ShipWeaponSO : ScriptableObject
 
     public GameObject m_Projectile;
     public string m_sWeaponName;
+    public float m_fHealth;
     public WeaponType m_Type;
     [Tooltip("In 1 min.")]
     public float m_fRateOfFire;

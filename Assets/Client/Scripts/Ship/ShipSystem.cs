@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(EngineSystem))]
 [RequireComponent(typeof(ShipSounds))]
 
-public class ShipSystem : MonoBehaviour, IShipResource
+public class ShipSystem : MonoBehaviour
 {
 
     [SerializeField]
@@ -31,16 +31,27 @@ public class ShipSystem : MonoBehaviour, IShipResource
         m_WeaponSystem.Shoot.RemoveListener(PlaySound);
     }
 
-    public ShipSystemHealth ShipSystemsHealth()
+    public ShipModuleHealth GetModulesHealth()
     {
 
         throw new System.NotImplementedException();
     }
 }
 
-public struct ShipSystemHealth
+public struct ShipModuleHealth
 {
     public float EngineHealth;
-    public float WeaponsHealth;
+    public float WeaponHealth;
     public float HullHealth;
+    public float AIHealth;
+    public float StorageHealth;
+}
+
+public enum ModuleType
+{
+    Hull,
+    Engine,
+    Weapon,
+    AI,
+    Storage
 }
