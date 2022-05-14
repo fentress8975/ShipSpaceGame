@@ -7,4 +7,5 @@ public class ShipEngineSO : ScriptableObject
     public float m_fHealth;
     public float m_fAccelerationPower;
     public float m_fRotationPower;
+    public float m_fWeight;
 }

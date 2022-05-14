@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-
-[RequireComponent(typeof(ShipEngine))]
+﻿using System;
+using UnityEngine;
 
 public class EngineSystem : MonoBehaviour, IShipSystem
 {
@@ -11,16 +10,10 @@ public class EngineSystem : MonoBehaviour, IShipSystem
 
     
 
-    public void Initialization(ShipEngineSO engineSO)
+    public void Initialization(object engineSO)
     {
-        m_Engine = GetComponent<ShipEngine>();
+        m_Engine = new ShipEngine();
         m_Engine.Initialization(engineSO);
-
-    }
-
-    public ShipModuleHealth GetModuleHealth()
-    {
-        throw new System.NotImplementedException();
     }
 
     public void TakeDamage(float damage)
@@ -37,8 +30,19 @@ public class EngineSystem : MonoBehaviour, IShipSystem
 
     public float EfficiencyCalculator()
     {
-        float percent = (m_Engine.GetBaseHealth() - m_Engine.GetModuleHealth()) / 100;
+        float percent = (float)Math.Round(Math.Pow(m_Engine.GetModuleHealth() / m_Engine.GetBaseHealth(), 2), 1); //x^2, округляя до 1 числа после запятой
+        //Дальше идет посчет всех возможных усилителей и бонусов... Когда их добавлю
         return percent;
+    }
+
+    public float GetSystemWeight()
+    {
+        return m_Engine.GetModuleWeight();
+    }
+
+    public float GetSystemHealth()
+    {
+        return m_Engine.GetModuleHealth();
     }
 }
 

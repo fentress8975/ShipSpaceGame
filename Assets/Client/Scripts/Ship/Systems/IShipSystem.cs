@@ -8,7 +8,10 @@
     delegate void ModuleEfficiencyUpdate(float percent);
     event ModuleEfficiencyUpdate Event_EfficiencyUpdate;
 
-    public float EfficiencyCalculator();
 
+    public void Initialization(object moduleSO);
+    public float EfficiencyCalculator();
+    public float GetSystemWeight();
+    public float GetSystemHealth();
     }
 

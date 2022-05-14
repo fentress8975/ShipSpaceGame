@@ -6,8 +6,14 @@ public abstract class BaseModule: IShipResource, IDamageable
 
 
     protected float m_fHealth;
+    protected float m_fWeight;
 
     public abstract void Initialization(object module); //Опасный момент
+    
+    public float GetModuleWeight()
+    {
+        return m_fWeight;
+    }
     public float GetModuleHealth()
     {
         return m_fHealth;

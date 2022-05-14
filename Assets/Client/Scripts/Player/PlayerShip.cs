@@ -3,12 +3,14 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(MovementHandler))]
 [RequireComponent(typeof(RotationHandler))]
+[RequireComponent(typeof(Ship))]
 
 public class PlayerShip : MonoBehaviour, IControllable
 {
     public UnityEvent<Vector2> Event_ShipMoving;
+
     [SerializeField]
-    private ShipSystem m_ShipSystem;
+    private Ship m_Ship;
     private MovementHandler m_MovementHandler;
     private RotationHandler m_RotationHandler;
 
@@ -17,14 +19,11 @@ public class PlayerShip : MonoBehaviour, IControllable
     {
         m_MovementHandler = GetComponent<MovementHandler>();
         m_RotationHandler = GetComponent<RotationHandler>();
-        m_ShipSystem.Initialization();
-        m_MovementHandler.Initialization(m_ShipSystem);
-        m_RotationHandler.Initialization(m_ShipSystem);
+        m_Ship = GetComponent<Ship>();
+        m_Ship.Initialization();
+        m_MovementHandler.Initialization(m_Ship);
+        m_RotationHandler.Initialization(m_Ship);
 
-    }
-
-    private void OnDestroy()
-    {
     }
 
     public void FireWeapon()

@@ -12,6 +12,7 @@ public class ShipEngine : BaseModule, IShipResource, IDamageable
         ShipEngineSO engine = module as ShipEngineSO;
         m_EngineSO = engine;
         m_fHealth = engine.m_fHealth;
+        m_fWeight = engine.m_fWeight;
     }
 
     public override float GetBaseHealth()

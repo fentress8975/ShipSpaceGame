@@ -6,7 +6,7 @@ public class RotationHandler : MonoBehaviour
     private Plane m_GamePlane;
     private Vector3 m_LockAt;
     private Camera m_MainCamera;
-    public void Initialization(ShipSystem ship)
+    public void Initialization(Ship ship)
     {
         InputsControl.instance.Event_MousePosition.AddListener(RotationCalculator);
         m_GamePlane = new Plane(transform.up, transform.position);

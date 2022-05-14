@@ -6,7 +6,7 @@ public class MovementHandler : MonoBehaviour
     private const float speed = 5f;
     private bool m_bIsMoving = false;
     private Vector3 m_MovingDirection = Vector3.zero;
-    public void Initialization(ShipSystem ship)
+    public void Initialization(Ship ship)
     {
         InputsControl.instance.Event_Movement.AddListener(Movement);
     }
