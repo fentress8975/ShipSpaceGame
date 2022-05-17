@@ -6,11 +6,20 @@ public class RotationHandler : MonoBehaviour
     private Plane m_GamePlane;
     private Vector3 m_LockAt;
     private Camera m_MainCamera;
+    private Rigidbody m_Rigidbody;
+    Vector3 m_EulerAngleVelocity = new Vector3(0, 20, 0);
+
+    private GameObject m_Rotation;
     public void Initialization(Ship ship)
     {
+        m_Rigidbody = ship.GetComponent<Rigidbody>();
+
         InputsControl.instance.Event_MousePosition.AddListener(RotationCalculator);
         m_GamePlane = new Plane(transform.up, transform.position);
         m_MainCamera = Camera.main;
+
+        m_Rotation = new GameObject("Ship Rotation");
+        m_Rotation.transform.parent = ship.transform;
     }
 
     private void OnDestroy()
@@ -37,8 +46,11 @@ public class RotationHandler : MonoBehaviour
 
     private void Rotate()
     {
-        //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(m_LockAt), Time.time * 2f);
-        transform.LookAt(m_LockAt);
+        m_Rotation.transform.LookAt(m_LockAt);
+        //transform.rotation = Quaternion.RotateTowards(transform.rotation, m_Rotation.transform.rotation, Time.time * 2f);
+        
+        Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * Time.fixedDeltaTime);
+        m_Rigidbody.MoveRotation(m_Rotation.transform.rotation * deltaRotation);
     }
 
     private void FixedUpdate()

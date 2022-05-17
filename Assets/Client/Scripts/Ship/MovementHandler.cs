@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class MovementHandler : MonoBehaviour
 {
-    private const float rotationSpeed = 10f;
     private const float speed = 5f;
     private bool m_bIsMoving = false;
+    private Rigidbody m_Rigidbody;
+
     private Vector3 m_MovingDirection = Vector3.zero;
     public void Initialization(Ship ship)
     {
         InputsControl.instance.Event_Movement.AddListener(Movement);
+        m_Rigidbody = ship.GetComponent<Rigidbody>();
     }
     private void OnDestroy()
     {
@@ -18,27 +20,19 @@ public class MovementHandler : MonoBehaviour
     public void Movement(Vector2 axis, bool isMoving)
     {
         m_bIsMoving = isMoving;
-        m_MovingDirection = new Vector3(0, axis.x, axis.y);
+        m_MovingDirection = new Vector3(axis.x, 0, axis.y);
     }
 
     private void Update()
     {
         Acceleration();
-        Rotate();
     }
 
 
     private void Acceleration()
     {
-
-        transform.position += transform.forward * m_MovingDirection.z * speed * Time.deltaTime;
+        m_Rigidbody.MovePosition(m_Rigidbody.position + m_MovingDirection * speed * Time.fixedDeltaTime);
     }
-
-    private void Rotate()
-    {
-        transform.Rotate(0, m_MovingDirection.y * rotationSpeed * 10 * Time.deltaTime, 0, Space.Self);
-    }
-
 
 }
 
