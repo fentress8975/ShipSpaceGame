@@ -3,24 +3,28 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(MovementHandler))]
 [RequireComponent(typeof(RotationHandler))]
-[RequireComponent(typeof(Ship))]
 
 public class PlayerShip : MonoBehaviour, IControllable
 {
     public UnityEvent<Vector2> Event_ShipMoving;
-
     [SerializeField]
     private Ship m_Ship;
     private MovementHandler m_MovementHandler;
     private RotationHandler m_RotationHandler;
 
+    [SerializeField]
+    public ShipModules test;
+    public TestInitModules TestInitModules;
 
     private void Start()
     {
+        TestInitModules = GetComponent<TestInitModules>();
+        test = new ShipModules(TestInitModules.m_ShipHullSO, TestInitModules.m_EngineSO, TestInitModules.m_WeaponSO, TestInitModules.m_StorageSO, TestInitModules.m_AISO);//чистый тест
+
         m_MovementHandler = GetComponent<MovementHandler>();
         m_RotationHandler = GetComponent<RotationHandler>();
-        m_Ship = GetComponent<Ship>();
-        m_Ship.Initialization();
+        m_Ship = GetComponentInChildren<Ship>();
+        m_Ship.Initialization(test);
         m_MovementHandler.Initialization(m_Ship);
         m_RotationHandler.Initialization(m_Ship);
 

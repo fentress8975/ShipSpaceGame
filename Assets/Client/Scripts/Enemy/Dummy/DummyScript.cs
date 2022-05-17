@@ -15,6 +15,6 @@ public class DummyScript : MonoBehaviour
 
     private void ShowText()
     {
-        Instantiate(m_Damage_Text,transform.position+Vector3.up*2,Quaternion.identity,transform);
+        Instantiate(m_Damage_Text, transform.position + Vector3.up * 2, Quaternion.identity, transform);
     }
 }

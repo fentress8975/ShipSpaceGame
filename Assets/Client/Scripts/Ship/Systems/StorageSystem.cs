@@ -2,7 +2,7 @@
 
 public class StorageSystem : MonoBehaviour, IShipSystem
 {
-    private ShipStorage m_Storage;
+    private ShipStorage m_Storage = new ShipStorage();
 
     public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
     public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
@@ -10,6 +10,11 @@ public class StorageSystem : MonoBehaviour, IShipSystem
     public float EfficiencyCalculator()
     {
         throw new System.NotImplementedException();
+    }
+
+    public BaseModule GetModuleSO()
+    {
+        return m_Storage;
     }
 
     public float GetSystemHealth()
@@ -24,6 +29,6 @@ public class StorageSystem : MonoBehaviour, IShipSystem
 
     public void Initialization(object moduleSO)
     {
-        throw new System.NotImplementedException();
+        m_Storage.Initialization(moduleSO);
     }
 }

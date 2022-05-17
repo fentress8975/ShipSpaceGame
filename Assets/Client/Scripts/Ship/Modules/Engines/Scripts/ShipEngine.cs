@@ -5,14 +5,16 @@ public class ShipEngine : BaseModule, IShipResource, IDamageable
 {
     private ShipEngineSO m_EngineSO;
 
-    
 
-    public override void Initialization(object module) 
+    public override void Initialization(object module)
     {
-        ShipEngineSO engine = module as ShipEngineSO;
-        m_EngineSO = engine;
-        m_fHealth = engine.m_fHealth;
-        m_fWeight = engine.m_fWeight;
+        if (module is ShipEngineSO shipEngine)
+        {
+            Debug.Log($"Я {this} включился. Мне передали модулить типа {shipEngine.GetType()}");
+            m_EngineSO = shipEngine;
+            m_fHealth = shipEngine.m_fHealth;
+            m_fWeight = shipEngine.m_fWeight;
+        }
     }
 
     public override float GetBaseHealth()

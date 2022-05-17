@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class ShipHull : BaseModule
 {
     public override float GetBaseHealth()
@@ -7,6 +9,7 @@ public class ShipHull : BaseModule
 
     public override void Initialization(object module)
     {
-        throw new System.NotImplementedException();
+        if (module is ShipHullSO shipHull)
+            Debug.Log($"Я {this} включился. Мне передали модулить типа {shipHull.GetType()}");
     }
 }

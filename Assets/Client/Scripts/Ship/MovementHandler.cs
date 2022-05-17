@@ -30,13 +30,13 @@ public class MovementHandler : MonoBehaviour
 
     private void Acceleration()
     {
-        
+
         transform.position += transform.forward * m_MovingDirection.z * speed * Time.deltaTime;
     }
 
     private void Rotate()
     {
-       transform.Rotate(0, m_MovingDirection.y * rotationSpeed * 10 * Time.deltaTime, 0, Space.Self);
+        transform.Rotate(0, m_MovingDirection.y * rotationSpeed * 10 * Time.deltaTime, 0, Space.Self);
     }
 
 

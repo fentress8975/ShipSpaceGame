@@ -30,14 +30,15 @@ public class RotationHandler : MonoBehaviour
         Ray ray = new Ray(position, direction);
         if (m_GamePlane.Raycast(ray, out float distance))
         {
-            position += (direction*distance);
+            position += (direction * distance);
             m_LockAt = position;
         }
     }
 
     private void Rotate()
     {
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(m_LockAt), Time.time * 2f);
+        //transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(m_LockAt), Time.time * 2f);
+        transform.LookAt(m_LockAt);
     }
 
     private void FixedUpdate()

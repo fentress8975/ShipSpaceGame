@@ -5,6 +5,8 @@ public class ShipAISO : ScriptableObject
 {
     public string m_sName;
     public float m_fHealth;
+    public float m_fWeight;
     public int m_iWeaponsBonus;
     public int m_iEnginesBonus;
+
 }

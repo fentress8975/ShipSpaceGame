@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Events;
-using System;
+using UnityEngine.InputSystem;
 
 public class InputsControl : MonoBehaviour
 {
@@ -9,7 +8,7 @@ public class InputsControl : MonoBehaviour
     public UnityEvent<Vector2> Event_MousePosition;
 
     public static InputsControl instance = null;
-    
+
     private PCControls m_PCControls;
     private Vector2 m_MousePosition;
 
@@ -25,18 +24,18 @@ public class InputsControl : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        m_PCControls =  new PCControls();
+        m_PCControls = new PCControls();
         m_PCControls.Enable();
     }
 
     private void OnEnable()
     {
-       m_PCControls?.Enable();
+        m_PCControls?.Enable();
     }
 
     private void OnDisable()
     {
-       m_PCControls?.Disable();
+        m_PCControls?.Disable();
     }
 
     private void Start()
@@ -49,14 +48,14 @@ public class InputsControl : MonoBehaviour
 
     private void MousePosition(InputAction.CallbackContext ctx)
     {
-        Debug.Log(ctx.ReadValue<Vector2>());
+        //Debug.Log(ctx.ReadValue<Vector2>());
         m_MousePosition = ctx.ReadValue<Vector2>();
         Event_MousePosition?.Invoke(m_MousePosition);
     }
 
     private void MovementStarted(InputAction.CallbackContext ctx, bool isMoving)
     {
-        Debug.Log($"x = {ctx.ReadValue<Vector2>().x}, y = {ctx.ReadValue<Vector2>().y}");
+        //Debug.Log($"x = {ctx.ReadValue<Vector2>().x}, y = {ctx.ReadValue<Vector2>().y}");
         Event_Movement?.Invoke(ctx.ReadValue<Vector2>(), isMoving);
     }
 }

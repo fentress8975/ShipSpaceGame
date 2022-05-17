@@ -2,7 +2,7 @@
 
 public class AISystem : MonoBehaviour, IShipSystem
 {
-    private ShipAI m_AI;
+    private ShipAI m_AI = new ShipAI();
 
     public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
     public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
@@ -10,6 +10,11 @@ public class AISystem : MonoBehaviour, IShipSystem
     public float EfficiencyCalculator()
     {
         throw new System.NotImplementedException();
+    }
+
+    public BaseModule GetModuleSO()
+    {
+        return m_AI;
     }
 
     public float GetSystemHealth()
@@ -24,6 +29,6 @@ public class AISystem : MonoBehaviour, IShipSystem
 
     public void Initialization(object moduleSO)
     {
-        throw new System.NotImplementedException();
+        m_AI.Initialization(moduleSO);
     }
 }

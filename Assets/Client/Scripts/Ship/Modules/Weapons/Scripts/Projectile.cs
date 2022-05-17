@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-       
+
     }
 
     private void OnDestroy()

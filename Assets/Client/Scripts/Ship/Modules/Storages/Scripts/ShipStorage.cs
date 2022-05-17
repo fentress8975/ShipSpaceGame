@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class ShipStorage : BaseModule
 {
     public override float GetBaseHealth()
@@ -7,6 +9,7 @@ public class ShipStorage : BaseModule
 
     public override void Initialization(object module)
     {
-        throw new System.NotImplementedException();
+        if (module is ShipStorageSO shipStorage)
+            Debug.Log($"Я {this} включился. Мне передали модулить типа {shipStorage.GetType()}");
     }
 }

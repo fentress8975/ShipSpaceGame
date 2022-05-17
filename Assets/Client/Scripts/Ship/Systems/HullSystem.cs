@@ -2,12 +2,22 @@
 
 public class HullSystem : MonoBehaviour, IShipSystem
 {
-    private ShipHull m_Hull;
+    private ShipHull m_Hull = new ShipHull();
 
     public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
     public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
 
     public float EfficiencyCalculator()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public BaseModule GetModuleSO()
+    {
+        return m_Hull;
+    }
+
+    public float GetSystemHealth()
     {
         throw new System.NotImplementedException();
     }
@@ -19,6 +29,7 @@ public class HullSystem : MonoBehaviour, IShipSystem
 
     public void Initialization(object moduleSO)
     {
-        throw new System.NotImplementedException();
+        m_Hull.Initialization(moduleSO);
+
     }
 }

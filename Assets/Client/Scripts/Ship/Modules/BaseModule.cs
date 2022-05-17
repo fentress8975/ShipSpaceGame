@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Events;
 
-public abstract class BaseModule: IShipResource, IDamageable
+public abstract class BaseModule : IShipResource, IDamageable
 {
     public UnityEvent<ModuleType, float> Event_HealthUpdate;
 
@@ -9,7 +9,7 @@ public abstract class BaseModule: IShipResource, IDamageable
     protected float m_fWeight;
 
     public abstract void Initialization(object module); //Опасный момент
-    
+
     public float GetModuleWeight()
     {
         return m_fWeight;

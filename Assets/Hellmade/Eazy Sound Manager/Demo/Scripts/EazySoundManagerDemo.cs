@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using Hellmade.Sound;
+using UnityEngine;
 using UnityEngine.UI;
-using Hellmade.Sound;
 
 public class EazySoundManagerDemo : MonoBehaviour
 {
@@ -11,10 +11,10 @@ public class EazySoundManagerDemo : MonoBehaviour
 
     public GameObject test;
 
-    private void Update ()
+    private void Update()
     {
         // Update UI
-        for(int i=0; i < AudioControls.Length; i++)
+        for (int i = 0; i < AudioControls.Length; i++)
         {
             EazySoundDemoAudioControls audioControl = AudioControls[i];
             if (audioControl.audio != null && audioControl.audio.IsPlaying)
@@ -48,7 +48,7 @@ public class EazySoundManagerDemo : MonoBehaviour
                 }
             }
         }
-	}
+    }
 
     public void PlayMusic1()
     {

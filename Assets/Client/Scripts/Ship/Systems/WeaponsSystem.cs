@@ -1,11 +1,9 @@
 using UnityEngine;
-using UnityEngine.Events;
-using System.Collections;
 
-public class WeaponsSystem : MonoBehaviour,IShipSystem
+public class WeaponsSystem : MonoBehaviour, IShipSystem
 {
 
-    public ShipWeapon m_Weapon;
+    public ShipWeapon m_Weapon = new ShipWeapon();
 
     public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
     public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
@@ -13,6 +11,11 @@ public class WeaponsSystem : MonoBehaviour,IShipSystem
     public float EfficiencyCalculator()
     {
         throw new System.NotImplementedException();
+    }
+
+    public BaseModule GetModuleSO()
+    {
+        return m_Weapon;
     }
 
     public float GetSystemHealth()
@@ -27,6 +30,6 @@ public class WeaponsSystem : MonoBehaviour,IShipSystem
 
     public void Initialization(object moduleSO)
     {
-        throw new System.NotImplementedException();
+        m_Weapon.Initialization(moduleSO);
     }
 }

@@ -485,10 +485,13 @@ GameObject:
   - component: {fileID: 1483612077}
   - component: {fileID: 1483612076}
   - component: {fileID: 1483612081}
-  - component: {fileID: 1483612079}
-  - component: {fileID: 1483612082}
-  - component: {fileID: 1483612083}
+  - component: {fileID: 1483612088}
+  - component: {fileID: 1483612087}
+  - component: {fileID: 1483612086}
+  - component: {fileID: 1483612085}
   - component: {fileID: 1483612084}
+  - component: {fileID: 1483612083}
+  - component: {fileID: 1483612082}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -575,22 +578,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1483612074}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1483612079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1483612074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f3a9ec885b1c9a45918a42f9340103a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Shoot:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Weapon: {fileID: 11400000, guid: 92d291a0311814643a9f26f71e5fb2d8, type: 2}
 --- !u!54 &1483612081
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -616,9 +603,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1483612074}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 494893fd9564b84468b4ad179c9ae29d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6de1fe2a621ff4744ab99bcb7746eae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_WeaponSystem: {fileID: 0}
+  m_EngineSystem: {fileID: 0}
+  m_StorageSystem: {fileID: 0}
+  m_HullSystem: {fileID: 0}
+  m_AISystem: {fileID: 0}
 --- !u!114 &1483612083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -640,12 +632,57 @@ MonoBehaviour:
   m_GameObject: {fileID: 1483612074}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07918ba6d8350fa4ab204522c0473557, type: 3}
+  m_Script: {fileID: 11500000, guid: d51d11bd15bff1349aa09c54b0238fb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_WeaponSystem: {fileID: 1483612079}
-  m_EngineSystem: {fileID: 1483612082}
-  m_SoundsSystem: {fileID: 1483612083}
+--- !u!114 &1483612085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483612074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c17ce0be5e721742a4c4373f30b0aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1483612086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483612074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0b7191a8119d01468d39f6bcb7a640c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1483612087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483612074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33d1d185eea89db49a5598eb8aae572c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1483612088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483612074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c4bbb92ff7d56f45b9a16d8a18f6b11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1831782368
 GameObject:
   m_ObjectHideFlags: 0
@@ -983,6 +1020,7 @@ GameObject:
   - component: {fileID: 1957297938}
   - component: {fileID: 1957297939}
   - component: {fileID: 1957297940}
+  - component: {fileID: 1957297941}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1021,7 +1059,8 @@ MonoBehaviour:
   Event_ShipMoving:
     m_PersistentCalls:
       m_Calls: []
-  m_ShipSystem: {fileID: 1483612084}
+  m_Ship: {fileID: 0}
+  TestInitModules: {fileID: 0}
 --- !u!114 &1957297938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1064,4 +1103,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc1facf4f424d84f8d376eff1a6b10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GamePlane: {fileID: 1831782368}
+--- !u!114 &1957297941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957297934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b0ccf2861b5824582a25aa6784ec51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShipHullSO: {fileID: 11400000, guid: 07e6ee76ab01c0041afb4fcd461bf8b4, type: 2}
+  m_EngineSO: {fileID: 11400000, guid: 2ec1efd7f79a66c4190c9d837a3e17cd, type: 2}
+  m_WeaponSO: {fileID: 11400000, guid: 92d291a0311814643a9f26f71e5fb2d8, type: 2}
+  m_StorageSO: {fileID: 11400000, guid: 32b0c89800492e34da3017876d6bea31, type: 2}
+  m_AISO: {fileID: 11400000, guid: 953b6cadaaad6054ab3b39bf7d7f9ae1, type: 2}

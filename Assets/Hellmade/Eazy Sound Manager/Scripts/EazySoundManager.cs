@@ -1,7 +1,7 @@
-using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Hellmade.Sound
 {
@@ -245,7 +245,7 @@ namespace Hellmade.Sound
         /// <returns>True if the audio is restored, false if the audio was not in the audio pool.</returns>
         public static bool RestoreAudioFromPool(Audio.AudioType audioType, int audioID)
         {
-            if(audioPool.ContainsKey(audioID))
+            if (audioPool.ContainsKey(audioID))
             {
                 Dictionary<int, Audio> audioDict = GetAudioTypeDictionary(audioType);
                 audioDict.Add(audioID, audioPool[audioID]);
@@ -404,19 +404,19 @@ namespace Hellmade.Sound
             foreach (int key in keys)
             {
                 Audio audio = null;
-				if (audioDict.ContainsKey(key))
-				{
-					audio = audioDict[key];
-				}
-				else if(audioPool.ContainsKey(key))
-				{
-					audio = audioPool[key];
-				}
-				if (audio == null)
-				{
-					return null;
-				}
-				if (audio.Clip == audioClip && audio.Type == audioType)
+                if (audioDict.ContainsKey(key))
+                {
+                    audio = audioDict[key];
+                }
+                else if (audioPool.ContainsKey(key))
+                {
+                    audio = audioPool[key];
+                }
+                if (audio == null)
+                {
+                    return null;
+                }
+                if (audio.Clip == audioClip && audio.Type == audioType)
                 {
                     return audio;
                 }
@@ -574,7 +574,7 @@ namespace Hellmade.Sound
             if (ignoreDuplicateAudio)
             {
                 Audio duplicateAudio = GetAudio(audioType, true, clip);
-                if(duplicateAudio != null)
+                if (duplicateAudio != null)
                 {
                     return duplicateAudio.AudioID;
                 }
