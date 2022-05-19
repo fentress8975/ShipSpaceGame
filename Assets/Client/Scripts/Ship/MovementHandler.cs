@@ -23,7 +23,7 @@ public class MovementHandler : MonoBehaviour
         m_MovingDirection = new Vector3(axis.x, 0, axis.y);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Acceleration();
     }

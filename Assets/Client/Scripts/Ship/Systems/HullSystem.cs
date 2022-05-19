@@ -1,35 +1,33 @@
 ﻿using UnityEngine;
 
-public class HullSystem : MonoBehaviour, IShipSystem
+public class HullSystem : MonoBehaviour, IShipSystem, IShipSystemSO<ShipHullSO>
 {
-    private ShipHull m_Hull = new ShipHull();
+    private ShipHull m_Hull;
 
     public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
     public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
 
-    public float EfficiencyCalculator()
+
+    public void Initialization(ShipHullSO moduleSO)
     {
-        throw new System.NotImplementedException();
+        m_Hull = new ShipHull(moduleSO);
+
     }
 
-    public BaseModule GetModuleSO()
+    public ShipHullSO GetModuleSO()
     {
-        return m_Hull;
-    }
-
-    public float GetSystemHealth()
-    {
-        throw new System.NotImplementedException();
+        return m_Hull.m_ModuleSO;
     }
 
     public float GetSystemWeight()
     {
-        throw new System.NotImplementedException();
+        return GetModuleSO().m_fWeight;
     }
 
-    public void Initialization(object moduleSO)
+    public float GetSystemHealth()
     {
-        m_Hull.Initialization(moduleSO);
-
+        return GetModuleSO().m_fHealth;
     }
+
+    
 }

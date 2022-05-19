@@ -28,6 +28,8 @@ public class PlayerShip : MonoBehaviour, IControllable
         m_MovementHandler.Initialization(m_Ship);
         m_RotationHandler.Initialization(m_Ship);
 
+        FollowTheObject followTheObject = Camera.main.GetComponent<FollowTheObject>();
+        followTheObject.Initialization(m_Ship.gameObject,new Vector3(0,6,-3));
     }
 
     public void FireWeapon()

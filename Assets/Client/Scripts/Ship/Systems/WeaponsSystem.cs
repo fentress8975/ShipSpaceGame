@@ -1,21 +1,22 @@
 using UnityEngine;
 
-public class WeaponsSystem : MonoBehaviour, IShipSystem
+public class WeaponsSystem : MonoBehaviour, IShipSystem, IShipSystemSO<ShipWeaponSO>
 {
 
-    public ShipWeapon m_Weapon = new ShipWeapon();
+    public ShipWeapon m_Weapon;
 
     public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
     public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
 
-    public float EfficiencyCalculator()
+
+    public void Initialization(ShipWeaponSO moduleSO)
     {
-        throw new System.NotImplementedException();
+        m_Weapon = new ShipWeapon(moduleSO);
     }
 
-    public BaseModule GetModuleSO()
+    public ShipWeaponSO GetModuleSO()
     {
-        return m_Weapon;
+        return m_Weapon.m_ModuleSO;
     }
 
     public float GetSystemHealth()
@@ -28,8 +29,4 @@ public class WeaponsSystem : MonoBehaviour, IShipSystem
         throw new System.NotImplementedException();
     }
 
-    public void Initialization(object moduleSO)
-    {
-        m_Weapon.Initialization(moduleSO);
-    }
 }

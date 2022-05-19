@@ -1,15 +1,20 @@
 using UnityEngine;
 
-public class ShipStorage : BaseModule
+public class ShipStorage : BaseModule<ShipStorageSO>, IShipResource, IDamageable
 {
-    public override float GetBaseHealth()
+    public ShipStorage(ShipStorageSO module) : base(module)
     {
-        throw new System.NotImplementedException();
+
     }
 
-    public override void Initialization(object module)
+    public override float GetBaseHealth()
     {
-        if (module is ShipStorageSO shipStorage)
-            Debug.Log($"Я {this} включился. Мне передали модулить типа {shipStorage.GetType()}");
+        return m_ModuleSO.m_fHealth;
+    }
+
+    protected override void Setting()
+    {
+        m_fHealth = m_ModuleSO.m_fHealth;
+        m_fWeight = m_ModuleSO.m_fWeight;
     }
 }

@@ -1,20 +1,21 @@
 ﻿using UnityEngine;
 
-public class StorageSystem : MonoBehaviour, IShipSystem
+public class StorageSystem : MonoBehaviour, IShipSystem, IShipSystemSO<ShipStorageSO>
 {
-    private ShipStorage m_Storage = new ShipStorage();
+    private ShipStorage m_Storage;
 
     public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
     public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
 
-    public float EfficiencyCalculator()
+
+    public void Initialization(ShipStorageSO moduleSO)
     {
-        throw new System.NotImplementedException();
+        m_Storage = new ShipStorage(moduleSO);
     }
 
-    public BaseModule GetModuleSO()
+    public ShipStorageSO GetModuleSO()
     {
-        return m_Storage;
+        return m_Storage.m_ModuleSO;
     }
 
     public float GetSystemHealth()
@@ -25,10 +26,5 @@ public class StorageSystem : MonoBehaviour, IShipSystem
     public float GetSystemWeight()
     {
         throw new System.NotImplementedException();
-    }
-
-    public void Initialization(object moduleSO)
-    {
-        m_Storage.Initialization(moduleSO);
     }
 }

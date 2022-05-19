@@ -53,9 +53,19 @@ public class InputsControl : MonoBehaviour
         Event_MousePosition?.Invoke(m_MousePosition);
     }
 
+    private void MousePosition()
+    {
+        Event_MousePosition?.Invoke(m_MousePosition);
+    }
+
     private void MovementStarted(InputAction.CallbackContext ctx, bool isMoving)
     {
         //Debug.Log($"x = {ctx.ReadValue<Vector2>().x}, y = {ctx.ReadValue<Vector2>().y}");
         Event_Movement?.Invoke(ctx.ReadValue<Vector2>(), isMoving);
+    }
+
+    private void Update()
+    {
+        MousePosition();
     }
 }

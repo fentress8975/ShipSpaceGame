@@ -1,15 +1,24 @@
 using UnityEngine;
 
-public class ShipHull : BaseModule
+public class ShipHull : BaseModule<ShipHullSO>, IShipResource, IDamageable
 {
-    public override float GetBaseHealth()
+
+
+    public ShipHull(ShipHullSO module) : base(module)
     {
-        throw new System.NotImplementedException();
+
     }
 
-    public override void Initialization(object module)
+    public override float GetBaseHealth()
     {
-        if (module is ShipHullSO shipHull)
-            Debug.Log($"Я {this} включился. Мне передали модулить типа {shipHull.GetType()}");
+        return m_ModuleSO.m_fHealth;
     }
+
+    protected override void Setting()
+    {
+        m_fHealth = m_ModuleSO.m_fHealth;
+        m_fWeight = m_ModuleSO.m_fWeight;
+    }
+
+
 }

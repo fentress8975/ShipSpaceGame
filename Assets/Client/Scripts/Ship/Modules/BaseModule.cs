@@ -1,14 +1,30 @@
-﻿using UnityEngine.Events;
+﻿using UnityEngine;
+using UnityEngine.Events;
 
-public abstract class BaseModule : IShipResource, IDamageable
+public abstract class BaseModule<T>: IShipResource, IDamageable
 {
     public UnityEvent<ModuleType, float> Event_HealthUpdate;
 
-
+    public T m_ModuleSO { get; protected set; }
     protected float m_fHealth;
     protected float m_fWeight;
 
-    public abstract void Initialization(object module); //Опасный момент
+
+    public BaseModule(T module)
+    {
+        Initialization(module);
+    }
+
+
+    public void Initialization(T module)
+    {
+        m_ModuleSO = module;
+        Debug.Log($"Я {this} включаюсь. Мне передали модулить типа {m_ModuleSO.GetType()}. \n Произвожу загрузку значений.");
+        Setting();
+        Debug.Log($"{this} Готов.");
+    }
+
+    protected abstract void Setting();
 
     public float GetModuleWeight()
     {

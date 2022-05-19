@@ -1,34 +1,30 @@
 ﻿using UnityEngine;
 
-public class AISystem : MonoBehaviour, IShipSystem
+public class AISystem : MonoBehaviour, IShipSystem, IShipSystemSO<ShipAISO>
 {
-    private ShipAI m_AI = new ShipAI();
+    private ShipAI m_AI;
 
     public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
     public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
 
-    public float EfficiencyCalculator()
+
+    public void Initialization(ShipAISO moduleSO)
     {
-        throw new System.NotImplementedException();
+        m_AI = new ShipAI(moduleSO);
     }
 
-    public BaseModule GetModuleSO()
+    public ShipAISO GetModuleSO()
     {
-        return m_AI;
-    }
-
-    public float GetSystemHealth()
-    {
-        throw new System.NotImplementedException();
+        return m_AI.m_ModuleSO;
     }
 
     public float GetSystemWeight()
     {
-        throw new System.NotImplementedException();
+        return GetModuleSO().m_fWeight;
     }
 
-    public void Initialization(object moduleSO)
+    public float GetSystemHealth()
     {
-        m_AI.Initialization(moduleSO);
+        return GetModuleSO().m_fHealth;
     }
 }

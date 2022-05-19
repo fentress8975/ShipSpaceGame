@@ -7,17 +7,18 @@ using UnityEngine;
 [RequireComponent(typeof(HullSystem))]
 [RequireComponent(typeof(AISystem))]
 [RequireComponent(typeof(ShipSounds))]
+[RequireComponent(typeof(Rigidbody))]
 
 public class Ship : MonoBehaviour, IShip
 {
     [SerializeField]
-    private WeaponsSystem m_WeaponSystem;
+    private HullSystem m_HullSystem;
     [SerializeField]
     private EngineSystem m_EngineSystem;
     [SerializeField]
-    private StorageSystem m_StorageSystem;
+    private WeaponsSystem m_WeaponSystem;
     [SerializeField]
-    private HullSystem m_HullSystem;
+    private StorageSystem m_StorageSystem;
     [SerializeField]
     private AISystem m_AISystem;
 
@@ -27,11 +28,12 @@ public class Ship : MonoBehaviour, IShip
 
     public void Initialization(ShipModules modules)
     {
-        m_HullSystem = gameObject.GetComponent<HullSystem>();
-        m_EngineSystem = gameObject.GetComponent<EngineSystem>();
-        m_WeaponSystem = gameObject.GetComponent<WeaponsSystem>();
-        m_StorageSystem = gameObject.GetComponent<StorageSystem>();
-        m_AISystem = gameObject.GetComponent<AISystem>();
+        m_HullSystem = GetComponent<HullSystem>();
+        m_EngineSystem = GetComponent<EngineSystem>();
+        m_WeaponSystem = GetComponent<WeaponsSystem>();
+        m_StorageSystem = GetComponent<StorageSystem>();
+        m_AISystem = GetComponent<AISystem>();
+
         m_SoundSystem = GetComponent<ShipSounds>();
 
         SystemsInitialization(modules);
@@ -41,8 +43,6 @@ public class Ship : MonoBehaviour, IShip
         m_Modules.Add(m_WeaponSystem);
         m_Modules.Add(m_StorageSystem);
         m_Modules.Add(m_AISystem);
-
-
     }
 
     public ShipModuleHealth GetShipHealth()
