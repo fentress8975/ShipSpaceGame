@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ShipBase;
+using UnityEngine;
 
 
 public class RotationHandler : MonoBehaviour
@@ -7,9 +8,10 @@ public class RotationHandler : MonoBehaviour
     private Vector3 m_LockAt;
     private Camera m_MainCamera;
     private Rigidbody m_Rigidbody;
-    Vector3 m_EulerAngleVelocity = new Vector3(0, 20, 0);
-
+    private Vector3 m_EulerAngleVelocity = new Vector3(0, 20, 0);
     private GameObject m_Rotation;
+
+
     public void Initialization(Ship ship)
     {
         m_Rigidbody = ship.GetComponent<Rigidbody>();
@@ -32,6 +34,7 @@ public class RotationHandler : MonoBehaviour
         GetTargetDirection(x);
 
     }
+
     private void GetTargetDirection(Vector2 x)
     {
         Vector3 position = m_MainCamera.ScreenToWorldPoint(x);
@@ -48,7 +51,7 @@ public class RotationHandler : MonoBehaviour
     {
         m_Rotation.transform.LookAt(m_LockAt);
         //transform.rotation = Quaternion.RotateTowards(transform.rotation, m_Rotation.transform.rotation, Time.time * 2f);
-        
+
         Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * Time.fixedDeltaTime);
         m_Rigidbody.MoveRotation(m_Rotation.transform.rotation * deltaRotation);
     }

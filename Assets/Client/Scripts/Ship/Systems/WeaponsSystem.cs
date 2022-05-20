@@ -1,32 +1,35 @@
+using ShipModule;
 using UnityEngine;
 
-public class WeaponsSystem : MonoBehaviour, IShipSystem, IShipSystemSO<ShipWeaponSO>
+
+namespace ShipSystem
 {
-
-    public ShipWeapon m_Weapon;
-
-    public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
-    public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
-
-
-    public void Initialization(ShipWeaponSO moduleSO)
+    public class WeaponsSystem : MonoBehaviour, IShipSystem, IShipSystemSO<ShipWeaponSO>
     {
-        m_Weapon = new ShipWeapon(moduleSO);
-    }
+        public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
+        public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
 
-    public ShipWeaponSO GetModuleSO()
-    {
-        return m_Weapon.m_ModuleSO;
-    }
+        public ShipWeapon m_Weapon;
 
-    public float GetSystemHealth()
-    {
-        throw new System.NotImplementedException();
-    }
 
-    public float GetSystemWeight()
-    {
-        throw new System.NotImplementedException();
-    }
+        public void Initialization(ShipWeaponSO moduleSO)
+        {
+            m_Weapon = new ShipWeapon(moduleSO);
+        }
 
+        public ShipWeaponSO GetModuleSO()
+        {
+            return m_Weapon.ModuleSO;
+        }
+
+        public float GetSystemHealth()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public float GetSystemWeight()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 }

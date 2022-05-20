@@ -1,30 +1,35 @@
-﻿using UnityEngine;
+﻿using ShipModule;
+using UnityEngine;
 
-public class StorageSystem : MonoBehaviour, IShipSystem, IShipSystemSO<ShipStorageSO>
+
+namespace ShipSystem
 {
-    private ShipStorage m_Storage;
-
-    public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
-    public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
-
-
-    public void Initialization(ShipStorageSO moduleSO)
+    public class StorageSystem : MonoBehaviour, IShipSystem, IShipSystemSO<ShipStorageSO>
     {
-        m_Storage = new ShipStorage(moduleSO);
-    }
+        private ShipStorage m_Storage;
 
-    public ShipStorageSO GetModuleSO()
-    {
-        return m_Storage.m_ModuleSO;
-    }
+        public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
+        public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
 
-    public float GetSystemHealth()
-    {
-        throw new System.NotImplementedException();
-    }
 
-    public float GetSystemWeight()
-    {
-        throw new System.NotImplementedException();
+        public void Initialization(ShipStorageSO moduleSO)
+        {
+            m_Storage = new ShipStorage(moduleSO);
+        }
+
+        public ShipStorageSO GetModuleSO()
+        {
+            return m_Storage.ModuleSO;
+        }
+
+        public float GetSystemHealth()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public float GetSystemWeight()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

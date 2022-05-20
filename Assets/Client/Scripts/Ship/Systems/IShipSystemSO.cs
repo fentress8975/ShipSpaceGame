@@ -1,6 +1,8 @@
-﻿public interface IShipSystemSO<T> where T : class
+﻿namespace ShipSystem
 {
-    public void Initialization(T moduleSO);
-    public T GetModuleSO();
+    public interface IShipSystemSO<T> where T : class
+    {
+        public void Initialization(T moduleSO);
+        public T GetModuleSO();
+    }
 }
-

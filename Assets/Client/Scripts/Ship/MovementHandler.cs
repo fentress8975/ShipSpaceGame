@@ -1,17 +1,21 @@
+using ShipBase;
 using UnityEngine;
+
 
 public class MovementHandler : MonoBehaviour
 {
     private const float speed = 5f;
     private bool m_bIsMoving = false;
     private Rigidbody m_Rigidbody;
-
     private Vector3 m_MovingDirection = Vector3.zero;
+
+
     public void Initialization(Ship ship)
     {
         InputsControl.instance.Event_Movement.AddListener(Movement);
         m_Rigidbody = ship.GetComponent<Rigidbody>();
     }
+
     private void OnDestroy()
     {
         InputsControl.instance.Event_Movement.RemoveListener(Movement);
@@ -28,12 +32,10 @@ public class MovementHandler : MonoBehaviour
         Acceleration();
     }
 
-
     private void Acceleration()
     {
         m_Rigidbody.MovePosition(m_Rigidbody.position + m_MovingDirection * speed * Time.fixedDeltaTime);
     }
-
 }
 
 

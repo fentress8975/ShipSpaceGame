@@ -1,33 +1,38 @@
-﻿using UnityEngine;
+﻿using ShipModule;
+using UnityEngine;
 
-public class HullSystem : MonoBehaviour, IShipSystem, IShipSystemSO<ShipHullSO>
+
+namespace ShipSystem
 {
-    private ShipHull m_Hull;
-
-    public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
-    public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
-
-
-    public void Initialization(ShipHullSO moduleSO)
+    public class HullSystem : MonoBehaviour, IShipSystem, IShipSystemSO<ShipHullSO>
     {
-        m_Hull = new ShipHull(moduleSO);
+        public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
+        public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
+
+        private ShipHull m_Hull;
+
+
+        public void Initialization(ShipHullSO moduleSO)
+        {
+            m_Hull = new ShipHull(moduleSO);
+
+        }
+
+        public ShipHullSO GetModuleSO()
+        {
+            return m_Hull.ModuleSO;
+        }
+
+        public float GetSystemWeight()
+        {
+            return GetModuleSO().m_fWeight;
+        }
+
+        public float GetSystemHealth()
+        {
+            return GetModuleSO().m_fHealth;
+        }
+
 
     }
-
-    public ShipHullSO GetModuleSO()
-    {
-        return m_Hull.m_ModuleSO;
-    }
-
-    public float GetSystemWeight()
-    {
-        return GetModuleSO().m_fWeight;
-    }
-
-    public float GetSystemHealth()
-    {
-        return GetModuleSO().m_fHealth;
-    }
-
-    
 }

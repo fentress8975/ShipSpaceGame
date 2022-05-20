@@ -1,30 +1,36 @@
-﻿using UnityEngine;
+﻿using ShipModule;
+using UnityEngine;
 
-public class AISystem : MonoBehaviour, IShipSystem, IShipSystemSO<ShipAISO>
+
+namespace ShipSystem
 {
-    private ShipAI m_AI;
 
-    public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
-    public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
-
-
-    public void Initialization(ShipAISO moduleSO)
+    public class AISystem : MonoBehaviour, IShipSystem, IShipSystemSO<ShipAISO>
     {
-        m_AI = new ShipAI(moduleSO);
-    }
+        private ShipAI m_AI;
 
-    public ShipAISO GetModuleSO()
-    {
-        return m_AI.m_ModuleSO;
-    }
+        public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
+        public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
 
-    public float GetSystemWeight()
-    {
-        return GetModuleSO().m_fWeight;
-    }
 
-    public float GetSystemHealth()
-    {
-        return GetModuleSO().m_fHealth;
+        public void Initialization(ShipAISO moduleSO)
+        {
+            m_AI = new ShipAI(moduleSO);
+        }
+
+        public ShipAISO GetModuleSO()
+        {
+            return m_AI.ModuleSO;
+        }
+
+        public float GetSystemWeight()
+        {
+            return GetModuleSO().m_fWeight;
+        }
+
+        public float GetSystemHealth()
+        {
+            return GetModuleSO().m_fHealth;
+        }
     }
 }

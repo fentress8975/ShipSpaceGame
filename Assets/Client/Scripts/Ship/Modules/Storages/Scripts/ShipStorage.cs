@@ -1,20 +1,20 @@
-using UnityEngine;
-
-public class ShipStorage : BaseModule<ShipStorageSO>, IShipResource, IDamageable
+namespace ShipModule
 {
-    public ShipStorage(ShipStorageSO module) : base(module)
+    public class ShipStorage : BaseModule<ShipStorageSO>, IShipResource, IDamageable
     {
+        public ShipStorage(ShipStorageSO module) : base(module)
+        {
+        }
 
-    }
+        public override float GetBaseHealth()
+        {
+            return ModuleSO.m_fHealth;
+        }
 
-    public override float GetBaseHealth()
-    {
-        return m_ModuleSO.m_fHealth;
-    }
-
-    protected override void Setting()
-    {
-        m_fHealth = m_ModuleSO.m_fHealth;
-        m_fWeight = m_ModuleSO.m_fWeight;
+        protected override void Setting()
+        {
+            m_fHealth = ModuleSO.m_fHealth;
+            m_fWeight = ModuleSO.m_fWeight;
+        }
     }
 }

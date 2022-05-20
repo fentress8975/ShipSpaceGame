@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
+
 public class InputsControl : MonoBehaviour
 {
     public UnityEvent<Vector2, bool> Event_Movement;
@@ -11,7 +12,6 @@ public class InputsControl : MonoBehaviour
 
     private PCControls m_PCControls;
     private Vector2 m_MousePosition;
-
 
 
     private void Awake()

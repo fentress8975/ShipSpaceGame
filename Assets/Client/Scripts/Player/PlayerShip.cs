@@ -1,8 +1,12 @@
+using ShipBase;
+using ShipBase.Containers;
 using UnityEngine;
 using UnityEngine.Events;
 
+
 [RequireComponent(typeof(MovementHandler))]
 [RequireComponent(typeof(RotationHandler))]
+
 
 public class PlayerShip : MonoBehaviour, IControllable
 {
@@ -19,7 +23,12 @@ public class PlayerShip : MonoBehaviour, IControllable
     private void Start()
     {
         TestInitModules = GetComponent<TestInitModules>();
-        test = new ShipModules(TestInitModules.m_ShipHullSO, TestInitModules.m_EngineSO, TestInitModules.m_WeaponSO, TestInitModules.m_StorageSO, TestInitModules.m_AISO);//чистый тест
+        //тест
+        test = new ShipModules(TestInitModules.m_ShipHullSO,
+                               TestInitModules.m_EngineSO,
+                               TestInitModules.m_WeaponSO,
+                               TestInitModules.m_StorageSO,
+                               TestInitModules.m_AISO);
 
         m_MovementHandler = GetComponent<MovementHandler>();
         m_RotationHandler = GetComponent<RotationHandler>();
@@ -29,7 +38,7 @@ public class PlayerShip : MonoBehaviour, IControllable
         m_RotationHandler.Initialization(m_Ship);
 
         FollowTheObject followTheObject = Camera.main.GetComponent<FollowTheObject>();
-        followTheObject.Initialization(m_Ship.gameObject,new Vector3(0,6,-3));
+        followTheObject.Initialization(m_Ship.gameObject, new Vector3(0, 6, -3));
     }
 
     public void FireWeapon()
