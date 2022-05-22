@@ -7,5 +7,7 @@ namespace ShipBase
     {
         public void Initialization(ShipModules modules);
         public ShipModuleHealth GetShipHealth();
+
+
     }
 }

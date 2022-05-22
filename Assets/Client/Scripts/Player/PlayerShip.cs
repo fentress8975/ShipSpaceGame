@@ -23,7 +23,7 @@ public class PlayerShip : MonoBehaviour, IControllable
     private void Start()
     {
         TestInitModules = GetComponent<TestInitModules>();
-        //тест
+        //Only for test
         test = new ShipModules(TestInitModules.m_ShipHullSO,
                                TestInitModules.m_EngineSO,
                                TestInitModules.m_WeaponSO,
@@ -34,8 +34,9 @@ public class PlayerShip : MonoBehaviour, IControllable
         m_RotationHandler = GetComponent<RotationHandler>();
         m_Ship = GetComponentInChildren<Ship>();
         m_Ship.Initialization(test);
-        m_MovementHandler.Initialization(m_Ship);
-        m_RotationHandler.Initialization(m_Ship);
+
+        m_MovementHandler.Initialization(m_Ship.m_Rigidbody);
+        m_RotationHandler.Initialization(m_Ship.m_Rigidbody);
 
         FollowTheObject followTheObject = Camera.main.GetComponent<FollowTheObject>();
         followTheObject.Initialization(m_Ship.gameObject, new Vector3(0, 6, -3));

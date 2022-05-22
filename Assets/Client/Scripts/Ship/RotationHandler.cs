@@ -8,20 +8,20 @@ public class RotationHandler : MonoBehaviour
     private Vector3 m_LockAt;
     private Camera m_MainCamera;
     private Rigidbody m_Rigidbody;
+    [SerializeField]
     private Vector3 m_EulerAngleVelocity = new Vector3(0, 20, 0);
     private GameObject m_Rotation;
 
 
-    public void Initialization(Ship ship)
+    public void Initialization(Rigidbody shipRB)
     {
-        m_Rigidbody = ship.GetComponent<Rigidbody>();
+        m_Rigidbody = shipRB;
 
         InputsControl.instance.Event_MousePosition.AddListener(RotationCalculator);
-        m_GamePlane = new Plane(transform.up, transform.position);
+        m_GamePlane = new Plane(transform.up, Vector3.zero);
         m_MainCamera = Camera.main;
-
         m_Rotation = new GameObject("Ship Rotation");
-        m_Rotation.transform.parent = ship.transform;
+        m_Rotation.transform.parent = shipRB.transform;
     }
 
     private void OnDestroy()
@@ -32,7 +32,6 @@ public class RotationHandler : MonoBehaviour
     private void RotationCalculator(Vector2 x)
     {
         GetTargetDirection(x);
-
     }
 
     private void GetTargetDirection(Vector2 x)
@@ -44,14 +43,13 @@ public class RotationHandler : MonoBehaviour
         {
             position += (direction * distance);
             m_LockAt = position;
+            m_LockAt.y = 0f;
         }
     }
 
     private void Rotate()
     {
         m_Rotation.transform.LookAt(m_LockAt);
-        //transform.rotation = Quaternion.RotateTowards(transform.rotation, m_Rotation.transform.rotation, Time.time * 2f);
-
         Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * Time.fixedDeltaTime);
         m_Rigidbody.MoveRotation(m_Rotation.transform.rotation * deltaRotation);
     }
@@ -64,6 +62,6 @@ public class RotationHandler : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(m_LockAt, 0.8f);
+        Gizmos.DrawSphere(m_LockAt, 0.5f);
     }
 }

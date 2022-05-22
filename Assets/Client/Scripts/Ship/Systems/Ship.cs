@@ -29,6 +29,7 @@ namespace ShipBase
         private AISystem m_AISystem;
 
         private ShipSounds m_SoundSystem;
+        public Rigidbody m_Rigidbody { get; private set; }
 
         private List<IShipSystem> m_Modules = new List<IShipSystem>();
 
@@ -42,7 +43,8 @@ namespace ShipBase
             m_AISystem = GetComponent<AISystem>();
 
             m_SoundSystem = GetComponent<ShipSounds>();
-
+            m_Rigidbody = GetComponent<Rigidbody>();
+            m_Rigidbody.centerOfMass = Vector3.zero;
             SystemsInitialization(modules);
 
             m_Modules.Add(m_HullSystem);
@@ -104,6 +106,7 @@ namespace ShipBase
             Debug.Log("SYSTEM TYPE ERROR!");
             return SystemType.ERROR;
         }
+
     }
 
 

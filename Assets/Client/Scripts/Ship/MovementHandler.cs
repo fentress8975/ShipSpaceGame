@@ -1,19 +1,20 @@
-using ShipBase;
 using UnityEngine;
 
 
 public class MovementHandler : MonoBehaviour
 {
-    private const float speed = 5f;
+    [SerializeField]
+    private float speed = 100f;
     private bool m_bIsMoving = false;
+    private bool m_bStabilization = true;
     private Rigidbody m_Rigidbody;
     private Vector3 m_MovingDirection = Vector3.zero;
 
 
-    public void Initialization(Ship ship)
+    public void Initialization(Rigidbody shipRB)
     {
         InputsControl.instance.Event_Movement.AddListener(Movement);
-        m_Rigidbody = ship.GetComponent<Rigidbody>();
+        m_Rigidbody = shipRB;
     }
 
     private void OnDestroy()
@@ -30,11 +31,29 @@ public class MovementHandler : MonoBehaviour
     private void FixedUpdate()
     {
         Acceleration();
+
+        if (!m_bIsMoving)
+        {
+            Stabilization();
+        }
+
+    }
+
+    private void Stabilization()
+    {
+        //Change drag to stop ship.
+
+        if (m_bStabilization)
+        {
+            if (m_Rigidbody.drag != 5) { m_Rigidbody.drag = 5; }
+        }
+        if (m_Rigidbody.velocity.magnitude < 1) { m_Rigidbody.velocity = Vector3.zero; }
     }
 
     private void Acceleration()
     {
-        m_Rigidbody.MovePosition(m_Rigidbody.position + m_MovingDirection * speed * Time.fixedDeltaTime);
+        if (m_Rigidbody.drag != 0) { m_Rigidbody.drag = 0; }
+        m_Rigidbody.AddForce(m_MovingDirection * Time.fixedDeltaTime * speed, ForceMode.Acceleration);
     }
 }
 
