@@ -8,9 +8,9 @@ using UnityEngine.Events;
 [RequireComponent(typeof(RotationHandler))]
 
 
-public class PlayerShip : MonoBehaviour, IControllable
+public class PlayerShip : MonoBehaviour
 {
-    public UnityEvent<Vector2> Event_ShipMoving;
+    public UnityEvent<Vector2> Event_ShipMovementUpdate;
     [SerializeField]
     private Ship m_Ship;
     private MovementHandler m_MovementHandler;
@@ -47,8 +47,5 @@ public class PlayerShip : MonoBehaviour, IControllable
         Debug.Log("PEW PEW");
     }
 
-    public void Movement(Vector2 axis)
-    {
-        Event_ShipMoving?.Invoke(axis);
-    }
+    
 }

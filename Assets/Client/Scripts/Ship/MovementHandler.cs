@@ -4,7 +4,7 @@ using UnityEngine;
 public class MovementHandler : MonoBehaviour
 {
     [SerializeField]
-    private float speed = 100f;
+    private float m_fAccelerationPower = 100f;
     private bool m_bIsMoving = false;
     private bool m_bStabilization = true;
     private Rigidbody m_Rigidbody;
@@ -53,7 +53,7 @@ public class MovementHandler : MonoBehaviour
     private void Acceleration()
     {
         if (m_Rigidbody.drag != 0) { m_Rigidbody.drag = 0; }
-        m_Rigidbody.AddForce(m_MovingDirection * Time.fixedDeltaTime * speed, ForceMode.Acceleration);
+        m_Rigidbody.AddForce(m_MovingDirection * Time.fixedDeltaTime * m_fAccelerationPower, ForceMode.Acceleration);
     }
 }
 

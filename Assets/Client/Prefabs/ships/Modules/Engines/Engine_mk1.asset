@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9379fb7cc3fa5ea43be50f98c0da95cf, type: 3}
-  m_Name: Engine
+  m_Name: Engine_mk1
   m_EditorClassIdentifier: 
   m_sName: Engine MK1
   m_fHealth: 100
   m_fWeight: 500
   m_fAccelerationPower: 100
-  m_fRotationPower: 20
+  m_fRotationPower: 100
