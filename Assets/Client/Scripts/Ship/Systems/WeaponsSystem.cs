@@ -1,4 +1,5 @@
 using ShipModule;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -9,27 +10,37 @@ namespace ShipSystem
         public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
         public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
 
-        public ShipWeapon m_Weapon;
+        public ShipWeapon m_Module;
 
 
         public void Initialization(ShipWeaponSO moduleSO)
         {
-            m_Weapon = new ShipWeapon(moduleSO);
+            m_Module = new ShipWeapon(moduleSO);
         }
 
         public ShipWeaponSO GetModuleSO()
         {
-            return m_Weapon.ModuleSO;
-        }
-
-        public float GetSystemHealth()
-        {
-            throw new System.NotImplementedException();
+            return m_Module.m_ModuleSO;
         }
 
         public float GetSystemWeight()
         {
-            throw new System.NotImplementedException();
+            return m_Module.GetModuleWeight();
+        }
+
+        public float GetSystemHealth()
+        {
+            return m_Module.GetModuleHealth();
+        }
+
+        public IShipModule GetModule()
+        {
+            return m_Module;
+        }
+
+        public Dictionary<string, float> GetModuleInfo()
+        {
+            return m_Module.GetModuleInformation();
         }
     }
 }

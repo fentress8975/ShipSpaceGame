@@ -16,4 +16,4 @@ MonoBehaviour:
   m_fHealth: 100
   m_fWeight: 500
   m_fAccelerationPower: 100
-  m_fRotationPower: 100
+  m_fRotationSpeed: 100

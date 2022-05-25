@@ -9,5 +9,5 @@ public class ShipEngineSO : ScriptableObject
     [Tooltip("Power/weight")]
     public float m_fAccelerationPower;
     [Tooltip("Degrees per second")]
-    public float m_fRotationPower;
+    public float m_fRotationSpeed;
 }

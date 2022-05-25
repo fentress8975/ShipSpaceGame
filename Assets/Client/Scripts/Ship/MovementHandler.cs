@@ -1,25 +1,34 @@
+using ShipBase;
+using ShipBase.Containers;
+using ShipModule;
+using ShipSystem;
 using UnityEngine;
 
 
 public class MovementHandler : MonoBehaviour
 {
     [SerializeField]
-    private float m_fAccelerationPower = 100f;
+    private float m_fAccelerationPower;
     private bool m_bIsMoving = false;
     private bool m_bStabilization = true;
+    EngineSystem engineSystem;
     private Rigidbody m_Rigidbody;
     private Vector3 m_MovingDirection = Vector3.zero;
 
 
-    public void Initialization(Rigidbody shipRB)
+    public void Initialization(Ship ship)
     {
         InputsControl.instance.Event_Movement.AddListener(Movement);
-        m_Rigidbody = shipRB;
+        m_Rigidbody = ship.GetComponent<Rigidbody>();
+        engineSystem = (EngineSystem)ship.GetSystem(SystemType.Engine);
+        m_fAccelerationPower = engineSystem.GetEnginePower();
+        engineSystem.Event_EnginePowerUpdate.AddListener(EngineChange);
     }
 
     private void OnDestroy()
     {
         InputsControl.instance.Event_Movement.RemoveListener(Movement);
+        engineSystem.Event_EnginePowerUpdate.RemoveListener(EngineChange);
     }
 
     public void Movement(Vector2 axis, bool isMoving)
@@ -42,7 +51,6 @@ public class MovementHandler : MonoBehaviour
     private void Stabilization()
     {
         //Change drag to stop ship.
-
         if (m_bStabilization)
         {
             if (m_Rigidbody.drag != 5) { m_Rigidbody.drag = 5; }
@@ -54,6 +62,11 @@ public class MovementHandler : MonoBehaviour
     {
         if (m_Rigidbody.drag != 0) { m_Rigidbody.drag = 0; }
         m_Rigidbody.AddForce(m_MovingDirection * Time.fixedDeltaTime * m_fAccelerationPower, ForceMode.Acceleration);
+    }
+
+    private void EngineChange(float newPower)
+    {
+        m_fAccelerationPower = newPower;
     }
 }
 

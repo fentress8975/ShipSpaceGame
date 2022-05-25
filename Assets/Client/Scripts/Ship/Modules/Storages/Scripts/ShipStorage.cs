@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+
 namespace ShipModule
 {
-    public class ShipStorage : BaseModule<ShipStorageSO>, IShipResource, IDamageable
+    public class ShipStorage : BaseModule<ShipStorageSO>, IShipResource, IDamageable, IShipModule
     {
         public ShipStorage(ShipStorageSO module) : base(module)
         {
@@ -8,13 +10,19 @@ namespace ShipModule
 
         public override float GetBaseHealth()
         {
-            return ModuleSO.m_fHealth;
+            return m_ModuleSO.m_fHealth;
+        }
+
+        public Dictionary<string, float> GetModuleInformation()
+        {
+            throw new System.NotImplementedException();
         }
 
         protected override void Setting()
         {
-            m_fHealth = ModuleSO.m_fHealth;
-            m_fWeight = ModuleSO.m_fWeight;
+            m_sName = m_ModuleSO.m_sName;
+            m_fHealth = m_ModuleSO.m_fHealth;
+            m_fWeight = m_ModuleSO.m_fWeight;
         }
     }
 }

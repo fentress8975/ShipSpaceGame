@@ -1161,6 +1161,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33d1d185eea89db49a5598eb8aae572c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Event_EnginePowerUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  Event_EngineRotationSpeedUpdate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1483612096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1384,7 +1390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78b7e426f235b1d44be83a630243cfbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_fAccelerationPower: 100
+  m_fAccelerationPower: 0
 --- !u!114 &1957297939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1415,7 +1421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc1facf4f424d84f8d376eff1a6b10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_fRotationVelocity: 10
+  m_fRotationVelocity: 0
 --- !u!114 &1957297941
 MonoBehaviour:
   m_ObjectHideFlags: 0

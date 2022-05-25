@@ -1,14 +1,22 @@
-﻿using UnityEngine;
+﻿using ShipBase;
+using ShipBase.Containers;
+using ShipModule;
+using ShipSystem;
+using UnityEngine;
 
 
 public class RotationHandler : MonoBehaviour
 {
     private Plane m_GamePlane;
     private Vector3 m_LockAt;
+
     private Camera m_MainCamera;
+
     private Rigidbody m_Rigidbody;
+    EngineSystem engineSystem;
+
     [SerializeField]
-    private float m_fRotationVelocity = 100f;
+    private float m_fRotationVelocity;
     private float m_fSpeedDamping = 1f;
     private RotationDirection m_RotationDirection;
     private GameObject m_Rotation;
@@ -19,19 +27,31 @@ public class RotationHandler : MonoBehaviour
         ConterClockWise
     }
 
-    public void Initialization(Rigidbody shipRB)
+
+    public void Initialization(Ship ship)
     {
-        m_Rigidbody = shipRB;
+        m_Rigidbody = ship.GetComponent<Rigidbody>();
+        engineSystem = (EngineSystem)ship.GetSystem(SystemType.Engine);
+        m_fRotationVelocity = engineSystem.GetEngineRotationSpeed();
+        engineSystem.Event_EnginePowerUpdate.AddListener(EngineChange);
+
         InputsControl.instance.Event_MousePosition.AddListener(RotationCalculator);
+
         m_GamePlane = new Plane(transform.up, Vector3.zero);
         m_MainCamera = Camera.main;
         m_Rotation = new GameObject("Ship Rotation");
-        m_Rotation.transform.parent = shipRB.transform;
+        m_Rotation.transform.parent = ship.transform;
+    }
+
+    private void EngineChange(float rotationVel)
+    {
+        m_fRotationVelocity = rotationVel;
     }
 
     private void OnDestroy()
     {
         InputsControl.instance.Event_MousePosition.RemoveListener(RotationCalculator);
+        engineSystem.Event_EnginePowerUpdate.RemoveListener(EngineChange);
     }
 
     private void RotationCalculator(Vector2 x)
@@ -72,13 +92,12 @@ public class RotationHandler : MonoBehaviour
         };
     }
 
+    //SLowdown, for better rotation at the end
     private void SpeedDampingCalculation()
     {
         m_fSpeedDamping = Mathf.InverseLerp(0f, m_fRotationVelocity*0.1f, Quaternion.Angle(m_Rotation.transform.rotation, m_Rigidbody.rotation));
-        Debug.Log(m_fSpeedDamping);
     }
-
-    //SLowdown, for better rotation at the end
+    
     private RotationDirection GetTurningDirection()
     {
         if (m_Rotation.transform.localEulerAngles.y < 180)

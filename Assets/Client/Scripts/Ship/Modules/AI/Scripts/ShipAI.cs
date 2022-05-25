@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+
 namespace ShipModule
 {
-    public class ShipAI : BaseModule<ShipAISO>, IShipResource, IDamageable
+    public class ShipAI : BaseModule<ShipAISO>, IShipResource, IDamageable, IShipModule
     {
         public ShipAI(ShipAISO module) : base(module)
         {
@@ -11,10 +13,16 @@ namespace ShipModule
             throw new System.NotImplementedException();
         }
 
+        public Dictionary<string, float> GetModuleInformation()
+        {
+            throw new System.NotImplementedException();
+        }
+
         protected override void Setting()
         {
-            m_fHealth = ModuleSO.m_fHealth;
-            m_fWeight = ModuleSO.m_fWeight;
+            m_sName = m_ModuleSO.m_sName;
+            m_fHealth = m_ModuleSO.m_fHealth;
+            m_fWeight = m_ModuleSO.m_fWeight;
         }
     }
 }

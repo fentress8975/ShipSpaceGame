@@ -1,5 +1,5 @@
 ﻿using ShipBase.Containers;
-
+using System.Collections.Generic;
 
 namespace ShipBase
 {
@@ -8,6 +8,7 @@ namespace ShipBase
         public void Initialization(ShipModules modules);
         public ShipModuleHealth GetShipHealth();
 
+        public Dictionary<string, float> GetSystemInfo(SystemType system);
 
     }
 }

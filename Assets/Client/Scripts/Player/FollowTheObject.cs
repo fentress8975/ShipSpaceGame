@@ -4,18 +4,17 @@
 public class FollowTheObject : MonoBehaviour
 {
     private GameObject m_GOTarget;
-    private Vector3 m_V3Offset;
+    private Vector3 m_Offset;
 
 
     public void Initialization(GameObject target, Vector3 offset)
     {
         m_GOTarget = target;
-        m_V3Offset = offset;
-
+        m_Offset = offset;
     }
 
     private void FixedUpdate()
     {
-        transform.position = m_GOTarget.transform.position + m_V3Offset;
+        transform.position = m_GOTarget.transform.position + m_Offset;
     }
 }

@@ -1,4 +1,5 @@
 using ShipBase.Containers;
+using ShipModule;
 using ShipSystem;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,7 +30,7 @@ namespace ShipBase
         private AISystem m_AISystem;
 
         private ShipSounds m_SoundSystem;
-        public Rigidbody m_Rigidbody { get; private set; }
+        public Rigidbody rigidBody { get; private set; }
 
         private List<IShipSystem> m_Modules = new List<IShipSystem>();
 
@@ -43,8 +44,8 @@ namespace ShipBase
             m_AISystem = GetComponent<AISystem>();
 
             m_SoundSystem = GetComponent<ShipSounds>();
-            m_Rigidbody = GetComponent<Rigidbody>();
-            m_Rigidbody.centerOfMass = Vector3.zero;
+            rigidBody = GetComponent<Rigidbody>();
+            rigidBody.centerOfMass = Vector3.zero;
             SystemsInitialization(modules);
 
             m_Modules.Add(m_HullSystem);
@@ -54,35 +55,23 @@ namespace ShipBase
             m_Modules.Add(m_AISystem);
         }
 
+        //Qustionable
+        public Dictionary<string, float> GetSystemInfo(SystemType system)
+        {
+            return GetShipSystem(system).GetModuleInfo();
+        }
+
+        public IShipSystem GetSystem(SystemType system)
+        {
+            return GetShipSystem(system);
+        }
+
         public ShipModuleHealth GetShipHealth()
         {
             ShipModuleHealth shipModuleHealth = new ShipModuleHealth();
             foreach (var module in m_Modules)
             {
 
-                switch (WhatSystemIsThis(module))
-                {
-                    case SystemType.Hull:
-                        shipModuleHealth.HullHealth = module.GetSystemHealth();
-                        break;
-                    case SystemType.Engine:
-                        shipModuleHealth.EngineHealth = module.GetSystemHealth();
-                        break;
-                    case SystemType.Weapon:
-                        shipModuleHealth.WeaponHealth = module.GetSystemHealth();
-                        break;
-                    case SystemType.Storage:
-                        shipModuleHealth.StorageHealth = module.GetSystemHealth();
-                        break;
-                    case SystemType.AI:
-                        shipModuleHealth.AIHealth = module.GetSystemHealth();
-                        break;
-                    case SystemType.ERROR:
-                        Debug.Log("SYSTEM TYPE ERROR!");
-                        break;
-                    default:
-                        break;
-                }
             }
             return shipModuleHealth;
         }
@@ -96,19 +85,24 @@ namespace ShipBase
             m_AISystem.Initialization(modules.m_AISO);
         }
 
-        private SystemType WhatSystemIsThis(IShipSystem module)
+        private IShipSystem GetShipSystem(SystemType system)
         {
-            if (module is ShipHullSO) return SystemType.Hull;
-            if (module is ShipEngineSO) return SystemType.Engine;
-            if (module is ShipWeaponSO) return SystemType.Weapon;
-            if (module is ShipStorageSO) return SystemType.Storage;
-            if (module is ShipAISO) return SystemType.AI;
-            Debug.Log("SYSTEM TYPE ERROR!");
-            return SystemType.ERROR;
+            switch (system)
+            {
+                case SystemType.Hull:
+                    return m_HullSystem;
+                case SystemType.Engine:
+                    return m_EngineSystem;
+                case SystemType.Weapon:
+                    return m_WeaponSystem;
+                case SystemType.Storage:
+                    return m_StorageSystem;
+                case SystemType.AI:
+                    return m_AISystem;
+            }
+            throw new System.NotImplementedException("Ошибка в типе системы");
         }
-
     }
-
 
     namespace Containers
     {
@@ -156,8 +150,7 @@ namespace ShipBase
             Engine,
             Weapon,
             Storage,
-            AI,
-            ERROR
+            AI
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ShipModule;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -9,30 +10,37 @@ namespace ShipSystem
         public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
         public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
 
-        private ShipHull m_Hull;
+        private ShipHull m_Module;
 
 
         public void Initialization(ShipHullSO moduleSO)
         {
-            m_Hull = new ShipHull(moduleSO);
-
+            m_Module = new ShipHull(moduleSO);
         }
 
         public ShipHullSO GetModuleSO()
         {
-            return m_Hull.ModuleSO;
+            return m_Module.m_ModuleSO;
         }
 
         public float GetSystemWeight()
         {
-            return GetModuleSO().m_fWeight;
+            return m_Module.GetModuleWeight();
         }
 
         public float GetSystemHealth()
         {
-            return GetModuleSO().m_fHealth;
+            return m_Module.GetModuleHealth();
         }
 
+        public IShipModule GetModule()
+        {
+            return m_Module;
+        }
 
+        public Dictionary<string, float> GetModuleInfo()
+        {
+            return m_Module.GetModuleInformation();
+        }
     }
 }
