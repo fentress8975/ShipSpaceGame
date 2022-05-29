@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(MovementHandler))]
 [RequireComponent(typeof(RotationHandler))]
+[RequireComponent(typeof(WeaponHandler))]
 
 
 public class PlayerShip : MonoBehaviour
@@ -15,6 +16,7 @@ public class PlayerShip : MonoBehaviour
     private Ship m_Ship;
     private MovementHandler m_MovementHandler;
     private RotationHandler m_RotationHandler;
+    private WeaponHandler m_WeaponHandler;
 
     [SerializeField]
     public ShipModules test;
@@ -32,11 +34,14 @@ public class PlayerShip : MonoBehaviour
 
         m_MovementHandler = GetComponent<MovementHandler>();
         m_RotationHandler = GetComponent<RotationHandler>();
+        m_WeaponHandler=GetComponent<WeaponHandler>();
+
         m_Ship = GetComponentInChildren<Ship>();
         m_Ship.Initialization(test);
 
         m_MovementHandler.Initialization(m_Ship);
         m_RotationHandler.Initialization(m_Ship);
+        m_WeaponHandler.Initialization(m_Ship);
 
         FollowTheObject followTheObject = Camera.main.GetComponent<FollowTheObject>();
         followTheObject.Initialization(m_Ship.gameObject, new Vector3(0, 6, -3));

@@ -44,6 +44,7 @@ namespace ShipBase
             m_AISystem = GetComponent<AISystem>();
 
             m_SoundSystem = GetComponent<ShipSounds>();
+
             rigidBody = GetComponent<Rigidbody>();
             rigidBody.centerOfMass = Vector3.zero;
             SystemsInitialization(modules);

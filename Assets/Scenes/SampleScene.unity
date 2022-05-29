@@ -1179,6 +1179,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c4bbb92ff7d56f45b9a16d8a18f6b11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Event_PlayAudio:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &1483612097
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1210,7 +1213,7 @@ GameObject:
   - component: {fileID: 1850411617}
   - component: {fileID: 1850411618}
   m_Layer: 0
-  m_Name: ENEMY SHIP, OH SHIT
+  m_Name: Dummy ship
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1338,6 +1341,7 @@ GameObject:
   - component: {fileID: 1957297939}
   - component: {fileID: 1957297940}
   - component: {fileID: 1957297941}
+  - component: {fileID: 1957297942}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1409,6 +1413,9 @@ MonoBehaviour:
   Event_MousePosition:
     m_PersistentCalls:
       m_Calls: []
+  Event_WeaponUse:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1957297940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1439,6 +1446,18 @@ MonoBehaviour:
   m_WeaponSO: {fileID: 11400000, guid: 92d291a0311814643a9f26f71e5fb2d8, type: 2}
   m_StorageSO: {fileID: 11400000, guid: 32b0c89800492e34da3017876d6bea31, type: 2}
   m_AISO: {fileID: 11400000, guid: 953b6cadaaad6054ab3b39bf7d7f9ae1, type: 2}
+--- !u!114 &1957297942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957297934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07a9054e9d84a92409eb506f378c2c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2099875441
 GameObject:
   m_ObjectHideFlags: 0

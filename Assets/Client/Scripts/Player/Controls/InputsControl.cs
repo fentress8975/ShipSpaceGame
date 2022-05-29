@@ -7,6 +7,7 @@ public class InputsControl : MonoBehaviour
 {
     public UnityEvent<Vector2, bool> Event_Movement;
     public UnityEvent<Vector2> Event_MousePosition;
+    public UnityEvent<bool> Event_WeaponUse;
 
     public static InputsControl instance = null;
 
@@ -44,6 +45,9 @@ public class InputsControl : MonoBehaviour
         m_PCControls.InGame.Movement.canceled += ctx => MovementStarted(ctx, false);
 
         m_PCControls.InGame.MousePosition.performed += ctx => MousePosition(ctx);
+
+        m_PCControls.InGame.FireWeapon.performed += ctx => WeaponUse(true);
+        m_PCControls.InGame.FireWeapon.canceled += ctx => WeaponUse(false);
     }
 
     private void MousePosition(InputAction.CallbackContext ctx)
@@ -62,6 +66,11 @@ public class InputsControl : MonoBehaviour
     {
         //Debug.Log($"x = {ctx.ReadValue<Vector2>().x}, y = {ctx.ReadValue<Vector2>().y}");
         Event_Movement?.Invoke(ctx.ReadValue<Vector2>(), isMoving);
+    }
+
+    private void WeaponUse(bool isFiring)
+    {
+        Event_WeaponUse?.Invoke(isFiring);
     }
 
     private void Update()

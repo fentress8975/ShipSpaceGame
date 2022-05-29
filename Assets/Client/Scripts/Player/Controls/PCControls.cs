@@ -44,6 +44,15 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""FireWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""f8691f7c-db99-4d9d-8167-043b4a63a717"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -112,6 +121,17 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c30bdce5-2472-4910-a990-2615f8d53e5a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyBoard&Mouse"",
+                    ""action"": ""FireWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -128,6 +148,7 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
         m_InGame = asset.FindActionMap("InGame", throwIfNotFound: true);
         m_InGame_Movement = m_InGame.FindAction("Movement", throwIfNotFound: true);
         m_InGame_MousePosition = m_InGame.FindAction("MousePosition", throwIfNotFound: true);
+        m_InGame_FireWeapon = m_InGame.FindAction("FireWeapon", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -189,12 +210,14 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
     private IInGameActions m_InGameActionsCallbackInterface;
     private readonly InputAction m_InGame_Movement;
     private readonly InputAction m_InGame_MousePosition;
+    private readonly InputAction m_InGame_FireWeapon;
     public struct InGameActions
     {
         private @PCControls m_Wrapper;
         public InGameActions(@PCControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_InGame_Movement;
         public InputAction @MousePosition => m_Wrapper.m_InGame_MousePosition;
+        public InputAction @FireWeapon => m_Wrapper.m_InGame_FireWeapon;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -210,6 +233,9 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
                 @MousePosition.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnMousePosition;
                 @MousePosition.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnMousePosition;
                 @MousePosition.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnMousePosition;
+                @FireWeapon.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnFireWeapon;
+                @FireWeapon.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnFireWeapon;
+                @FireWeapon.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnFireWeapon;
             }
             m_Wrapper.m_InGameActionsCallbackInterface = instance;
             if (instance != null)
@@ -220,6 +246,9 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
                 @MousePosition.started += instance.OnMousePosition;
                 @MousePosition.performed += instance.OnMousePosition;
                 @MousePosition.canceled += instance.OnMousePosition;
+                @FireWeapon.started += instance.OnFireWeapon;
+                @FireWeapon.performed += instance.OnFireWeapon;
+                @FireWeapon.canceled += instance.OnFireWeapon;
             }
         }
     }
@@ -237,5 +266,6 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
+        void OnFireWeapon(InputAction.CallbackContext context);
     }
 }

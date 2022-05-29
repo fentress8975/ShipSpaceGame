@@ -1,16 +1,18 @@
 using UnityEngine;
 
-public class DummyScript : MonoBehaviour
+public class DummyScript : MonoBehaviour, IDamageable
 {
     [SerializeField]
     private GameObject m_Damage_Text;
 
-
-    private void OnTriggerEnter(Collider other)
+    public void TakeDamage(float damage)
     {
-        Destroy(other.gameObject);
         ShowText();
+    }
 
+    public void TakeDamage(float damage, string damageType)
+    {
+        ShowText();
     }
 
     private void ShowText()

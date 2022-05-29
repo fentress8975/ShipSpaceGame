@@ -6,17 +6,19 @@ public class Projectile : MonoBehaviour
     private float m_fSpeed;
     private int m_iDamage;
     private float m_fDelay = 10f;
+    private Rigidbody m_Rigidbody;
 
-    public void CreateProjectile(float speed, int damage)
+    public void Initialization(float speed, int damage)
     {
         m_fSpeed = speed;
         m_iDamage = damage;
+        m_Rigidbody = gameObject.AddComponent<Rigidbody>();
         StartCoroutine(TestDestroy());
 
     }
-    private void Update()
+    private void FixedUpdate()
     {
-        gameObject.transform.position = gameObject.transform.position + Vector3.forward * m_fSpeed * Time.deltaTime;
+        m_Rigidbody.velocity = transform.forward * m_fSpeed;
     }
 
     private IEnumerator TestDestroy()
@@ -25,11 +27,14 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-
+        if (collision.gameObject.TryGetComponent<DummyScript>(out DummyScript target))
+        {
+            target.TakeDamage(m_iDamage);
+            Destroy(gameObject);
+        }
     }
-
     private void OnDestroy()
     {
         StopAllCoroutines();

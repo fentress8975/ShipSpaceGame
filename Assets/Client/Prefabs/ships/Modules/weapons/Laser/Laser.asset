@@ -15,7 +15,7 @@ MonoBehaviour:
   m_sName: Laser mk1
   m_fHealth: 100
   m_fWeight: 100
-  m_Projectile: {fileID: 1157046698228022277, guid: bcf7ed70f366185479e67dc6ddd522c0,
+  m_Projectile: {fileID: 2900163671417320328, guid: bab800ded5109b74bb59fbe305dd877f,
     type: 3}
   m_Type: 0
   m_fRateOfFire: 120

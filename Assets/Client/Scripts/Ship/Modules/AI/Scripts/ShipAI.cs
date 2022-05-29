@@ -10,7 +10,7 @@ namespace ShipModule
 
         public override float GetBaseHealth()
         {
-            throw new System.NotImplementedException();
+            return m_ModuleSO.m_fHealth;
         }
 
         public Dictionary<string, float> GetModuleInformation()
