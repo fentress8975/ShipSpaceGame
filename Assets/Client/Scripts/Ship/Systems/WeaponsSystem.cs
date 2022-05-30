@@ -1,5 +1,4 @@
 using ShipModule;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -20,6 +19,7 @@ namespace ShipSystem
 
         private ShipWeapon m_Module;
         private GameObject m_Projectiles;
+        private float m_fNextTimeFire = 0;
         private WeaponsState m_sWeaponState = WeaponsState.Idle;
 
 
@@ -58,37 +58,44 @@ namespace ShipSystem
         public void EnableWeapon()
         {
             m_sWeaponState = WeaponsState.Firing;
-            StartCoroutine(Fire());
         }
         public void DisableWeapon()
         {
             m_sWeaponState = WeaponsState.Idle;
-            StopAllCoroutines();
         }
 
-        private IEnumerator Fire()
+        private void Fire()
         {
-            while (true)
+            if (Time.time > m_fNextTimeFire + (60 / m_Module.m_ModuleSO.m_fFireRate))
             {
-                PrepareProjectile();
+                m_fNextTimeFire = Time.time;
+                Projectile projectile = PrepareProjectile();
+                projectile.Initialization(m_Module.m_ModuleSO.m_fSpeed, m_Module.m_ModuleSO.m_iDamage);
                 Event_PlayAudio?.Invoke(m_Module.m_ModuleSO.m_Audio);
-                yield return new WaitForSeconds(60 / m_Module.m_ModuleSO.m_fRateOfFire);
             }
         }
 
-        private void PrepareProjectile()
+        private Projectile PrepareProjectile()
         {
             GameObject prefab = Instantiate(m_Module.m_ModuleSO.m_Projectile, m_Projectiles.transform);
-            prefab.transform.position = transform.position+transform.forward*2f;
+            prefab.transform.position = transform.position + transform.forward * 2f;
             prefab.transform.rotation = transform.rotation;
             Projectile projectile = prefab.GetComponent<Projectile>();
-            projectile.Initialization(m_Module.m_ModuleSO.m_fSpeed,m_Module.m_ModuleSO.m_iDamage);
+            return projectile;
         }
 
 
         private void Update()
         {
-            
+            if (m_sWeaponState == WeaponsState.Idle)
+            {
+
+            }
+            if (m_sWeaponState == WeaponsState.Firing)
+            {
+                Fire();
+            }
+
         }
     }
 }

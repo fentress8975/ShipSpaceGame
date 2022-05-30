@@ -10,7 +10,7 @@ public class ShipWeaponSO : ScriptableObject
     public GameObject m_Projectile;
     public WeaponType m_Type;
     [Tooltip("In 1 min.")]
-    public float m_fRateOfFire;
+    public float m_fFireRate;
     public int m_iDamage;
     public int m_fSpeed;
     public AudioClip m_Audio;

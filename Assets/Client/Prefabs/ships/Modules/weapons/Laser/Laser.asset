@@ -18,7 +18,7 @@ MonoBehaviour:
   m_Projectile: {fileID: 2900163671417320328, guid: bab800ded5109b74bb59fbe305dd877f,
     type: 3}
   m_Type: 0
-  m_fRateOfFire: 120
+  m_fFireRate: 120
   m_iDamage: 1
   m_fSpeed: 10
   m_Audio: {fileID: 8300000, guid: ad7c48dc9f5230d4fbf7c8e72549c148, type: 3}
