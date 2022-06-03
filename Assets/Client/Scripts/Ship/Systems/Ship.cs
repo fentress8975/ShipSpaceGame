@@ -70,9 +70,14 @@ namespace ShipBase
         public ShipModuleHealth GetShipHealth()
         {
             ShipModuleHealth shipModuleHealth = new ShipModuleHealth();
-            foreach (var module in m_Modules)
+            shipModuleHealth.HullHealth=m_HullSystem.GetSystemHealth();
+            shipModuleHealth.EngineHealth=m_EngineSystem.GetSystemHealth();
+            shipModuleHealth.WeaponHealth=m_WeaponSystem.GetSystemHealth();
+            shipModuleHealth.StorageHealth=m_StorageSystem.GetSystemHealth();
+            shipModuleHealth.AIHealth=m_AISystem.GetSystemHealth();
+            foreach(var module in m_Modules)
             {
-
+                shipModuleHealth.FullHealth += module.GetModule().GetBaseHealth();
             }
             return shipModuleHealth;
         }
@@ -109,6 +114,7 @@ namespace ShipBase
     {
         public struct ShipModuleHealth
         {
+            public float FullHealth;
             public float HullHealth;
             public float EngineHealth;
             public float WeaponHealth;

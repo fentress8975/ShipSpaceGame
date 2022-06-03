@@ -17,6 +17,8 @@ public class PlayerShip : MonoBehaviour
     private MovementHandler m_MovementHandler;
     private RotationHandler m_RotationHandler;
     private WeaponHandler m_WeaponHandler;
+    [SerializeField]
+    private UIController m_UIController;
 
     [SerializeField]
     public ShipModules test;
@@ -42,6 +44,8 @@ public class PlayerShip : MonoBehaviour
         m_MovementHandler.Initialization(m_Ship);
         m_RotationHandler.Initialization(m_Ship);
         m_WeaponHandler.Initialization(m_Ship);
+
+        m_UIController.Ininitialization(m_Ship.GetShipHealth(), m_MovementHandler.isStabilazed(), m_Ship.GetSystem(SystemType.Weapon).GetModule().GetModuleName());
 
         FollowTheObject followTheObject = Camera.main.GetComponent<FollowTheObject>();
         followTheObject.Initialization(m_Ship.gameObject, new Vector3(0, 6, -3));

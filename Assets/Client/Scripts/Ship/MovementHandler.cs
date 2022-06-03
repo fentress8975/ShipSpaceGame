@@ -15,6 +15,7 @@ public class MovementHandler : MonoBehaviour
     private Rigidbody m_Rigidbody;
     private Vector3 m_MovingDirection = Vector3.zero;
 
+    UIController m_UIController;
 
     public void Initialization(Ship ship)
     {
@@ -25,16 +26,22 @@ public class MovementHandler : MonoBehaviour
         engineSystem.Event_EnginePowerUpdate.AddListener(EngineChange);
     }
 
-    private void OnDestroy()
+    public bool isStabilazed()
     {
-        InputsControl.instance.Event_Movement.RemoveListener(Movement);
-        engineSystem.Event_EnginePowerUpdate.RemoveListener(EngineChange);
+        return m_bStabilization;
     }
 
     public void Movement(Vector2 axis, bool isMoving)
     {
         m_bIsMoving = isMoving;
         m_MovingDirection = new Vector3(axis.x, 0, axis.y);
+    }
+
+
+    private void OnDestroy()
+    {
+        InputsControl.instance.Event_Movement.RemoveListener(Movement);
+        engineSystem.Event_EnginePowerUpdate.RemoveListener(EngineChange);
     }
 
     private void FixedUpdate()

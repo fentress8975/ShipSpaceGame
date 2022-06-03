@@ -35,6 +35,11 @@ public abstract class BaseModule<T> : IShipResource, IDamageable
         return m_fHealth;
     }
 
+    public string GetModuleName()
+    {
+        return m_sName;
+    }
+
     public void TakeDamage(float damage)
     {
         m_fHealth -= damage;

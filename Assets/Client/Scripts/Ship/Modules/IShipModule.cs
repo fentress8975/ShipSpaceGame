@@ -12,6 +12,8 @@ namespace  ShipModule
 
         public float GetModuleHealth();
 
+        public string GetModuleName();
+
         public float GetModuleWeight();
     }
 }
