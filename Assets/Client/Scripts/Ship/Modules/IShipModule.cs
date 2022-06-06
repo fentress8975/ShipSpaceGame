@@ -12,7 +12,7 @@ namespace  ShipModule
 
         public float GetModuleHealth();
 
-        public string GetModuleName();
+        public string GetName();
 
         public float GetModuleWeight();
     }

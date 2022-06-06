@@ -8,7 +8,9 @@ public class UI_HealthIndicator : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> m_HealthBlocks = new List<GameObject>(4);
+    [SerializeField]
     private float m_fBaseHealth;
+    [SerializeField]
     private float m_fHealth;
     private float m_fPercent;
     private HealthState m_HealthState;
@@ -28,6 +30,13 @@ public class UI_HealthIndicator : MonoBehaviour
         m_fBaseHealth = shipHealth.FullHealth;
         m_fHealth = shipHealth.WeaponHealth + shipHealth.AIHealth + shipHealth.HullHealth + shipHealth.StorageHealth + shipHealth.EngineHealth;
     }
+
+    public void UpdateInformation(ShipModuleHealth shipHealth)
+    {
+        m_fBaseHealth = shipHealth.FullHealth;
+        m_fHealth = shipHealth.WeaponHealth + shipHealth.AIHealth + shipHealth.HullHealth + shipHealth.StorageHealth + shipHealth.EngineHealth;
+    }
+
 
     private void UpdateHealth(ShipModuleHealth shipHealth)
     {

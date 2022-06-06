@@ -64,6 +64,17 @@ namespace ShipSystem
             m_sWeaponState = WeaponsState.Idle;
         }
 
+        public void TakeDamage(float damage)
+        {
+            m_Module.TakeDamage(damage);
+        }
+
+        public void TakeDamage(float damage, string damageType)
+        {
+            throw new System.NotImplementedException();
+        }
+
+
         private void Fire()
         {
             if (Time.time > m_fNextTimeFire + (60 / m_Module.m_ModuleSO.m_fFireRate))
@@ -97,5 +108,7 @@ namespace ShipSystem
             }
 
         }
+
+        
     }
 }

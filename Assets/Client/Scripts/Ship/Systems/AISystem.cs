@@ -43,5 +43,15 @@ namespace ShipSystem
         {
             return m_Module.GetModuleInformation();
         }
+
+        public void TakeDamage(float damage)
+        {
+            m_Module.TakeDamage(damage);
+        }
+
+        public void TakeDamage(float damage, string damageType)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace ShipSystem
 {
-    public interface IShipSystem
+    public interface IShipSystem : IDamageable
     {
         delegate void ModuleHealthUpdate(ModuleType module, float health);
         delegate void ModuleEfficiencyUpdate(float percent);

@@ -3,10 +3,12 @@ using ShipBase.Containers;
 using ShipModule;
 using ShipSystem;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 public class MovementHandler : MonoBehaviour
 {
+    public UnityEvent<bool> Event_StabilazionChanged;
+
     [SerializeField]
     private float m_fAccelerationPower;
     private bool m_bIsMoving = false;
@@ -20,6 +22,7 @@ public class MovementHandler : MonoBehaviour
     public void Initialization(Ship ship)
     {
         InputsControl.instance.Event_Movement.AddListener(Movement);
+        InputsControl.instance.Event_EngineStabilizationChange.AddListener(ChangeStabilazion);
         m_Rigidbody = ship.GetComponent<Rigidbody>();
         engineSystem = (EngineSystem)ship.GetSystem(SystemType.Engine);
         m_fAccelerationPower = engineSystem.GetEnginePower();
@@ -29,6 +32,12 @@ public class MovementHandler : MonoBehaviour
     public bool isStabilazed()
     {
         return m_bStabilization;
+    }
+
+    public void ChangeStabilazion()
+    {
+        m_bStabilization = !m_bStabilization;
+        Event_StabilazionChanged?.Invoke(m_bStabilization);
     }
 
     public void Movement(Vector2 axis, bool isMoving)
@@ -41,6 +50,7 @@ public class MovementHandler : MonoBehaviour
     private void OnDestroy()
     {
         InputsControl.instance.Event_Movement.RemoveListener(Movement);
+        InputsControl.instance.Event_EngineStabilizationChange.RemoveListener(ChangeStabilazion);
         engineSystem.Event_EnginePowerUpdate.RemoveListener(EngineChange);
     }
 

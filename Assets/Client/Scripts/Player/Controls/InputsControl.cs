@@ -8,6 +8,7 @@ public class InputsControl : MonoBehaviour
     public UnityEvent<Vector2, bool> Event_Movement;
     public UnityEvent<Vector2> Event_MousePosition;
     public UnityEvent<bool> Event_WeaponUse;
+    public UnityEvent Event_EngineStabilizationChange;
 
     public static InputsControl instance = null;
 
@@ -48,6 +49,8 @@ public class InputsControl : MonoBehaviour
 
         m_PCControls.InGame.FireWeapon.performed += ctx => WeaponUse(true);
         m_PCControls.InGame.FireWeapon.canceled += ctx => WeaponUse(false);
+
+        m_PCControls.InGame.ChangeStabilization.performed += ctx => EngineStabilizationChange();
     }
 
     private void MousePosition(InputAction.CallbackContext ctx)
@@ -73,6 +76,10 @@ public class InputsControl : MonoBehaviour
         Event_WeaponUse?.Invoke(isFiring);
     }
 
+    private void EngineStabilizationChange()
+    {
+        Event_EngineStabilizationChange?.Invoke();
+    }
     private void Update()
     {
         MousePosition();

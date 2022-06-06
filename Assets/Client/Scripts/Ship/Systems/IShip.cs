@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ShipBase
 {
-    public interface IShip
+    public interface IShip : IDamageable
     {
         public void Initialization(ShipModules modules);
 

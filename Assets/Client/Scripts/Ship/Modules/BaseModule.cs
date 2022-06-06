@@ -35,7 +35,7 @@ public abstract class BaseModule<T> : IShipResource, IDamageable
         return m_fHealth;
     }
 
-    public string GetModuleName()
+    public string GetName()
     {
         return m_sName;
     }

@@ -3,7 +3,7 @@ using ShipModule;
 using ShipSystem;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 
 namespace ShipBase
 {
@@ -18,6 +18,8 @@ namespace ShipBase
 
     public class Ship : MonoBehaviour, IShip
     {
+        public UnityEvent<ShipModuleHealth> Event_HealthUpdate;
+
         [SerializeField]
         private HullSystem m_HullSystem;
         [SerializeField]
@@ -32,7 +34,7 @@ namespace ShipBase
         private ShipSounds m_SoundSystem;
         public Rigidbody rigidBody { get; private set; }
 
-        private List<IShipSystem> m_Modules = new List<IShipSystem>();
+        private List<IShipSystem> m_Systems = new List<IShipSystem>();
 
 
         public void Initialization(ShipModules modules)
@@ -49,11 +51,11 @@ namespace ShipBase
             rigidBody.centerOfMass = Vector3.zero;
             SystemsInitialization(modules);
 
-            m_Modules.Add(m_HullSystem);
-            m_Modules.Add(m_EngineSystem);
-            m_Modules.Add(m_WeaponSystem);
-            m_Modules.Add(m_StorageSystem);
-            m_Modules.Add(m_AISystem);
+            m_Systems.Add(m_HullSystem);
+            m_Systems.Add(m_EngineSystem);
+            m_Systems.Add(m_WeaponSystem);
+            m_Systems.Add(m_StorageSystem);
+            m_Systems.Add(m_AISystem);
         }
 
         //Qustionable
@@ -75,12 +77,26 @@ namespace ShipBase
             shipModuleHealth.WeaponHealth=m_WeaponSystem.GetSystemHealth();
             shipModuleHealth.StorageHealth=m_StorageSystem.GetSystemHealth();
             shipModuleHealth.AIHealth=m_AISystem.GetSystemHealth();
-            foreach(var module in m_Modules)
+            foreach(var module in m_Systems)
             {
                 shipModuleHealth.FullHealth += module.GetModule().GetBaseHealth();
             }
             return shipModuleHealth;
         }
+
+        public void TakeDamage(float damage)
+        {
+            Debug.Log("Take Damage " + damage);
+            DistributeDamageByModules(damage);
+            Event_HealthUpdate?.Invoke(GetShipHealth());
+        }
+
+        public void TakeDamage(float damage, string damageType)
+        {
+            DistributeDamageByModules(damage);
+            Event_HealthUpdate?.Invoke(GetShipHealth());
+        }
+
 
         private void SystemsInitialization(ShipModules modules)
         {
@@ -89,6 +105,25 @@ namespace ShipBase
             m_WeaponSystem.Initialization(modules.m_WeaponSO);
             m_StorageSystem.Initialization(modules.m_StorageSO);
             m_AISystem.Initialization(modules.m_AISO);
+        }
+
+        private void DistributeDamageByModules(float damage)
+        {
+            float partialDamage = damage - Random.Range(0, damage);
+            damage -= partialDamage;
+
+            IShipSystem system = m_Systems[Random.Range(0, 4)];
+            if (system.GetSystemHealth() < partialDamage)
+            {
+                float temp = partialDamage - system.GetSystemHealth();
+                system.TakeDamage(temp);
+                damage += temp;
+            }
+            else
+            {
+                system.TakeDamage(partialDamage);
+            }
+            GetSystem(SystemType.Hull).TakeDamage(damage);
         }
 
         private IShipSystem GetShipSystem(SystemType system)
@@ -105,9 +140,13 @@ namespace ShipBase
                     return m_StorageSystem;
                 case SystemType.AI:
                     return m_AISystem;
+                default:
+                    break;
             }
             throw new System.NotImplementedException("Ошибка в типе системы");
         }
+
+
     }
 
     namespace Containers

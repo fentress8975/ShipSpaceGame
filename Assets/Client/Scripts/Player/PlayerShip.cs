@@ -40,19 +40,36 @@ public class PlayerShip : MonoBehaviour
 
         m_Ship = GetComponentInChildren<Ship>();
         m_Ship.Initialization(test);
+        m_Ship.Event_HealthUpdate.AddListener(UIHealthUpdater);
+        m_MovementHandler.Event_StabilazionChanged.AddListener(UIEngineUpdater);
 
         m_MovementHandler.Initialization(m_Ship);
         m_RotationHandler.Initialization(m_Ship);
         m_WeaponHandler.Initialization(m_Ship);
 
-        m_UIController.Ininitialization(m_Ship.GetShipHealth(), m_MovementHandler.isStabilazed(), m_Ship.GetSystem(SystemType.Weapon).GetModule().GetModuleName());
+        m_UIController.Ininitialization(m_Ship.GetShipHealth(), m_MovementHandler.isStabilazed(), m_Ship.GetSystem(SystemType.Weapon).GetModule().GetName());
 
         FollowTheObject followTheObject = Camera.main.GetComponent<FollowTheObject>();
         followTheObject.Initialization(m_Ship.gameObject, new Vector3(0, 6, -3));
     }
 
-    public void FireWeapon()
+    private void UIHealthUpdater(ShipModuleHealth shipHealth)
     {
-        Debug.Log("PEW PEW");
+        m_UIController.HealthUpdate(shipHealth);
+    }
+    private void UIWeaponUpdater(string weaponName)
+    {
+        m_UIController.WeaponUpdate(weaponName);
+    }
+
+    private void UIEngineUpdater(bool stabilazed)
+    {
+        m_UIController.EngineUpdate(stabilazed);
+    }
+
+    private void OnDestroy()
+    {
+        m_Ship.Event_HealthUpdate.RemoveListener(UIHealthUpdater);
+        m_MovementHandler.Event_StabilazionChanged.RemoveListener(UIEngineUpdater);
     }
 }

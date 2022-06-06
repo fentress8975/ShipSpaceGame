@@ -53,6 +53,15 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeStabilization"",
+                    ""type"": ""Button"",
+                    ""id"": ""e4281502-a37e-4776-bf13-febadf2df871"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,17 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
                     ""action"": ""FireWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""169dbac2-e7db-474c-8974-24f75c11e62e"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeStabilization"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -149,6 +169,7 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
         m_InGame_Movement = m_InGame.FindAction("Movement", throwIfNotFound: true);
         m_InGame_MousePosition = m_InGame.FindAction("MousePosition", throwIfNotFound: true);
         m_InGame_FireWeapon = m_InGame.FindAction("FireWeapon", throwIfNotFound: true);
+        m_InGame_ChangeStabilization = m_InGame.FindAction("ChangeStabilization", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -211,6 +232,7 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_InGame_Movement;
     private readonly InputAction m_InGame_MousePosition;
     private readonly InputAction m_InGame_FireWeapon;
+    private readonly InputAction m_InGame_ChangeStabilization;
     public struct InGameActions
     {
         private @PCControls m_Wrapper;
@@ -218,6 +240,7 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_InGame_Movement;
         public InputAction @MousePosition => m_Wrapper.m_InGame_MousePosition;
         public InputAction @FireWeapon => m_Wrapper.m_InGame_FireWeapon;
+        public InputAction @ChangeStabilization => m_Wrapper.m_InGame_ChangeStabilization;
         public InputActionMap Get() { return m_Wrapper.m_InGame; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -236,6 +259,9 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
                 @FireWeapon.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnFireWeapon;
                 @FireWeapon.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnFireWeapon;
                 @FireWeapon.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnFireWeapon;
+                @ChangeStabilization.started -= m_Wrapper.m_InGameActionsCallbackInterface.OnChangeStabilization;
+                @ChangeStabilization.performed -= m_Wrapper.m_InGameActionsCallbackInterface.OnChangeStabilization;
+                @ChangeStabilization.canceled -= m_Wrapper.m_InGameActionsCallbackInterface.OnChangeStabilization;
             }
             m_Wrapper.m_InGameActionsCallbackInterface = instance;
             if (instance != null)
@@ -249,6 +275,9 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
                 @FireWeapon.started += instance.OnFireWeapon;
                 @FireWeapon.performed += instance.OnFireWeapon;
                 @FireWeapon.canceled += instance.OnFireWeapon;
+                @ChangeStabilization.started += instance.OnChangeStabilization;
+                @ChangeStabilization.performed += instance.OnChangeStabilization;
+                @ChangeStabilization.canceled += instance.OnChangeStabilization;
             }
         }
     }
@@ -267,5 +296,6 @@ public partial class @PCControls : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnFireWeapon(InputAction.CallbackContext context);
+        void OnChangeStabilization(InputAction.CallbackContext context);
     }
 }
