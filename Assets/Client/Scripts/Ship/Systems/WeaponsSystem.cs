@@ -10,6 +10,8 @@ namespace ShipSystem
         public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
         public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
         public UnityEvent<AudioClip> Event_PlayAudio;
+        private ObjectPooling m_ProjectilePool;
+        private int m_iProjectilesLifeTime = 5;
 
         private enum WeaponsState
         {
@@ -28,6 +30,10 @@ namespace ShipSystem
             m_Module = new ShipWeapon(moduleSO);
 
             m_Projectiles = new GameObject("Projectiles");
+            m_ProjectilePool = gameObject.AddComponent<ObjectPooling>();
+            m_ProjectilePool.Initialization(m_Module.m_ModuleSO.m_Projectile,
+                                            m_iProjectilesLifeTime * Mathf.RoundToInt(m_Module.m_ModuleSO.m_fFireRate / 60) + 1,
+                                            m_Projectiles.transform);
         }
 
         public ShipWeaponSO GetModuleSO()
@@ -81,18 +87,25 @@ namespace ShipSystem
             {
                 m_fNextTimeFire = Time.time;
                 Projectile projectile = PrepareProjectile();
-                projectile.Initialization(m_Module.m_ModuleSO.m_fSpeed, m_Module.m_ModuleSO.m_iDamage);
+                projectile.Initialization(m_Module.m_ModuleSO.m_fSpeed, m_Module.m_ModuleSO.m_iDamage, m_iProjectilesLifeTime);
                 Event_PlayAudio?.Invoke(m_Module.m_ModuleSO.m_Audio);
             }
         }
 
         private Projectile PrepareProjectile()
         {
-            GameObject prefab = Instantiate(m_Module.m_ModuleSO.m_Projectile, m_Projectiles.transform);
-            prefab.transform.position = transform.position + transform.forward * 2f;
-            prefab.transform.rotation = transform.rotation;
-            Projectile projectile = prefab.GetComponent<Projectile>();
-            return projectile;
+
+            GameObject prefab = m_ProjectilePool.GetPooledObject();
+            if (prefab != null)
+            {
+                prefab.transform.position = transform.position + transform.forward * 2f;
+                prefab.transform.rotation = transform.rotation;
+                Projectile projectile = prefab.GetComponent<Projectile>();
+                return projectile;
+            }
+
+            Debug.LogException(new System.Exception("Null pooled Projectile"));
+            return null;
         }
 
 
@@ -109,6 +122,6 @@ namespace ShipSystem
 
         }
 
-        
+
     }
 }
