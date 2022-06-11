@@ -20,7 +20,7 @@ public class PlayerShip : MonoBehaviour
     [SerializeField]
     private UIController m_UIController;
 
-    [SerializeField]
+    //for test
     public ShipModules test;
     public TestInitModules TestInitModules;
 

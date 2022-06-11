@@ -857,7 +857,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14bcc9468d8856a4ea58aae72d0fd654, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a3801689d73f58468cc48c5f9866c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1116894885
@@ -1143,8 +1143,8 @@ GameObject:
   - component: {fileID: 1483612094}
   - component: {fileID: 1483612093}
   - component: {fileID: 1483612092}
-  - component: {fileID: 1483612091}
   - component: {fileID: 1483612090}
+  - component: {fileID: 1483612098}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -1243,7 +1243,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6de1fe2a621ff4744ab99bcb7746eae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Event_HealthUpdate:
+  Event_BaseHealthUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  Event_CurrentHealthUpdate:
     m_PersistentCalls:
       m_Calls: []
   m_HullSystem: {fileID: 0}
@@ -1251,18 +1254,6 @@ MonoBehaviour:
   m_WeaponSystem: {fileID: 0}
   m_StorageSystem: {fileID: 0}
   m_AISystem: {fileID: 0}
---- !u!114 &1483612091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1483612074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c16b039a6afdef409293fe80e4a5415, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1483612092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1348,6 +1339,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &1483612098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1483612074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98e9aad4d326c31469f10b22f44b61b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1850411610
 GameObject:
   m_ObjectHideFlags: 0
@@ -1489,9 +1492,9 @@ GameObject:
   - component: {fileID: 1957297937}
   - component: {fileID: 1957297938}
   - component: {fileID: 1957297939}
-  - component: {fileID: 1957297940}
-  - component: {fileID: 1957297941}
+  - component: {fileID: 1957297943}
   - component: {fileID: 1957297942}
+  - component: {fileID: 1957297941}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1524,7 +1527,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1957297934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c982586e03763ec42b900c5546f5ecbe, type: 3}
+  m_Script: {fileID: 11500000, guid: 811050cc3e8d6fe45ab0c98571740f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Event_ShipMovementUpdate:
@@ -1542,13 +1545,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1957297934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78b7e426f235b1d44be83a630243cfbe, type: 3}
+  m_Script: {fileID: 11500000, guid: 58760b9c7d61d8945b870ff4c39428a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Event_StabilazionChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_fAccelerationPower: 0
+  m_ShipHullSO: {fileID: 11400000, guid: 07e6ee76ab01c0041afb4fcd461bf8b4, type: 2}
+  m_EngineSO: {fileID: 11400000, guid: 2ec1efd7f79a66c4190c9d837a3e17cd, type: 2}
+  m_WeaponSO: {fileID: 11400000, guid: 92d291a0311814643a9f26f71e5fb2d8, type: 2}
+  m_StorageSO: {fileID: 11400000, guid: 32b0c89800492e34da3017876d6bea31, type: 2}
+  m_AISO: {fileID: 11400000, guid: 953b6cadaaad6054ab3b39bf7d7f9ae1, type: 2}
 --- !u!114 &1957297939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1573,19 +1577,6 @@ MonoBehaviour:
   Event_EngineStabilizationChange:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1957297940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1957297934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbc1facf4f424d84f8d376eff1a6b10d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_fRotationVelocity: 0
 --- !u!114 &1957297941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1595,14 +1586,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1957297934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5b0ccf2861b5824582a25aa6784ec51, type: 3}
+  m_Script: {fileID: 11500000, guid: 7197d15281e4a364c901684bc30e6a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShipHullSO: {fileID: 11400000, guid: 07e6ee76ab01c0041afb4fcd461bf8b4, type: 2}
-  m_EngineSO: {fileID: 11400000, guid: 2ec1efd7f79a66c4190c9d837a3e17cd, type: 2}
-  m_WeaponSO: {fileID: 11400000, guid: 92d291a0311814643a9f26f71e5fb2d8, type: 2}
-  m_StorageSO: {fileID: 11400000, guid: 32b0c89800492e34da3017876d6bea31, type: 2}
-  m_AISO: {fileID: 11400000, guid: 953b6cadaaad6054ab3b39bf7d7f9ae1, type: 2}
 --- !u!114 &1957297942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1612,9 +1598,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1957297934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07a9054e9d84a92409eb506f378c2c1a, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cf0ac6fbc9e8ee4d830be4ec09abc2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_fRotationVelocity: 0
+--- !u!114 &1957297943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957297934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f0fbb94cec51b43b2f883724ae0bb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event_StabilazionChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_fAccelerationPower: 0
 --- !u!1 &2099875441
 GameObject:
   m_ObjectHideFlags: 0
