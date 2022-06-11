@@ -18,7 +18,8 @@ namespace ShipBase
 
     public class Ship : MonoBehaviour, IShip
     {
-        public UnityEvent<ShipModuleHealth> Event_HealthUpdate;
+        public UnityEvent<BaseModulesHealth> Event_BaseHealthUpdate;
+        public UnityEvent<CurrentModulesHealth> Event_CurrentHealthUpdate;
 
         [SerializeField]
         private HullSystem m_HullSystem;
@@ -69,18 +70,25 @@ namespace ShipBase
             return GetShipSystem(system);
         }
 
-        public ShipModuleHealth GetShipHealth()
+        public BaseModulesHealth GetBaseShipHealth()
         {
-            ShipModuleHealth shipModuleHealth = new ShipModuleHealth();
-            shipModuleHealth.HullHealth=m_HullSystem.GetSystemHealth();
-            shipModuleHealth.EngineHealth=m_EngineSystem.GetSystemHealth();
-            shipModuleHealth.WeaponHealth=m_WeaponSystem.GetSystemHealth();
-            shipModuleHealth.StorageHealth=m_StorageSystem.GetSystemHealth();
-            shipModuleHealth.AIHealth=m_AISystem.GetSystemHealth();
-            foreach(var module in m_Systems)
-            {
-                shipModuleHealth.FullHealth += module.GetModule().GetBaseHealth();
-            }
+            BaseModulesHealth shipModuleHealth = new BaseModulesHealth();
+            shipModuleHealth.BaseHullHealth=m_HullSystem.GetModule().GetBaseHealth();
+            shipModuleHealth.BaseEngineHealth=m_EngineSystem.GetModule().GetBaseHealth();
+            shipModuleHealth.BaseWeaponHealth=m_WeaponSystem.GetModule().GetBaseHealth();
+            shipModuleHealth.BaseStorageHealth=m_StorageSystem.GetModule().GetBaseHealth();
+            shipModuleHealth.BaseAIHealth=m_AISystem.GetModule().GetBaseHealth();
+            return shipModuleHealth;
+        }
+
+        public CurrentModulesHealth GetCurrentShipHealth()
+        {
+            CurrentModulesHealth shipModuleHealth = new CurrentModulesHealth();
+            shipModuleHealth.HullHealth = m_HullSystem.GetSystemHealth();
+            shipModuleHealth.EngineHealth = m_EngineSystem.GetSystemHealth();
+            shipModuleHealth.WeaponHealth = m_WeaponSystem.GetSystemHealth();
+            shipModuleHealth.StorageHealth = m_StorageSystem.GetSystemHealth();
+            shipModuleHealth.AIHealth = m_AISystem.GetSystemHealth();
             return shipModuleHealth;
         }
 
@@ -88,13 +96,13 @@ namespace ShipBase
         {
             Debug.Log("Take Damage " + damage);
             DistributeDamageByModules(damage);
-            Event_HealthUpdate?.Invoke(GetShipHealth());
+            Event_CurrentHealthUpdate?.Invoke(GetCurrentShipHealth());
         }
 
         public void TakeDamage(float damage, string damageType)
         {
             DistributeDamageByModules(damage);
-            Event_HealthUpdate?.Invoke(GetShipHealth());
+            Event_CurrentHealthUpdate?.Invoke(GetCurrentShipHealth());
         }
 
 
@@ -151,9 +159,17 @@ namespace ShipBase
 
     namespace Containers
     {
-        public struct ShipModuleHealth
+        public struct BaseModulesHealth
         {
-            public float FullHealth;
+            public float BaseHullHealth;
+            public float BaseEngineHealth;
+            public float BaseWeaponHealth;
+            public float BaseStorageHealth;
+            public float BaseAIHealth;
+        }
+
+        public struct CurrentModulesHealth
+        {
             public float HullHealth;
             public float EngineHealth;
             public float WeaponHealth;

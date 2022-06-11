@@ -7,7 +7,7 @@ namespace ShipBase
     {
         public void Initialization(ShipModules modules);
 
-        public ShipModuleHealth GetShipHealth();
+        public BaseModulesHealth GetBaseShipHealth();
 
         public Dictionary<string, float> GetSystemInfo(SystemType system);
     }

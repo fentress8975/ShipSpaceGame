@@ -9,7 +9,7 @@ public class UI_HealthIndicator : MonoBehaviour
     [SerializeField]
     private List<GameObject> m_HealthBlocks = new List<GameObject>(4);
     [SerializeField]
-    private float m_fBaseHealth;
+    private float m_fHullHealth;
     [SerializeField]
     private float m_fHealth;
     private float m_fPercent;
@@ -25,25 +25,22 @@ public class UI_HealthIndicator : MonoBehaviour
         Empty
     }
 
-    public void Initialization(ShipModuleHealth shipHealth)
+    public void Initialization(BaseModulesHealth baseShipHealth, CurrentModulesHealth currentShipHealth)
     {
-        m_fBaseHealth = shipHealth.FullHealth;
-        m_fHealth = shipHealth.WeaponHealth + shipHealth.AIHealth + shipHealth.HullHealth + shipHealth.StorageHealth + shipHealth.EngineHealth;
+        m_fHullHealth = baseShipHealth.BaseHullHealth;
+        m_fHealth = currentShipHealth.HullHealth;
     }
 
-    public void UpdateInformation(ShipModuleHealth shipHealth)
+    public void UpdateBaseHealth(BaseModulesHealth shipHealth)
     {
-        m_fBaseHealth = shipHealth.FullHealth;
-        m_fHealth = shipHealth.WeaponHealth + shipHealth.AIHealth + shipHealth.HullHealth + shipHealth.StorageHealth + shipHealth.EngineHealth;
+        m_fHullHealth = shipHealth.BaseHullHealth;
     }
 
-
-    private void UpdateHealth(ShipModuleHealth shipHealth)
+    public void UpdateCurrentHealth(CurrentModulesHealth currentShipHealth)
     {
-        m_fBaseHealth = shipHealth.FullHealth;
-        m_fHealth = shipHealth.WeaponHealth + shipHealth.AIHealth + shipHealth.HullHealth + shipHealth.StorageHealth + shipHealth.EngineHealth;
-        StateCalculation();
+        m_fHealth = currentShipHealth.HullHealth;
     }
+
 
     private void StateCalculation()
     {
@@ -53,12 +50,12 @@ public class UI_HealthIndicator : MonoBehaviour
             m_HealthState = HealthState.Empty;
             m_fPercent = 0;
         }
-        if (m_fBaseHealth == 0)
+        if (m_fHullHealth == 0)
         {
             Debug.LogError("Базовое здоровье не может быть равно 0");
             return;
         }
-        m_fPercent = m_fHealth / m_fBaseHealth;
+        m_fPercent = m_fHealth / m_fHullHealth;
         if (m_fPercent >= 0.8f)
         {
             m_HealthState = HealthState.Full;

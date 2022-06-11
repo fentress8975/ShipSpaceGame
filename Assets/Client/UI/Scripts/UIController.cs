@@ -10,14 +10,14 @@ public class UIController : MonoBehaviour
     private UI_HealthIndicator m_HealthIndicator;
     private UI_WeaponIndicator m_WeaponIndicator;
 
-    public void Ininitialization(ShipModuleHealth shipHealth, bool stabilization, string weaponName)
+    public void Ininitialization(BaseModulesHealth baseShipHealth, CurrentModulesHealth currentShipHealth, bool stabilization, string weaponName)
     {
         m_EngineIndicator = GetComponentInChildren<UI_EngineIndicator>();
         m_HealthIndicator = GetComponentInChildren<UI_HealthIndicator>();
         m_WeaponIndicator = GetComponentInChildren<UI_WeaponIndicator>();
 
         m_EngineIndicator.Initialization(stabilization);
-        m_HealthIndicator.Initialization(shipHealth);   
+        m_HealthIndicator.Initialization(baseShipHealth,currentShipHealth);   
         m_WeaponIndicator.Initialization(weaponName);
     }
 
@@ -27,9 +27,14 @@ public class UIController : MonoBehaviour
         m_EngineIndicator.UpdateInformation(stabilazed);
     }
 
-    public void HealthUpdate(ShipModuleHealth health)
+    public void CurrentHealthUpdate(CurrentModulesHealth currentShipHealth)
     {
-        m_HealthIndicator.UpdateInformation(health);
+        m_HealthIndicator.UpdateCurrentHealth(currentShipHealth);
+    }
+
+    public void BaseHealthUpdate(BaseModulesHealth baseShipHealth)
+    {
+        m_HealthIndicator.UpdateBaseHealth(baseShipHealth);
     }
 
     public void WeaponUpdate(string weaponName)
