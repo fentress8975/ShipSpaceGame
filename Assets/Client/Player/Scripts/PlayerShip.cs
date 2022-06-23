@@ -57,6 +57,7 @@ public class PlayerShip : MonoBehaviour
 
         FollowTheObject followTheObject = Camera.main.GetComponent<FollowTheObject>();
         followTheObject.Initialization(m_Ship.gameObject, new Vector3(0, 6, -3));
+
     }
 
     private void UIBaseHealthUpdater(BaseModulesHealth shipHealth)
