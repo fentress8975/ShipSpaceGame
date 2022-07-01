@@ -7,7 +7,7 @@ namespace AI
 {
     namespace Enemy
     {
-        public class EnemyShip : MonoBehaviour
+        public class EnemyController : MonoBehaviour
         {
 
         }

@@ -1,22 +1,24 @@
 using AI.Enemy;
+using ShipBase;
 using System.Collections;
 using System.Collections.Generic;
-
+using UnityEngine;
 
 namespace AI
 {
     public class EngageState : EnemyBaseState
     {
-        public EngageState(EnemyShip enemyShip) : base(enemyShip)
-        {
-        }
-
-        public override void Attack()
+        public override void Attack(Ship target)
         {
             throw new System.NotImplementedException();
         }
 
-        public override void Chase()
+        public override void Begin()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Chase(Ship target)
         {
             throw new System.NotImplementedException();
         }
@@ -26,17 +28,17 @@ namespace AI
             throw new System.NotImplementedException();
         }
 
-        public override void Patrol()
+        public override void Patrol(List<Vector3> route)
         {
             throw new System.NotImplementedException();
         }
 
-        public override void Retreat()
+        public override void Retreat(Ship danger)
         {
             throw new System.NotImplementedException();
         }
 
-        public override void Search()
+        public override void Search(Vector3 lastKnowPosition)
         {
             throw new System.NotImplementedException();
         }
@@ -46,14 +48,24 @@ namespace AI
             throw new System.NotImplementedException();
         }
 
-        public override void Start()
+        public override void Stop()
         {
             throw new System.NotImplementedException();
         }
 
-        public override void Stop()
+        private void Fire()
         {
-            throw new System.NotImplementedException();
+
+        }
+
+        private void MoveVector()
+        {
+
+        }
+
+        private void RotateVector(Vector3 rot)
+        {
+            OnRotationChanged(new RotationEventArgs(rot));
         }
     }
 }
