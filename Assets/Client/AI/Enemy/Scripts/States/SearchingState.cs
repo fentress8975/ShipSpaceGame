@@ -13,7 +13,7 @@ namespace AI
             throw new System.NotImplementedException();
         }
 
-        public override void Begin()
+        public override void Begin(Ship target)
         {
             throw new System.NotImplementedException();
         }

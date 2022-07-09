@@ -19,36 +19,53 @@ namespace AI
 
     public class MovementEventArgs : EventArgs
     {
-        public MovementEventArgs(Vector2 movement, bool Moving)
+        public MovementEventArgs(Vector2 movement, bool moving)
         {
             Movement = movement;
-            isMoving = Moving;
+            isMoving = moving;
         }
 
         public Vector3 Movement { get; }
         public bool isMoving { get; }
     }
 
+    public class FireEventArgs : EventArgs
+    {
+        public FireEventArgs(bool firing)
+        {
+            isFiring = firing;
+        }
+
+        public bool isFiring { get; }
+    }
+
     public abstract class EnemyBaseState : MonoBehaviour
     {
         public event EventHandler<RotationEventArgs> Event_RotationChanged;
         public event EventHandler<MovementEventArgs> Event_MovementChanged;
+        public event EventHandler<FireEventArgs> Event_FireChanged;
 
-        protected EnemyController m_Ship;
         protected Ship m_TargetShip;
+        protected IStateSwitcher m_ISwitcher;
 
 
-        public void Initialization(EnemyController Ship)
+        public void Initialization(IStateSwitcher switcher)
         {
-            m_Ship = Ship;
-
+            m_ISwitcher = switcher;
         }
 
-        public abstract void Stop();
+        public virtual void Stop()
+        {
+            m_TargetShip = null;
+        }
 
-        public abstract void Begin();
-
-
+        public virtual void Begin(Ship target)
+        {
+            if (target != null)
+            {
+                m_TargetShip = target;
+            }
+        }
 
         public abstract void Attack(Ship target);
 
@@ -76,6 +93,21 @@ namespace AI
             Event_MovementChanged?.Invoke(this, e);
         }
 
-       
+        protected virtual void GetSpeedVector()
+        {
+            Vector3 direction = m_TargetShip.transform.position - gameObject.transform.position;
+            direction.Normalize();
+            Event_MovementChanged?.Invoke(this, new MovementEventArgs(direction, true));
+        }
+
+        protected virtual void GetRotationVector()
+        {
+            Event_RotationChanged?.Invoke(this, new RotationEventArgs(m_TargetShip.transform.position));
+        }
+
+        protected virtual void Fire(bool isFiring)
+        {
+            Event_FireChanged?.Invoke(this, new FireEventArgs(isFiring));
+        }
     }
 }

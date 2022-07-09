@@ -41,6 +41,7 @@ public class RotationHandler : MonoBehaviour
         m_MainCamera = Camera.main;
         m_Rotation = new GameObject("Ship Rotation");
         m_Rotation.transform.parent = ship.transform;
+        m_Rotation.transform.localPosition = Vector3.zero;
     }
 
     private void EngineChange(float rotationVel)
@@ -71,7 +72,7 @@ public class RotationHandler : MonoBehaviour
         {
             position += (direction * distance);
             m_LockAt = position;
-            m_LockAt.y = 0f;
+            m_LockAt.y = 0;
         }
     }
 

@@ -7,6 +7,9 @@ namespace AI
 {
     public class TargetScaner : MonoBehaviour
     {
+        public delegate void ScanerHandler(Ship target);
+        public event ScanerHandler Event_TargetChanged;
+
         private Ship m_Target;
         [SerializeField]
         private List<Ship> m_ListTargets;
@@ -35,7 +38,7 @@ namespace AI
 
         private void Update()
         {
-            // CheckTargetStatus();
+
         }
 
         private void CheckTargetStatus()
@@ -57,12 +60,20 @@ namespace AI
 
         private void ChooseNewTarget()
         {
-            foreach (var ship in m_ListTargets)
+            if (m_ListTargets.Count == 0)
             {
-                if (isTargetAlive(ship))
+                m_Target = null;
+            }
+            else
+            {
+                foreach (var ship in m_ListTargets)
                 {
-                    m_Target = ship;
-                    return;
+                    if (isTargetAlive(ship))
+                    {
+                        m_Target = ship;
+                        Event_TargetChanged?.Invoke(ship);
+                        return;
+                    }
                 }
             }
         }
@@ -72,6 +83,7 @@ namespace AI
             if (collider.gameObject.TryGetComponent<Ship>(out Ship target))
             {
                 m_ListTargets.Add(target);
+                ChooseNewTarget();
             }
         }
 
@@ -80,6 +92,7 @@ namespace AI
             if (collider.gameObject.TryGetComponent<Ship>(out Ship target))
             {
                 m_ListTargets.Remove(target);
+                ChooseNewTarget();
             }
         }
 

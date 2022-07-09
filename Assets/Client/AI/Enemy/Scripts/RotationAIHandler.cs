@@ -10,7 +10,7 @@ namespace AI
     public class RotationAIHandler : MonoBehaviour
     {
         private Plane m_GamePlane;
-        private Vector3 m_LockAt;
+        private Vector3 m_LockAt = Vector3.zero;
 
         private Camera m_MainCamera;
 
@@ -34,22 +34,28 @@ namespace AI
 
         public void Initialization(Ship ship, EnemyBehavior behavior)
         {
-            m_Rigidbody = ship.GetComponent<Rigidbody>();
+            m_Rigidbody = ship.rigidBody;
             engineSystem = (EngineSystem)ship.GetSystem(SystemType.Engine);
             m_fRotationVelocity = engineSystem.GetEngineRotationSpeed();
             engineSystem.Event_EnginePowerUpdate.AddListener(EngineChange);
 
-            behavior.Event_RotationChanged += RotationCalculator;
+            Subscribe(behavior);
 
             m_GamePlane = new Plane(transform.up, Vector3.zero);
             m_MainCamera = Camera.main;
             m_Rotation = new GameObject("Ship Rotation");
             m_Rotation.transform.parent = ship.transform;
+            m_Rotation.transform.localPosition = Vector3.zero;
         }
 
         public void UnSubscribe(EnemyBehavior target)
         {
             target.Event_RotationChanged -= RotationCalculator;
+        }
+
+        public void Subscribe(EnemyBehavior target)
+        {
+            target.Event_RotationChanged += RotationCalculator;
         }
 
         private void EngineChange(float rotationVel)
@@ -65,24 +71,20 @@ namespace AI
 
         private void RotationCalculator(Vector3 x)
         {
-            GetTargetDirection(x);
-            m_Rotation.transform.LookAt(m_LockAt);
-            m_RotationDirection = GetTurningDirection();
-            SpeedDampingCalculation();
+            if (x != m_LockAt)
+            {
+                GetTargetPosition(x);
+                m_Rotation.transform.LookAt(m_LockAt);
+                m_RotationDirection = GetTurningDirection();
+                SpeedDampingCalculation();
+            }
         }
 
 
-        private void GetTargetDirection(Vector3 x)
+        private void GetTargetPosition(Vector3 x)
         {
-            Vector3 position = m_MainCamera.ScreenToWorldPoint(x);
-            Vector3 direction = m_MainCamera.transform.forward;
-            Ray ray = new Ray(position, direction);
-            if (m_GamePlane.Raycast(ray, out float distance))
-            {
-                position += (direction * distance);
-                m_LockAt = position;
-                m_LockAt.y = 0f;
-            }
+            m_LockAt = x;
+            m_LockAt.y = 0;
         }
 
         private void Rotate()
@@ -122,6 +124,7 @@ namespace AI
 
         private void FixedUpdate()
         {
+            RotationCalculator(m_LockAt);
             Rotate();
         }
 

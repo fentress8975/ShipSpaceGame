@@ -25,12 +25,17 @@ namespace AI
 
         public void Initialization(Ship ship, EnemyBehavior behavior)
         {
-            behavior.Event_MovementChanged += Movement;
+            Subscribe(behavior);
 
-            m_Rigidbody = ship.GetComponent<Rigidbody>();
+            m_Rigidbody = ship.rigidBody;
             engineSystem = (EngineSystem)ship.GetSystem(SystemType.Engine);
             m_fAccelerationPower = engineSystem.GetEnginePower();
             engineSystem.Event_EnginePowerUpdate.AddListener(EngineChange);
+        }
+
+        public void Subscribe(EnemyBehavior target)
+        {
+            target.Event_MovementChanged += Movement;
         }
 
         public void UnSubscribe(EnemyBehavior target)

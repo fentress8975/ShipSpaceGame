@@ -8,4 +8,5 @@ public class TestInitModules : MonoBehaviour
     public ShipStorageSO m_StorageSO;
     public ShipAISO m_AISO;
 
+    
 }

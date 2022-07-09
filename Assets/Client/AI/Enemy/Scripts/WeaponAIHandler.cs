@@ -1,4 +1,5 @@
-﻿using ShipBase;
+﻿using AI.Enemy;
+using ShipBase;
 using ShipSystem;
 using System;
 using UnityEngine;
@@ -12,15 +13,16 @@ namespace AI
         private bool m_bIsFiring = false;
 
 
-        public void Initialization(Ship ship)
+        public void Initialization(Ship ship, EnemyBehavior behavior)
         {
-            InputsControl.instance.Event_WeaponUse.AddListener(FireWeapon);
+            Subscribe(behavior);
+
             m_WeaponSystem = ship.GetComponent<WeaponsSystem>();
         }
 
         private void FireWeapon(bool isFiring)
         {
-            //m_bIsFiring = isFiring;
+            m_bIsFiring = isFiring; // Пусть будет
             if (isFiring)
             {
                 m_WeaponSystem.EnableWeapon();
@@ -31,9 +33,19 @@ namespace AI
             }
         }
 
+        public void Subscribe(EnemyBehavior target)
+        {
+            target.Event_FireChanged += FireWeapon;
+        }
+
+        public void UnSubscribe(EnemyBehavior target)
+        {
+            target.Event_FireChanged -= FireWeapon;
+        }
+
         private void OnDestroy()
         {
-            InputsControl.instance.Event_WeaponUse.RemoveListener(FireWeapon);
+            
         }
     }
 }

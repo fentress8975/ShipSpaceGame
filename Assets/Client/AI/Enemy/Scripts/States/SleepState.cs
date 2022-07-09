@@ -10,10 +10,10 @@ namespace AI
     {
         public override void Attack(Ship target)
         {
-            throw new System.NotImplementedException();
+            m_ISwitcher.StateSwitcher<EngageState>();
         }
 
-        public override void Begin()
+        public override void Begin(Ship target)
         {
             throw new System.NotImplementedException();
         }

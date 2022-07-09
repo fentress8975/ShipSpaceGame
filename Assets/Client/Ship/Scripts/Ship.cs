@@ -20,6 +20,8 @@ namespace ShipBase
     {
         public UnityEvent<BaseModulesHealth> Event_BaseHealthUpdate;
         public UnityEvent<CurrentModulesHealth> Event_CurrentHealthUpdate;
+        public UnityEvent<bool> Event_DeathStatusUpdate;
+
 
         [SerializeField]
         private HullSystem m_HullSystem;

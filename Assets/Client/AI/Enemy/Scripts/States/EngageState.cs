@@ -13,7 +13,7 @@ namespace AI
             throw new System.NotImplementedException();
         }
 
-        public override void Begin()
+        public override void Begin(Ship target)
         {
             throw new System.NotImplementedException();
         }
@@ -53,19 +53,7 @@ namespace AI
             throw new System.NotImplementedException();
         }
 
-        private void Fire()
-        {
+        
 
-        }
-
-        private void MoveVector()
-        {
-
-        }
-
-        private void RotateVector(Vector3 rot)
-        {
-            OnRotationChanged(new RotationEventArgs(rot));
-        }
     }
 }
