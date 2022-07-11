@@ -39,7 +39,7 @@ public class PlayerShip : MonoBehaviour
         m_WeaponHandler = GetComponent<WeaponHandler>();
 
         m_Ship = GetComponentInChildren<Ship>();
-        m_Ship.Initialization(test);
+        m_Ship.Initialization(test, Faction.Side.BLUFOR);
 
         m_Ship.Event_BaseHealthUpdate.AddListener(UIBaseHealthUpdater);
         m_Ship.Event_CurrentHealthUpdate.AddListener(UICurrentHealthUpdater);

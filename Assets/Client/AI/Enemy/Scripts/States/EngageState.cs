@@ -10,13 +10,12 @@ namespace AI
     {
         public override void Attack(Ship target)
         {
-            throw new System.NotImplementedException();
+            if (target != null)
+            {
+                m_TargetShip = target;
+            }          
         }
 
-        public override void Begin(Ship target)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public override void Chase(Ship target)
         {
@@ -40,7 +39,7 @@ namespace AI
 
         public override void Search(Vector3 lastKnowPosition)
         {
-            throw new System.NotImplementedException();
+            m_ISwitcher.StateSwitcher<SearchingState>();
         }
 
         public override void Sleep()
@@ -48,12 +47,15 @@ namespace AI
             throw new System.NotImplementedException();
         }
 
-        public override void Stop()
+
+        private void Update()
         {
-            throw new System.NotImplementedException();
+            if (m_TargetShip != null)
+            {
+                GetSpeedVector(m_TargetShip.transform.position, true);
+                GetRotationVector(m_TargetShip.transform.position);
+            }
+            
         }
-
-        
-
     }
 }

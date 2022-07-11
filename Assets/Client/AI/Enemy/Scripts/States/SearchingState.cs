@@ -10,12 +10,7 @@ namespace AI
     {
         public override void Attack(Ship target)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Begin(Ship target)
-        {
-            throw new System.NotImplementedException();
+            m_ISwitcher.StateSwitcher<EngageState>();
         }
 
         public override void Chase(Ship target)
@@ -40,7 +35,7 @@ namespace AI
 
         public override void Search(Vector3 lastKnowPosition)
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Start Searching!");
         }
 
         public override void Sleep()
@@ -48,9 +43,5 @@ namespace AI
             throw new System.NotImplementedException();
         }
 
-        public override void Stop()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

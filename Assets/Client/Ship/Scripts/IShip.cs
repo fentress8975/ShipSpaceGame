@@ -5,7 +5,7 @@ namespace ShipBase
 {
     public interface IShip : IDamageable
     {
-        public void Initialization(ShipModules modules);
+        public void Initialization(ShipModules modules, Faction.Side side);
 
         public BaseModulesHealth GetBaseShipHealth();
 

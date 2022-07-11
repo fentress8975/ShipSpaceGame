@@ -47,11 +47,11 @@ namespace AI
                                        TestInitModules.m_StorageSO,
                                        TestInitModules.m_AISO);
 
-                m_Ship.Initialization(test);
+                m_Ship.Initialization(test, Faction.Side.REDFOR);
                 m_MovementHandler.Initialization(m_Ship, m_Behavior);
                 m_RotationHandler.Initialization(m_Ship, m_Behavior);
                 m_WeaponHandler.Initialization(m_Ship, m_Behavior);
-                m_TargetScaner.Initialization();
+                m_TargetScaner.Initialization(m_Ship, m_Ship.m_Faction.m_Side);
                 m_Behavior.Initialization(m_TargetScaner, m_MovementHandler, m_RotationHandler, m_WeaponHandler);
             }
         }

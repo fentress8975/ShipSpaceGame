@@ -1,9 +1,8 @@
-﻿using ShipBase;
+﻿using AI.Enemy;
+using ShipBase;
 using ShipBase.Containers;
 using ShipSystem;
 using UnityEngine;
-using AI.Enemy;
-using System.Collections.Generic;
 
 namespace AI
 {
@@ -15,7 +14,7 @@ namespace AI
         private Camera m_MainCamera;
 
         private Rigidbody m_Rigidbody;
-        EngineSystem engineSystem;
+        private EngineSystem engineSystem;
 
         [SerializeField]
         private float m_fRotationVelocity;
@@ -23,7 +22,7 @@ namespace AI
         private RotationDirection m_RotationDirection;
         private GameObject m_Rotation;
 
-        
+
 
         private enum RotationDirection
         {
@@ -65,19 +64,16 @@ namespace AI
 
         private void OnDestroy()
         {
-            
+
             engineSystem.Event_EnginePowerUpdate.RemoveListener(EngineChange);
         }
 
         private void RotationCalculator(Vector3 x)
         {
-            if (x != m_LockAt)
-            {
-                GetTargetPosition(x);
-                m_Rotation.transform.LookAt(m_LockAt);
-                m_RotationDirection = GetTurningDirection();
-                SpeedDampingCalculation();
-            }
+            GetTargetPosition(x);
+            m_Rotation.transform.LookAt(m_LockAt);
+            m_RotationDirection = GetTurningDirection();
+            SpeedDampingCalculation();
         }
 
 

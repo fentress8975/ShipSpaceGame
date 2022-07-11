@@ -34,13 +34,15 @@ namespace ShipBase
         [SerializeField]
         private AISystem m_AISystem;
 
+        public Faction m_Faction { get; private set; }
+
         private ShipSounds m_SoundSystem;
         public Rigidbody rigidBody { get; private set; }
 
         private List<IShipSystem> m_Systems = new List<IShipSystem>();
 
 
-        public void Initialization(ShipModules modules)
+        public void Initialization(ShipModules modules, Faction.Side side)
         {
             m_HullSystem = GetComponent<HullSystem>();
             m_EngineSystem = GetComponent<EngineSystem>();
@@ -49,6 +51,8 @@ namespace ShipBase
             m_AISystem = GetComponent<AISystem>();
 
             m_SoundSystem = GetComponent<ShipSounds>();
+
+            m_Faction = new Faction(side);
 
             rigidBody = GetComponent<Rigidbody>();
             rigidBody.centerOfMass = Vector3.zero;

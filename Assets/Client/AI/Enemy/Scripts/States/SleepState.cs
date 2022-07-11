@@ -13,10 +13,6 @@ namespace AI
             m_ISwitcher.StateSwitcher<EngageState>();
         }
 
-        public override void Begin(Ship target)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public override void Chase(Ship target)
         {
@@ -48,9 +44,5 @@ namespace AI
             throw new System.NotImplementedException();
         }
 
-        public override void Stop()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

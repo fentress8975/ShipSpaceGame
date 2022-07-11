@@ -1,4 +1,3 @@
-using AI.Enemy;
 using ShipBase;
 using System;
 using System.Collections.Generic;
@@ -56,7 +55,9 @@ namespace AI
 
         public virtual void Stop()
         {
+            Debug.Log("Stop State");
             m_TargetShip = null;
+            StopMovement();
         }
 
         public virtual void Begin(Ship target)
@@ -93,16 +94,29 @@ namespace AI
             Event_MovementChanged?.Invoke(this, e);
         }
 
-        protected virtual void GetSpeedVector()
+        protected virtual void GetSpeedVector(Vector3 position, bool isMoving)
         {
-            Vector3 direction = m_TargetShip.transform.position - gameObject.transform.position;
-            direction.Normalize();
-            Event_MovementChanged?.Invoke(this, new MovementEventArgs(direction, true));
+            if (isMoving)
+            {
+                Vector3 direction = position - gameObject.transform.position;
+                direction.Normalize();
+                Debug.Log(direction);
+                Event_MovementChanged?.Invoke(this, new MovementEventArgs(direction, isMoving));
+            }
+            else
+            {
+                Event_MovementChanged?.Invoke(this, new MovementEventArgs(Vector3.zero, isMoving));
+            }
         }
 
-        protected virtual void GetRotationVector()
+        protected virtual void GetRotationVector(Vector3 position)
         {
-            Event_RotationChanged?.Invoke(this, new RotationEventArgs(m_TargetShip.transform.position));
+            Event_RotationChanged?.Invoke(this, new RotationEventArgs(position));
+        }
+
+        private void StopMovement()
+        {
+            Event_MovementChanged?.Invoke(this, new MovementEventArgs(Vector3.zero, false));
         }
 
         protected virtual void Fire(bool isFiring)

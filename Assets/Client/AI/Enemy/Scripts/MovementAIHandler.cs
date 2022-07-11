@@ -54,17 +54,21 @@ namespace AI
             Event_StabilazionChanged?.Invoke(m_bStabilization);
         }
 
-        public void Movement(Vector2 axis, bool isMoving)
+        //public void Movement(Vector2 axis, bool isMoving)
+        //{
+        //    m_bIsMoving = isMoving;
+        //    m_MovingDirection = new Vector3(axis.x, 0, axis.y);
+        //}
+
+        public void Movement(Vector3 axis, bool isMoving)
         {
             m_bIsMoving = isMoving;
-            m_MovingDirection = new Vector3(axis.x, 0, axis.y);
+            m_MovingDirection = axis;
         }
 
 
         private void OnDestroy()
         {
-            InputsControl.instance.Event_Movement.RemoveListener(Movement);
-            InputsControl.instance.Event_EngineStabilizationChange.RemoveListener(ChangeStabilazion);
             engineSystem.Event_EnginePowerUpdate.RemoveListener(EngineChange);
         }
 

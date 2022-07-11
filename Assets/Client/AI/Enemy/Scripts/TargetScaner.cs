@@ -17,24 +17,30 @@ namespace AI
         private GameObject m_Sphere;
         private SphereDetection m_SphereDetection;
 
+        private Faction m_Faction;
 
-        public void Initialization()
+
+        public void Initialization(Ship ship, Faction.Side side)
         {
             m_ListTargets = new List<Ship>();
-            m_Sphere = Instantiate(m_Sphere);
-            m_SphereDetection = m_Sphere.GetComponent<SphereDetection>();
-            m_SphereDetection.Initialization();
-        }
-
-        private void Start()
-        {
-            m_ListTargets = new List<Ship>();
-            m_Sphere = Instantiate(m_Sphere, gameObject.transform);
+            m_Sphere = Instantiate(m_Sphere, ship.transform);
             m_SphereDetection = m_Sphere.GetComponent<SphereDetection>();
             m_SphereDetection.Initialization();
             m_SphereDetection.Event_ColliderEnter.AddListener(AddTarget);
             m_SphereDetection.Event_ColliderExit.AddListener(RemoveTarget);
+
+            m_Faction = new Faction(side);
         }
+
+        //private void Start()
+        //{
+        //    m_ListTargets = new List<Ship>();
+        //    m_Sphere = Instantiate(m_Sphere, gameObject.transform);
+        //    m_SphereDetection = m_Sphere.GetComponent<SphereDetection>();
+        //    m_SphereDetection.Initialization();
+        //    m_SphereDetection.Event_ColliderEnter.AddListener(AddTarget);
+        //    m_SphereDetection.Event_ColliderExit.AddListener(RemoveTarget);
+        //}
 
         private void Update()
         {
@@ -55,7 +61,7 @@ namespace AI
 
         private bool isTargetAlive(Ship ship)
         {
-            return m_Target.GetCurrentShipHealth().HullHealth >= 0 ? true : false;
+            return ship.GetCurrentShipHealth().HullHealth >= 0 ? true : false;
         }
 
         private void ChooseNewTarget()
@@ -63,6 +69,7 @@ namespace AI
             if (m_ListTargets.Count == 0)
             {
                 m_Target = null;
+                Event_TargetChanged?.Invoke(m_Target);
             }
             else
             {
@@ -82,8 +89,11 @@ namespace AI
         {
             if (collider.gameObject.TryGetComponent<Ship>(out Ship target))
             {
-                m_ListTargets.Add(target);
-                ChooseNewTarget();
+                if (target.m_Faction.m_Side != m_Faction.m_Side && !m_ListTargets.Contains(target))  //почему коллайдер 2 раза прокается?
+                {
+                    m_ListTargets.Add(target);
+                    ChooseNewTarget();
+                }
             }
         }
 
@@ -91,8 +101,11 @@ namespace AI
         {
             if (collider.gameObject.TryGetComponent<Ship>(out Ship target))
             {
-                m_ListTargets.Remove(target);
-                ChooseNewTarget();
+                if (target.m_Faction != m_Faction)
+                {
+                    m_ListTargets.Remove(target);
+                    ChooseNewTarget();
+                }
             }
         }
 

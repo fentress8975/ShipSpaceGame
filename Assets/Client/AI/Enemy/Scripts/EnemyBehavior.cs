@@ -12,7 +12,7 @@ namespace AI
         public class EnemyBehavior : MonoBehaviour, IStateSwitcher
         {
             public delegate void RotationHandler(Vector3 rotation);
-            public delegate void MovementHandler(Vector2 movement, bool isMoving);
+            public delegate void MovementHandler(Vector3 movement, bool isMoving);
             public delegate void FireHandler(bool isFiring);
             public event RotationHandler Event_RotationChanged;
             public event MovementHandler Event_MovementChanged;
@@ -147,7 +147,7 @@ namespace AI
 
             private void GetTarget(Ship target)
             {
-                if(target == null)
+                if (target == null && m_Target != null)
                 {
                     m_CurrentState.Search(m_Target.transform.position);
                     m_Target = null;
@@ -168,6 +168,7 @@ namespace AI
                 {
                     m_CurrentState.Patrol(m_Route);
                 }
+                
             }
 
             private void OnDestroy()

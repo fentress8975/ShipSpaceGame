@@ -17,7 +17,7 @@ namespace AI
         }
 
 
-        
+
 
         private void OnTriggerEnter(Collider other)
         {
@@ -28,5 +28,6 @@ namespace AI
         {
             Event_ColliderExit?.Invoke(other);
         }
+
     }
 }
