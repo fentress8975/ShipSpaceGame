@@ -33,7 +33,7 @@ namespace AI
 
         public void Initialization(Ship ship, EnemyBehavior behavior)
         {
-            m_Rigidbody = ship.rigidBody;
+            m_Rigidbody = ship.m_RigidBody;
             engineSystem = (EngineSystem)ship.GetSystem(SystemType.Engine);
             m_fRotationVelocity = engineSystem.GetEngineRotationSpeed();
             engineSystem.Event_EnginePowerUpdate.AddListener(EngineChange);

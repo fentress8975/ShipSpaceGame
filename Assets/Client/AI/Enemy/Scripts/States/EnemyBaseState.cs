@@ -10,21 +10,21 @@ namespace AI
 
         public RotationEventArgs(Vector3 rotation)
         {
-            Rotation = rotation;
+            targetRotation = rotation;
         }
 
-        public Vector3 Rotation { get; }
+        public Vector3 targetRotation { get; }
     }
 
     public class MovementEventArgs : EventArgs
     {
-        public MovementEventArgs(Vector2 movement, bool moving)
+        public MovementEventArgs(Vector3 movement, bool moving)
         {
-            Movement = movement;
+            targetPosition = movement;
             isMoving = moving;
         }
 
-        public Vector3 Movement { get; }
+        public Vector3 targetPosition { get; }
         public bool isMoving { get; }
     }
 
@@ -94,14 +94,11 @@ namespace AI
             Event_MovementChanged?.Invoke(this, e);
         }
 
-        protected virtual void GetSpeedVector(Vector3 position, bool isMoving)
+        protected virtual void SendTargetPosition(Vector3 positionTarget, bool isMoving)
         {
             if (isMoving)
             {
-                Vector3 direction = position - gameObject.transform.position;
-                direction.Normalize();
-                Debug.Log(direction);
-                Event_MovementChanged?.Invoke(this, new MovementEventArgs(direction, isMoving));
+                Event_MovementChanged?.Invoke(this, new MovementEventArgs(positionTarget, isMoving));
             }
             else
             {
@@ -109,7 +106,7 @@ namespace AI
             }
         }
 
-        protected virtual void GetRotationVector(Vector3 position)
+        protected virtual void SendRotationPosition(Vector3 position)
         {
             Event_RotationChanged?.Invoke(this, new RotationEventArgs(position));
         }

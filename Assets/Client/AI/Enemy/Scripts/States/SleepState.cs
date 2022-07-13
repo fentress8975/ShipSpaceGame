@@ -16,7 +16,7 @@ namespace AI
 
         public override void Chase(Ship target)
         {
-            throw new System.NotImplementedException();
+            m_ISwitcher.StateSwitcher<ChaseState>();
         }
 
         public override void Die()

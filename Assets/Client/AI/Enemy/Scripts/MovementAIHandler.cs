@@ -19,7 +19,7 @@ namespace AI
         private bool m_bStabilization = true;
         EngineSystem engineSystem;
         private Rigidbody m_Rigidbody;
-        private Vector3 m_MovingDirection = Vector3.zero;
+        private Vector3 m_MovingDirection;
 
         UIController m_UIController;
 
@@ -27,7 +27,7 @@ namespace AI
         {
             Subscribe(behavior);
 
-            m_Rigidbody = ship.rigidBody;
+            m_Rigidbody = ship.m_RigidBody;
             engineSystem = (EngineSystem)ship.GetSystem(SystemType.Engine);
             m_fAccelerationPower = engineSystem.GetEnginePower();
             engineSystem.Event_EnginePowerUpdate.AddListener(EngineChange);
@@ -63,6 +63,7 @@ namespace AI
         public void Movement(Vector3 axis, bool isMoving)
         {
             m_bIsMoving = isMoving;
+            axis.y = 0;
             m_MovingDirection = axis;
         }
 

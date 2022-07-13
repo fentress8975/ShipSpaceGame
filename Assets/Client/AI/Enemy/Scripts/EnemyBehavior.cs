@@ -1,5 +1,4 @@
 using ShipBase;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -20,6 +19,7 @@ namespace AI
 
             private Ship m_Target;
 
+            private Ship m_Ship;
             private MovementAIHandler m_MovementHandler;
             private RotationAIHandler m_RotationHandler;
             private WeaponAIHandler m_WeaponHandler;
@@ -31,8 +31,9 @@ namespace AI
 
             private List<Vector3> m_Route = new List<Vector3>();
 
-            public void Initialization(TargetScaner targetScanner, MovementAIHandler movementHandler, RotationAIHandler rotationHandler, WeaponAIHandler weaponHandler)
+            public void Initialization(Ship ship, TargetScaner targetScanner, MovementAIHandler movementHandler, RotationAIHandler rotationHandler, WeaponAIHandler weaponHandler)
             {
+                m_Ship = ship;
                 m_MovementHandler = movementHandler;
                 m_RotationHandler = rotationHandler;
                 m_WeaponHandler = weaponHandler;
@@ -53,13 +54,10 @@ namespace AI
                 foreach (EnemyBaseState state in m_AllStates)
                 {
                     state.Initialization(this);
-                    state.gameObject.SetActive(false);
+                    state.enabled = false;
                 }
-                m_CurrentState = m_AllStates[0];
-                m_CurrentState.gameObject.SetActive(true);
 
-                m_CurrentState.Begin(m_Target);
-                Subscribe(m_CurrentState);
+                StateSwitcher<SleepState>();
             }
 
             public void UpdateRoute(List<Vector3> route)
@@ -70,50 +68,73 @@ namespace AI
             public void StateSwitcher<T>() where T : EnemyBaseState
             {
                 var state = m_AllStates.FirstOrDefault(s => s is T);
-
-                m_CurrentState.Stop();
-                UnSubscribe(state);
-                state.gameObject.SetActive(false);
+                if (m_CurrentState != null)
+                {
+                    m_CurrentState.Stop();
+                    UnSubscribe(state);
+                    m_CurrentState.enabled = false;
+                }
 
                 m_CurrentState = state;
-                state.gameObject.SetActive(true);
+                state.enabled = true;
                 m_CurrentState.Begin(m_Target);
                 Subscribe(state);
             }
 
             public void Sleep()
             {
-                m_CurrentState.Sleep();
+                if (m_CurrentState != m_AllStates[0])
+                {
+                    m_CurrentState.Sleep();
+                }
             }
 
             public void Patrol(List<Vector3> route)
             {
-                m_CurrentState.Patrol(route);
+                if (m_CurrentState != m_AllStates[1])
+                {
+                    m_CurrentState.Patrol(route);
+                }
             }
 
-            public void AttackTarget()
+            public void AttackTarget(Ship target)
             {
-                m_CurrentState.Attack(m_Target);
+                if (m_CurrentState != m_AllStates[2])
+                {
+                    m_CurrentState.Attack(m_Target);
+                }
             }
 
             public void SearchTarget(Vector3 lastKnowPosition)
             {
-                m_CurrentState.Search(lastKnowPosition);
+                if (m_CurrentState != m_AllStates[3])
+                {
+                    m_CurrentState.Search(lastKnowPosition);
+                }
             }
 
-            public void ChaseTarget()
+            public void ChaseTarget(Ship target)
             {
-                m_CurrentState.Chase(m_Target);
+                if (m_CurrentState != m_AllStates[4])
+                {
+                    m_CurrentState.Chase(m_Target);
+                }
             }
 
             public void Retreat()
             {
-                m_CurrentState.Retreat(m_Target);
+                if (m_CurrentState != m_AllStates[5])
+                {
+                    m_CurrentState.Retreat(m_Target);
+                }
             }
 
             public void Die()
             {
-                m_CurrentState.Die();
+                if (m_CurrentState != m_AllStates[6])
+                {
+                    m_CurrentState.Die();
+                }
             }
 
             private void Subscribe<T>(T state) where T : EnemyBaseState
@@ -132,12 +153,13 @@ namespace AI
 
             private void RotateShip(object sender, RotationEventArgs e)
             {
-                Event_RotationChanged?.Invoke(e.Rotation);
+                Event_RotationChanged?.Invoke(e.targetRotation);
             }
 
             private void MoveShip(object sender, MovementEventArgs e)
             {
-                Event_MovementChanged?.Invoke(e.Movement, e.isMoving);
+                Vector3 direction = e.targetPosition - m_Ship.transform.position;
+                Event_MovementChanged?.Invoke(direction, e.isMoving);
             }
 
             private void FireShip(object sender, FireEventArgs e)
@@ -149,7 +171,7 @@ namespace AI
             {
                 if (target == null && m_Target != null)
                 {
-                    m_CurrentState.Search(m_Target.transform.position);
+                    SearchTarget(m_Target.transform.position);
                     m_Target = null;
                 }
                 else
@@ -160,15 +182,32 @@ namespace AI
 
             private void Update()
             {
-                if(m_Target != null)
+                if (m_Target != null)
                 {
-                    m_CurrentState.Attack(m_Target);
+                    //Check Distance
+                    if (Mathf.Abs((m_Target.transform.position - m_Ship.transform.position).magnitude) <= 10)
+                    {
+                        AttackTarget(m_Target);
+                    }
+                    else if (Mathf.Abs((m_Target.transform.position - m_Ship.transform.position).magnitude) >= 10)
+                    {
+                        ChaseTarget(m_Target);
+                    }
                 }
-                else if (m_Route.Count > 1 && m_Route != null)
+
+                if (m_Target == null)
                 {
-                    m_CurrentState.Patrol(m_Route);
+                    if (m_Route.Count > 1 && m_Route != null)
+                    {
+                        Patrol(m_Route);
+                    }
+                    else
+                    {
+                        Sleep();
+                    }
+
                 }
-                
+
             }
 
             private void OnDestroy()

@@ -19,7 +19,7 @@ namespace AI
 
         public override void Chase(Ship target)
         {
-            throw new System.NotImplementedException();
+            m_ISwitcher.StateSwitcher<ChaseState>();
         }
 
         public override void Die()
@@ -44,7 +44,7 @@ namespace AI
 
         public override void Sleep()
         {
-            throw new System.NotImplementedException();
+            m_ISwitcher.StateSwitcher<SleepState>();
         }
 
 
@@ -52,8 +52,8 @@ namespace AI
         {
             if (m_TargetShip != null)
             {
-                GetSpeedVector(m_TargetShip.transform.position, true);
-                GetRotationVector(m_TargetShip.transform.position);
+                SendTargetPosition(m_TargetShip.transform.position, true);
+                SendRotationPosition(m_TargetShip.transform.position);
             }
             
         }

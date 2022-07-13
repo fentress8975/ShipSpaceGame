@@ -10,12 +10,7 @@ namespace AI
     {
         public override void Attack(Ship target)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Begin(Ship target)
-        {
-            throw new System.NotImplementedException();
+            m_ISwitcher.StateSwitcher<EngageState>();
         }
 
         public override void Chase(Ship target)
@@ -45,12 +40,13 @@ namespace AI
 
         public override void Sleep()
         {
-            throw new System.NotImplementedException();
+            m_ISwitcher.StateSwitcher<SleepState>();
         }
 
-        public override void Stop()
+        private void Update()
         {
-            throw new System.NotImplementedException();
+            SendTargetPosition(m_TargetShip.transform.position, true);
+            SendRotationPosition(m_TargetShip.transform.position);
         }
     }
 }

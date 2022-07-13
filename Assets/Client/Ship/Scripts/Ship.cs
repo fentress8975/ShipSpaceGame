@@ -37,7 +37,7 @@ namespace ShipBase
         public Faction m_Faction { get; private set; }
 
         private ShipSounds m_SoundSystem;
-        public Rigidbody rigidBody { get; private set; }
+        public Rigidbody m_RigidBody { get; private set; }
 
         private List<IShipSystem> m_Systems = new List<IShipSystem>();
 
@@ -54,8 +54,8 @@ namespace ShipBase
 
             m_Faction = new Faction(side);
 
-            rigidBody = GetComponent<Rigidbody>();
-            rigidBody.centerOfMass = Vector3.zero;
+            m_RigidBody = GetComponent<Rigidbody>();
+            m_RigidBody.centerOfMass = Vector3.zero;
             SystemsInitialization(modules);
 
             m_Systems.Add(m_HullSystem);
@@ -63,6 +63,8 @@ namespace ShipBase
             m_Systems.Add(m_WeaponSystem);
             m_Systems.Add(m_StorageSystem);
             m_Systems.Add(m_AISystem);
+
+            m_RigidBody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         }
 
         //Qustionable

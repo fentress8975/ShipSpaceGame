@@ -1,7 +1,5 @@
 using ShipBase;
 using ShipBase.Containers;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -52,7 +50,7 @@ namespace AI
                 m_RotationHandler.Initialization(m_Ship, m_Behavior);
                 m_WeaponHandler.Initialization(m_Ship, m_Behavior);
                 m_TargetScaner.Initialization(m_Ship, m_Ship.m_Faction.m_Side);
-                m_Behavior.Initialization(m_TargetScaner, m_MovementHandler, m_RotationHandler, m_WeaponHandler);
+                m_Behavior.Initialization(m_Ship, m_TargetScaner, m_MovementHandler, m_RotationHandler, m_WeaponHandler);
             }
         }
     }
