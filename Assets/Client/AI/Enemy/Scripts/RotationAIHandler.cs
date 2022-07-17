@@ -9,6 +9,7 @@ namespace AI
     public class RotationAIHandler : MonoBehaviour
     {
         private Plane m_GamePlane;
+        [SerializeField]
         private Vector3 m_LockAt = Vector3.zero;
 
         private Camera m_MainCamera;

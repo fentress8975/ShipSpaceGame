@@ -300,6 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09eae399165ba84eaa2421302364a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_LockAt: {x: 0, y: 0, z: 50}
   m_fRotationVelocity: 0
 --- !u!114 &120768305
 MonoBehaviour:
@@ -325,7 +326,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 120768300}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.91, y: 0, z: 17.7}
+  m_LocalPosition: {x: -18.05, y: 0, z: 17.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -695,14 +696,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 338519077}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0.5}
   m_LocalScale: {x: 1.3357744, y: 0.57574, z: 0.57574}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 961649663}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
 --- !u!65 &338519079
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1000,7 +1001,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961649662}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 18.34, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1911,7 +1912,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1850411610}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 9.18}
+  m_LocalPosition: {x: 14, y: 0, z: 9.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2017,7 +2018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShipHullSO: {fileID: 11400000, guid: 07e6ee76ab01c0041afb4fcd461bf8b4, type: 2}
-  m_EngineSO: {fileID: 11400000, guid: 2ec1efd7f79a66c4190c9d837a3e17cd, type: 2}
+  m_EngineSO: {fileID: 11400000, guid: 977c618cd06280a4b8b8930034448082, type: 2}
   m_WeaponSO: {fileID: 11400000, guid: 92d291a0311814643a9f26f71e5fb2d8, type: 2}
   m_StorageSO: {fileID: 11400000, guid: 32b0c89800492e34da3017876d6bea31, type: 2}
   m_AISO: {fileID: 11400000, guid: 953b6cadaaad6054ab3b39bf7d7f9ae1, type: 2}

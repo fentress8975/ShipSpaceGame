@@ -18,14 +18,14 @@ namespace AI
 
     public class MovementEventArgs : EventArgs
     {
-        public MovementEventArgs(Vector3 movement, bool moving)
+        public MovementEventArgs(Vector3 movement, float speedScale)
         {
-            targetPosition = movement;
-            isMoving = moving;
+            _targetPosition = movement;
+            _speedScale = speedScale;
         }
 
-        public Vector3 targetPosition { get; }
-        public bool isMoving { get; }
+        public Vector3 _targetPosition { get; }
+        public float _speedScale { get; }
     }
 
     public class FireEventArgs : EventArgs
@@ -46,11 +46,15 @@ namespace AI
 
         protected Ship m_TargetShip;
         protected IStateSwitcher m_ISwitcher;
+        protected IShipInformation m_IShipInformation;
 
+        protected const int m_iFULLSPEED = 1;
+        protected const int m_iFULLSTOP = 0;
 
-        public void Initialization(IStateSwitcher switcher)
+        public void Initialization(IStateSwitcher switcher, IShipInformation shipInfo)
         {
             m_ISwitcher = switcher;
+            m_IShipInformation = shipInfo;
         }
 
         public virtual void Stop()
@@ -94,31 +98,79 @@ namespace AI
             Event_MovementChanged?.Invoke(this, e);
         }
 
-        protected virtual void SendTargetPosition(Vector3 positionTarget, bool isMoving)
+        protected virtual void SendMovingCommand(bool isMoving)
         {
             if (isMoving)
             {
-                Event_MovementChanged?.Invoke(this, new MovementEventArgs(positionTarget, isMoving));
+                Event_MovementChanged?.Invoke(this, new MovementEventArgs(m_TargetShip.transform.position, m_iFULLSPEED));
             }
             else
             {
-                Event_MovementChanged?.Invoke(this, new MovementEventArgs(Vector3.zero, isMoving));
+                Event_MovementChanged?.Invoke(this, new MovementEventArgs(Vector3.zero, m_iFULLSTOP));
             }
         }
 
-        protected virtual void SendRotationPosition(Vector3 position)
+        protected virtual void SendMovingCommand(Vector3 positionTarget, bool isMoving)
+        {
+            if (isMoving)
+            {
+                Event_MovementChanged?.Invoke(this, new MovementEventArgs(positionTarget, m_iFULLSPEED));
+            }
+            else
+            {
+                Event_MovementChanged?.Invoke(this, new MovementEventArgs(Vector3.zero, m_iFULLSTOP));
+            }
+        }
+
+        protected virtual void SendMovingCommand(Vector3 positionTarget, float speed, bool isMoving)
+        {
+            if (isMoving)
+            {
+                Event_MovementChanged?.Invoke(this, new MovementEventArgs(positionTarget, speed));
+            }
+            else
+            {
+                Event_MovementChanged?.Invoke(this, new MovementEventArgs(Vector3.zero, m_iFULLSTOP));
+            }
+        }
+
+        protected virtual void SendRotationCommand()
+        {
+            Event_RotationChanged?.Invoke(this, new RotationEventArgs(m_TargetShip.transform.position));
+        }
+
+        protected virtual void SendRotationCommand(Vector3 position)
         {
             Event_RotationChanged?.Invoke(this, new RotationEventArgs(position));
         }
 
         private void StopMovement()
         {
-            Event_MovementChanged?.Invoke(this, new MovementEventArgs(Vector3.zero, false));
+            Event_MovementChanged?.Invoke(this, new MovementEventArgs(Vector3.zero, m_iFULLSTOP));
         }
 
         protected virtual void Fire(bool isFiring)
         {
             Event_FireChanged?.Invoke(this, new FireEventArgs(isFiring));
+        }
+
+        protected virtual bool isLookingOnTarget()
+        {
+            float angle = Quaternion.Angle(GetDirectionToTarget(m_TargetShip.transform.position), m_IShipInformation.m_ShipTransform.rotation);
+            if (MathF.Abs(angle) < 10)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        protected Quaternion GetDirectionToTarget(Vector3 target)
+        {
+            Vector3 relativePos = target - m_IShipInformation.m_ShipTransform.position;
+            return Quaternion.LookRotation(relativePos);
         }
     }
 }

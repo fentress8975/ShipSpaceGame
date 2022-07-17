@@ -1,6 +1,4 @@
-using AI.Enemy;
 using ShipBase;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +6,11 @@ namespace AI
 {
     public class ChaseState : EnemyBaseState
     {
+        [SerializeField]
+        private float m_ChaseDistance = 20f;
+        [SerializeField]
+        private float m_PenaltySpeed = 0.3f;
+
         public override void Attack(Ship target)
         {
             m_ISwitcher.StateSwitcher<EngageState>();
@@ -43,10 +46,26 @@ namespace AI
             m_ISwitcher.StateSwitcher<SleepState>();
         }
 
+        //private bool CheckTargetDistance()
+        //{
+        //    float distance = Vector3.Distance(m_IShipInformation.m_ShipPosition, m_TargetShip.transform.position);
+        //    return distance >= m_ChaseDistance ? true : false;
+        //}
+
+
+
         private void Update()
         {
-            SendTargetPosition(m_TargetShip.transform.position, true);
-            SendRotationPosition(m_TargetShip.transform.position);
+            if (isLookingOnTarget())
+            {
+                SendMovingCommand(m_TargetShip.transform.position, true);
+            }
+            else
+            {
+                SendMovingCommand(m_TargetShip.transform.position, m_PenaltySpeed, true);
+            }
+
+            SendRotationCommand(m_TargetShip.transform.position);
         }
     }
 }

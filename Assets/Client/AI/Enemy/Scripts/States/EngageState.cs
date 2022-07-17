@@ -52,8 +52,8 @@ namespace AI
         {
             if (m_TargetShip != null)
             {
-                SendTargetPosition(m_TargetShip.transform.position, true);
-                SendRotationPosition(m_TargetShip.transform.position);
+                SendMovingCommand(m_TargetShip.transform.position, true);
+                SendRotationCommand(m_TargetShip.transform.position);
             }
             
         }

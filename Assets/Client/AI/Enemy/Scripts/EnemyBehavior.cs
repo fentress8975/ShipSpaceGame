@@ -8,7 +8,7 @@ namespace AI
 {
     namespace Enemy
     {
-        public class EnemyBehavior : MonoBehaviour, IStateSwitcher
+        public class EnemyBehavior : MonoBehaviour, IStateSwitcher, IShipInformation
         {
             public delegate void RotationHandler(Vector3 rotation);
             public delegate void MovementHandler(Vector3 movement, bool isMoving);
@@ -20,6 +20,10 @@ namespace AI
             private Ship m_Target;
 
             private Ship m_Ship;
+            public Transform m_ShipTransform
+            {
+                get { return m_Ship.transform; }
+            }
             private MovementAIHandler m_MovementHandler;
             private RotationAIHandler m_RotationHandler;
             private WeaponAIHandler m_WeaponHandler;
@@ -53,7 +57,7 @@ namespace AI
                 }
                 foreach (EnemyBaseState state in m_AllStates)
                 {
-                    state.Initialization(this);
+                    state.Initialization(this,this);
                     state.enabled = false;
                 }
 
@@ -158,8 +162,16 @@ namespace AI
 
             private void MoveShip(object sender, MovementEventArgs e)
             {
-                Vector3 direction = e.targetPosition - m_Ship.transform.position;
-                Event_MovementChanged?.Invoke(direction, e.isMoving);
+                if (e._speedScale == 0)
+                {
+                    Event_MovementChanged?.Invoke(Vector3.zero, false);
+                    return;
+                }
+                else
+                {
+                    Vector3 direction = (e._targetPosition - m_Ship.transform.position) * e._speedScale;
+                    Event_MovementChanged?.Invoke(direction, true);
+                }
             }
 
             private void FireShip(object sender, FireEventArgs e)
