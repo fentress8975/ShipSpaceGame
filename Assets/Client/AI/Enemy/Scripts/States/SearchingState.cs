@@ -8,40 +8,43 @@ namespace AI
 {
     public class SearchingState : EnemyBaseState
     {
-        public override void Attack(Ship target)
-        {
-            m_ISwitcher.StateSwitcher<EngageState>();
-        }
+        private Vector3 m_LastPosition;
+        [SerializeField]
+        private float m_SearchingSpeed = 0.5f;
+        [SerializeField]
+        private float m_SearchingDistance = 5f;
 
-        public override void Chase(Ship target)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Die()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Patrol(List<Vector3> route)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Retreat(Ship danger)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public override void Search(Vector3 lastKnowPosition)
         {
+            base.Search(lastKnowPosition);
             Debug.Log("Start Searching!");
+            m_LastPosition = lastKnowPosition;
         }
 
-        public override void Sleep()
+
+        private float CheckDistanceToLastPosition()
         {
-            throw new System.NotImplementedException();
+            float distance = Vector3.Distance(m_IShipInformation.m_ShipTransform.position, m_LastPosition);
+            return distance;
         }
 
+        private void Update()
+        {
+            if(m_LastPosition == null)
+            {
+                m_ISwitcher.StateSwitcher<SleepState>();
+            }
+            else if (CheckDistanceToLastPosition() > m_SearchingDistance)
+            {
+                SendMovingCommand(m_LastPosition, m_SearchingSpeed, true);
+                SendRotationCommand(m_LastPosition);
+            }
+            else
+            {
+                m_ISwitcher.StateSwitcher<SleepState>();
+            }
+            
+        }
     }
 }

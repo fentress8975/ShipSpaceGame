@@ -20,6 +20,7 @@ namespace AI
             private Ship m_Target;
 
             private Ship m_Ship;
+            private Vector3? m_LastPosition;
             public Transform m_ShipTransform
             {
                 get { return m_Ship.transform; }
@@ -87,56 +88,70 @@ namespace AI
 
             public void Sleep()
             {
+                m_CurrentState.Sleep();
                 if (m_CurrentState != m_AllStates[0])
                 {
+                    StateSwitcher<SleepState>();
                     m_CurrentState.Sleep();
                 }
             }
 
             public void Patrol(List<Vector3> route)
             {
+                m_CurrentState.Patrol(route);
                 if (m_CurrentState != m_AllStates[1])
                 {
+                    StateSwitcher<PatrollingState>();
                     m_CurrentState.Patrol(route);
                 }
             }
 
             public void AttackTarget(Ship target)
             {
+                m_CurrentState.Attack(m_Target);
                 if (m_CurrentState != m_AllStates[2])
                 {
+                    StateSwitcher<EngageState>();
                     m_CurrentState.Attack(m_Target);
                 }
             }
 
             public void SearchTarget(Vector3 lastKnowPosition)
             {
+                m_CurrentState.Search(lastKnowPosition);
                 if (m_CurrentState != m_AllStates[3])
                 {
+                    StateSwitcher<SearchingState>();
                     m_CurrentState.Search(lastKnowPosition);
                 }
             }
 
             public void ChaseTarget(Ship target)
             {
+                m_CurrentState.Chase(m_Target);
                 if (m_CurrentState != m_AllStates[4])
                 {
+                    StateSwitcher<ChaseState>();
                     m_CurrentState.Chase(m_Target);
                 }
             }
 
             public void Retreat()
             {
+                m_CurrentState.Retreat(m_Target);
                 if (m_CurrentState != m_AllStates[5])
                 {
+                    StateSwitcher<RetreatState>();
                     m_CurrentState.Retreat(m_Target);
                 }
             }
 
             public void Die()
             {
+                m_CurrentState.Die();
                 if (m_CurrentState != m_AllStates[6])
                 {
+                    StateSwitcher<DeathState>();
                     m_CurrentState.Die();
                 }
             }
@@ -181,14 +196,17 @@ namespace AI
 
             private void GetTarget(Ship target)
             {
+                //≈сли приходит пустой таргет, то сн€ть текущий таргет и записать его последнюю позицию дл€ поиска
                 if (target == null && m_Target != null)
                 {
-                    SearchTarget(m_Target.transform.position);
+                    m_LastPosition = m_Target.transform.position;
                     m_Target = null;
+                    SearchTarget((Vector3)m_LastPosition);
                 }
                 else
                 {
                     m_Target = target;
+                    m_LastPosition = null;
                 }
             }
 
@@ -209,17 +227,22 @@ namespace AI
 
                 if (m_Target == null)
                 {
-                    if (m_Route.Count > 1 && m_Route != null)
+                    if(m_LastPosition != null)
                     {
-                        Patrol(m_Route);
+                        SearchTarget((Vector3)m_LastPosition);
                     }
                     else
                     {
-                        Sleep();
+                        if (m_Route.Count > 1 && m_Route != null)
+                        {
+                            Patrol(m_Route);
+                        }
+                        else
+                        {
+                            Sleep();
+                        }
                     }
-
                 }
-
             }
 
             private void OnDestroy()

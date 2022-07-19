@@ -72,19 +72,24 @@ namespace AI
             }
         }
 
-        public abstract void Attack(Ship target);
+        //ћетоды, которые можно прописать, если нужно вызывать какие-то особые действи€,
+        //во врем€ смены состо€ний, оставл€ю их пустыми, чтобы по дефолту ничего не происходило.
 
-        public abstract void Chase(Ship target);
+        public virtual void Attack(Ship target) { Debug.Log($"From {this} to Attack"); }
 
-        public abstract void Retreat(Ship danger);
+        public virtual void Chase(Ship target) { Debug.Log($"From {this} to Chase"); }
 
-        public abstract void Search(Vector3 lastKnowPosition);
+        public virtual void Retreat(Ship danger) { Debug.Log($"From {this} to Retreat"); }
 
-        public abstract void Patrol(List<Vector3> route);
+        public virtual void Search(Vector3 lastKnowPosition) { Debug.Log($"From {this} to Search"); }
 
-        public abstract void Sleep();
+        public virtual void Patrol(List<Vector3> route) { Debug.Log($"From {this} to Patrol"); }
 
-        public abstract void Die();
+        public virtual void Sleep() { Debug.Log($"From {this} to Sleep"); }
+
+        public virtual void Die() { Debug.Log($"From {this} to Death"); }
+
+        //ќбщие полезное методы дл€ всех состо€ний
 
         protected virtual void OnRotationChanged(RotationEventArgs e)
         {

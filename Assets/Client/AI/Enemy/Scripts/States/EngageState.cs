@@ -10,41 +10,11 @@ namespace AI
     {
         public override void Attack(Ship target)
         {
+            base.Attack(target);
             if (target != null)
             {
                 m_TargetShip = target;
             }          
-        }
-
-
-        public override void Chase(Ship target)
-        {
-            m_ISwitcher.StateSwitcher<ChaseState>();
-        }
-
-        public override void Die()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Patrol(List<Vector3> route)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Retreat(Ship danger)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Search(Vector3 lastKnowPosition)
-        {
-            m_ISwitcher.StateSwitcher<SearchingState>();
-        }
-
-        public override void Sleep()
-        {
-            m_ISwitcher.StateSwitcher<SleepState>();
         }
 
 
