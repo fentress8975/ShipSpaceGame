@@ -7,9 +7,9 @@ namespace AI
     public class ChaseState : EnemyBaseState
     {
         [SerializeField]
-        private float m_ChaseDistance = 20f;
+        private float m_fChaseDistance = 20f;
         [SerializeField]
-        private float m_PenaltySpeed = 0.3f;
+        private float m_fPenaltySpeed = 0.3f;
 
         
         public override void Chase(Ship target)
@@ -27,7 +27,7 @@ namespace AI
             }
             else
             {
-                SendMovingCommand(m_TargetShip.transform.position, m_PenaltySpeed, true);
+                SendMovingCommand(m_TargetShip.transform.position, m_fPenaltySpeed, true);
             }
 
             SendRotationCommand(m_TargetShip.transform.position);

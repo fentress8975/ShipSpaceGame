@@ -15,5 +15,5 @@ MonoBehaviour:
   m_sName: GIGA_ENGINE_MK1
   m_fHealth: 9999
   m_fWeight: 1
-  m_fAccelerationPower: 10000
-  m_fRotationSpeed: 10000
+  m_fAccelerationPower: 1000
+  m_fRotationSpeed: 100

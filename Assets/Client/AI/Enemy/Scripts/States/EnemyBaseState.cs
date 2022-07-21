@@ -62,6 +62,7 @@ namespace AI
             Debug.Log("Stop State");
             m_TargetShip = null;
             StopMovement();
+            Fire(false);
         }
 
         public virtual void Begin(Ship target)

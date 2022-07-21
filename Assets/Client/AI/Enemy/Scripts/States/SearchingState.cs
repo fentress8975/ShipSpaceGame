@@ -10,9 +10,9 @@ namespace AI
     {
         private Vector3 m_LastPosition;
         [SerializeField]
-        private float m_SearchingSpeed = 0.5f;
+        private float m_fSearchingSpeed = 0.5f;
         [SerializeField]
-        private float m_SearchingDistance = 5f;
+        private float m_fSearchingDistance = 5f;
 
 
         public override void Search(Vector3 lastKnowPosition)
@@ -35,9 +35,9 @@ namespace AI
             {
                 m_ISwitcher.StateSwitcher<SleepState>();
             }
-            else if (CheckDistanceToLastPosition() > m_SearchingDistance)
+            else if (CheckDistanceToLastPosition() > m_fSearchingDistance)
             {
-                SendMovingCommand(m_LastPosition, m_SearchingSpeed, true);
+                SendMovingCommand(m_LastPosition, m_fSearchingSpeed, true);
                 SendRotationCommand(m_LastPosition);
             }
             else

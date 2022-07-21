@@ -88,9 +88,9 @@ namespace AI
 
             public void Sleep()
             {
-                m_CurrentState.Sleep();
                 if (m_CurrentState != m_AllStates[0])
                 {
+                    m_CurrentState.Sleep();
                     StateSwitcher<SleepState>();
                     m_CurrentState.Sleep();
                 }
@@ -98,9 +98,9 @@ namespace AI
 
             public void Patrol(List<Vector3> route)
             {
-                m_CurrentState.Patrol(route);
                 if (m_CurrentState != m_AllStates[1])
                 {
+                    m_CurrentState.Patrol(route);
                     StateSwitcher<PatrollingState>();
                     m_CurrentState.Patrol(route);
                 }
@@ -108,9 +108,9 @@ namespace AI
 
             public void AttackTarget(Ship target)
             {
-                m_CurrentState.Attack(m_Target);
                 if (m_CurrentState != m_AllStates[2])
                 {
+                    m_CurrentState.Attack(m_Target);
                     StateSwitcher<EngageState>();
                     m_CurrentState.Attack(m_Target);
                 }
@@ -118,9 +118,9 @@ namespace AI
 
             public void SearchTarget(Vector3 lastKnowPosition)
             {
-                m_CurrentState.Search(lastKnowPosition);
                 if (m_CurrentState != m_AllStates[3])
                 {
+                    m_CurrentState.Search(lastKnowPosition);
                     StateSwitcher<SearchingState>();
                     m_CurrentState.Search(lastKnowPosition);
                 }
@@ -128,9 +128,9 @@ namespace AI
 
             public void ChaseTarget(Ship target)
             {
-                m_CurrentState.Chase(m_Target);
                 if (m_CurrentState != m_AllStates[4])
                 {
+                    m_CurrentState.Chase(m_Target);
                     StateSwitcher<ChaseState>();
                     m_CurrentState.Chase(m_Target);
                 }
@@ -138,9 +138,9 @@ namespace AI
 
             public void Retreat()
             {
-                m_CurrentState.Retreat(m_Target);
                 if (m_CurrentState != m_AllStates[5])
                 {
+                    m_CurrentState.Retreat(m_Target);
                     StateSwitcher<RetreatState>();
                     m_CurrentState.Retreat(m_Target);
                 }
@@ -148,9 +148,9 @@ namespace AI
 
             public void Die()
             {
-                m_CurrentState.Die();
                 if (m_CurrentState != m_AllStates[6])
                 {
+                    m_CurrentState.Die();
                     StateSwitcher<DeathState>();
                     m_CurrentState.Die();
                 }
@@ -191,7 +191,12 @@ namespace AI
 
             private void FireShip(object sender, FireEventArgs e)
             {
-                Event_FireChanged?.Invoke(e.isFiring);
+                if (e.isFiring)
+                {
+                    Debug.Log("tratratratratra");
+                }
+                
+                //Event_FireChanged?.Invoke(e.isFiring);
             }
 
             private void GetTarget(Ship target)
