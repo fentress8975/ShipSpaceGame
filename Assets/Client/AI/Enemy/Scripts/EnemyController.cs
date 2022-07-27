@@ -28,6 +28,25 @@ namespace AI
             [SerializeField]
             public TestInitModules TestInitModules;
 
+
+            public void Initialization(Ship ship, ShipModules modules)
+            {
+                m_Ship = ship;
+                m_Behavior = gameObject.GetComponentInChildren<EnemyBehavior>();
+                m_TargetScaner = gameObject.GetComponentInChildren<TargetScaner>();
+                m_MovementHandler = gameObject.GetComponent<MovementAIHandler>();
+                m_RotationHandler = gameObject.GetComponent<RotationAIHandler>();
+                m_WeaponHandler = gameObject.GetComponent<WeaponAIHandler>();
+
+
+                m_Ship.Initialization(modules, Faction.Side.REDFOR);
+                m_MovementHandler.Initialization(m_Ship, m_Behavior);
+                m_RotationHandler.Initialization(m_Ship, m_Behavior);
+                m_WeaponHandler.Initialization(m_Ship, m_Behavior);
+                m_TargetScaner.Initialization(m_Ship, m_Ship.m_Faction.m_Side);
+                m_Behavior.Initialization(m_Ship, m_TargetScaner, m_MovementHandler, m_RotationHandler, m_WeaponHandler);
+            }
+
             private void Start()
             {
                 m_Ship = gameObject.GetComponentInChildren<Ship>();

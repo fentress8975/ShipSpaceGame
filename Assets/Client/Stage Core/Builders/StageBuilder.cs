@@ -5,7 +5,11 @@ namespace StageCore
 {
     public class StageBuilder
     {
+        public void Initialization()
+        {
 
-       
+        }
+
+
     }
 }
