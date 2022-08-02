@@ -2,6 +2,7 @@
 using ShipBase;
 using ShipBase.Containers;
 using ShipSystem;
+using System;
 using UnityEngine;
 
 namespace AI
@@ -10,7 +11,7 @@ namespace AI
     {
         private Plane m_GamePlane;
         [SerializeField]
-        private Vector3 m_LockAt = Vector3.zero;
+        private Vector3 m_LockAt;
 
         private Camera m_MainCamera;
 
@@ -43,7 +44,7 @@ namespace AI
             m_Rigidbody = ship.m_RigidBody;
             engineSystem = (EngineSystem)ship.GetSystem(SystemType.Engine);
             m_fRotationVelocity = engineSystem.GetEngineRotationSpeed();
-            engineSystem.Event_EnginePowerUpdate.AddListener(EngineChange);
+            engineSystem.Event_EnginePowerUpdate += EngineChange;
 
             Subscribe(behavior);
 
@@ -53,6 +54,8 @@ namespace AI
             m_Rotation = new GameObject("Ship Rotation");
             m_Rotation.transform.parent = ship.transform;
             m_Rotation.transform.localPosition = Vector3.zero;
+
+            RotationCalculator(m_Rigidbody.transform.localPosition + Vector3.forward);
 
             m_ErrorRotation = new GameObject("Ship Error Rotation");
             m_ErrorRotation.transform.parent = ship.transform;
@@ -77,7 +80,7 @@ namespace AI
         private void OnDestroy()
         {
 
-            engineSystem.Event_EnginePowerUpdate.RemoveListener(EngineChange);
+            engineSystem.Event_EnginePowerUpdate -= EngineChange;
         }
 
         private void RotationCalculator(Vector3 x)
@@ -95,6 +98,7 @@ namespace AI
 
         private void Rotation(float speed)
         {
+            ClearRotationXZ();
             Vector3 dPerSeconds = new Vector3(0, speed, 0);
             Quaternion deltaRotation;
             switch (m_RotationDirection)
@@ -110,23 +114,25 @@ namespace AI
             };
         }
 
+        private void ClearRotationXZ()
+        {
+            m_Rigidbody.rotation = Quaternion.Euler(new Vector3(0, m_Rigidbody.rotation.eulerAngles.y, 0));
+        }
+
         private void Rotate()
         {
             m_fAngle = Quaternion.Angle(m_Rotation.transform.rotation, m_Rigidbody.rotation);
+
             if (m_bisError)
             {
                 Rotate(CalculateErrorSpeed());
                 m_bisError = false;
             }
-            else if (m_fAngle == 0)
+            else if (m_fAngle != 0)
             {
                 Rotation(m_fRotationVelocity);
+                ErrorCleaning();
             }
-            else
-            {
-                m_Rigidbody.rotation = m_Rotation.transform.rotation;
-            }
-            ErrorCleaning();
         }
 
         private void Rotate(float speed)

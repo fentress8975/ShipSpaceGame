@@ -1,5 +1,6 @@
 using ShipBase;
 using ShipBase.Containers;
+using System;
 using UnityEngine;
 
 
@@ -32,45 +33,64 @@ namespace AI
             public void Initialization(Ship ship, ShipModules modules)
             {
                 m_Ship = ship;
-                m_Behavior = gameObject.GetComponentInChildren<EnemyBehavior>();
-                m_TargetScaner = gameObject.GetComponentInChildren<TargetScaner>();
-                m_MovementHandler = gameObject.GetComponent<MovementAIHandler>();
-                m_RotationHandler = gameObject.GetComponent<RotationAIHandler>();
-                m_WeaponHandler = gameObject.GetComponent<WeaponAIHandler>();
-
+                GetComponents();
 
                 m_Ship.Initialization(modules, Faction.Side.REDFOR);
-                m_MovementHandler.Initialization(m_Ship, m_Behavior);
-                m_RotationHandler.Initialization(m_Ship, m_Behavior);
-                m_WeaponHandler.Initialization(m_Ship, m_Behavior);
-                m_TargetScaner.Initialization(m_Ship, m_Ship.m_Faction.m_Side);
-                m_Behavior.Initialization(m_Ship, m_TargetScaner, m_MovementHandler, m_RotationHandler, m_WeaponHandler);
+
+                InitComponents();
             }
 
-            private void Start()
+            public void Initialization(Ship ship)
             {
-                m_Ship = gameObject.GetComponentInChildren<Ship>();
-                m_Behavior = gameObject.GetComponentInChildren<EnemyBehavior>();
-                m_TargetScaner = gameObject.GetComponentInChildren<TargetScaner>();
+                if (ship != null)
+                {
+                    m_Ship = ship;
+                    GetComponents();
+
+                    m_Ship.ChangeFaction(Faction.Side.REDFOR);
+
+                    InitComponents();
+                }
+                else
+                {
+                    throw new NullReferenceException("Ship is't INIT!");
+                }
+            }
+
+            private void GetComponents()
+            {
+                m_Behavior = gameObject.GetComponent<EnemyBehavior>();
+                m_TargetScaner = gameObject.GetComponent<TargetScaner>();
                 m_MovementHandler = gameObject.GetComponent<MovementAIHandler>();
                 m_RotationHandler = gameObject.GetComponent<RotationAIHandler>();
                 m_WeaponHandler = gameObject.GetComponent<WeaponAIHandler>();
+            }
 
-                TestInitModules = GetComponent<TestInitModules>();
-                //Only for test
-                test = new ShipModules(TestInitModules.m_ShipHullSO,
-                                       TestInitModules.m_EngineSO,
-                                       TestInitModules.m_WeaponSO,
-                                       TestInitModules.m_StorageSO,
-                                       TestInitModules.m_AISO);
-
-                m_Ship.Initialization(test, Faction.Side.REDFOR);
+            private void InitComponents()
+            {
                 m_MovementHandler.Initialization(m_Ship, m_Behavior);
                 m_RotationHandler.Initialization(m_Ship, m_Behavior);
                 m_WeaponHandler.Initialization(m_Ship, m_Behavior);
                 m_TargetScaner.Initialization(m_Ship, m_Ship.m_Faction.m_Side);
                 m_Behavior.Initialization(m_Ship, m_TargetScaner, m_MovementHandler, m_RotationHandler, m_WeaponHandler);
             }
+
+            //private void Start()
+            //{
+            //    m_Ship = gameObject.GetComponentInChildren<Ship>();
+            //    GetComponents();
+
+            //    TestInitModules = GetComponent<TestInitModules>();
+            //    //Only for test
+            //    test = new ShipModules(TestInitModules.m_ShipHullSO,
+            //                           TestInitModules.m_EngineSO,
+            //                           TestInitModules.m_WeaponSO,
+            //                           TestInitModules.m_StorageSO,
+            //                           TestInitModules.m_AISO);
+
+            //    m_Ship.Initialization(test, Faction.Side.REDFOR);
+            //    InitComponents();
+            //}
         }
     }
 }

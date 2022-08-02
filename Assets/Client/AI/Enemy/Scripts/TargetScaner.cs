@@ -23,6 +23,10 @@ namespace AI
         public void Initialization(Ship ship, Faction.Side side)
         {
             m_ListTargets = new List<Ship>();
+            if(m_Sphere == null)
+            {
+                m_Sphere = (GameObject)Resources.Load("Ship/SphereDetection");
+            }
             m_Sphere = Instantiate(m_Sphere, ship.transform);
             m_SphereDetection = m_Sphere.GetComponent<SphereDetection>();
             m_SphereDetection.Initialization();
@@ -85,9 +89,9 @@ namespace AI
             }
         }
 
-        private void AddTarget(Collider collider)
+        private void AddTarget(Collision collision)
         {
-            if (collider.gameObject.TryGetComponent<Ship>(out Ship target))
+            if (collision.gameObject.TryGetComponent<Ship>(out Ship target))
             {
                 if (target.m_Faction.m_Side != m_Faction.m_Side && !m_ListTargets.Contains(target))  //почему коллайдер 2 раза прокается?
                 {
@@ -97,9 +101,35 @@ namespace AI
             }
         }
 
-        private void RemoveTarget(Collider collider)
+        private void RemoveTarget(Collision collision)
         {
-            if (collider.gameObject.TryGetComponent<Ship>(out Ship target))
+            if (collision.gameObject.TryGetComponent<Ship>(out Ship target))
+            {
+                if (target.m_Faction != m_Faction)
+                {
+                    m_ListTargets.Remove(target);
+                    ChooseNewTarget();
+                }
+            }
+        }
+
+        private void AddTarget(Collider other)
+        {
+            Ship target = other.gameObject.GetComponentInParent<Ship>();
+            if (target != null)
+            {
+                if (target.m_Faction.m_Side != m_Faction.m_Side && !m_ListTargets.Contains(target))  //почему коллайдер 2 раза прокается?
+                {
+                    m_ListTargets.Add(target);
+                    ChooseNewTarget();
+                }
+            }
+        }
+
+        private void RemoveTarget(Collider other)
+        {
+            Ship target = other.gameObject.GetComponentInParent<Ship>();
+            if (target != null)
             {
                 if (target.m_Faction != m_Faction)
                 {

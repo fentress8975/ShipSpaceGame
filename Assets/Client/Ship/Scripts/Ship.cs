@@ -44,27 +44,62 @@ namespace ShipBase
 
         public void Initialization(ShipModules modules, Faction.Side side)
         {
+            GetComponents();
+            InitRigidBody();
+            //m_RigidBody.centerOfMass = Vector3.zero;
+            SystemsInitialization(modules);
+            CreateListOfSystems();
+            
+            ChangeFaction(side);
+        }
+
+        public void Initialization(ShipModules modules)
+        {
+            GetComponents();
+            InitRigidBody();
+            //m_RigidBody.centerOfMass = Vector3.zero;
+            SystemsInitialization(modules);
+            CreateListOfSystems();
+        }
+
+        private void InitRigidBody()
+        {
+
+            m_RigidBody = GetComponent<Rigidbody>();
+            m_RigidBody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        }
+
+        private void GetComponents()
+        {
             m_HullSystem = GetComponent<HullSystem>();
             m_EngineSystem = GetComponent<EngineSystem>();
             m_WeaponSystem = GetComponent<WeaponsSystem>();
             m_StorageSystem = GetComponent<StorageSystem>();
             m_AISystem = GetComponent<AISystem>();
-
             m_SoundSystem = GetComponent<ShipSounds>();
-
-            m_Faction = new Faction(side);
-
             m_RigidBody = GetComponent<Rigidbody>();
-            m_RigidBody.centerOfMass = Vector3.zero;
-            SystemsInitialization(modules);
+        }
 
+        private void CreateListOfSystems()
+        {
             m_Systems.Add(m_HullSystem);
             m_Systems.Add(m_EngineSystem);
             m_Systems.Add(m_WeaponSystem);
             m_Systems.Add(m_StorageSystem);
             m_Systems.Add(m_AISystem);
+        }
 
-            m_RigidBody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        public void ChangeFaction(Faction.Side side)
+        {
+            if (m_Faction == null)
+            {
+                m_Faction = new Faction(side);
+            }
+            else
+            {
+                m_Faction.ChangeFaction(side);
+            }
+            Debug.Log($"{gameObject.name} is {m_Faction.m_Side.ToString()}");
         }
 
         //Qustionable
@@ -161,8 +196,6 @@ namespace ShipBase
             }
             throw new System.NotImplementedException("Ошибка в типе системы");
         }
-
-
     }
 
     namespace Containers

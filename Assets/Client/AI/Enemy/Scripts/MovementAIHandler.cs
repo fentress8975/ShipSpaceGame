@@ -30,7 +30,7 @@ namespace AI
             m_Rigidbody = ship.m_RigidBody;
             engineSystem = (EngineSystem)ship.GetSystem(SystemType.Engine);
             m_fAccelerationPower = engineSystem.GetEnginePower();
-            engineSystem.Event_EnginePowerUpdate.AddListener(EngineChange);
+            engineSystem.Event_EnginePowerUpdate += EngineChange;
         }
 
         public void Subscribe(EnemyBehavior target)
@@ -70,7 +70,7 @@ namespace AI
 
         private void OnDestroy()
         {
-            engineSystem.Event_EnginePowerUpdate.RemoveListener(EngineChange);
+            engineSystem.Event_EnginePowerUpdate-=EngineChange;
         }
 
         private void FixedUpdate()

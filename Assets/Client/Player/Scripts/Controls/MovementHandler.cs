@@ -23,10 +23,10 @@ public class MovementHandler : MonoBehaviour
     {
         InputsControl.instance.Event_Movement.AddListener(Movement);
         InputsControl.instance.Event_EngineStabilizationChange.AddListener(ChangeStabilazion);
-        m_Rigidbody = ship.GetComponent<Rigidbody>();
+        m_Rigidbody = ship.m_RigidBody;
         engineSystem = (EngineSystem)ship.GetSystem(SystemType.Engine);
         m_fAccelerationPower = engineSystem.GetEnginePower();
-        engineSystem.Event_EnginePowerUpdate.AddListener(EngineChange);
+        engineSystem.Event_EnginePowerUpdate+=EngineChange;
     }
 
     public bool isStabilazed()
@@ -51,7 +51,7 @@ public class MovementHandler : MonoBehaviour
     {
         InputsControl.instance.Event_Movement.RemoveListener(Movement);
         InputsControl.instance.Event_EngineStabilizationChange.RemoveListener(ChangeStabilazion);
-        engineSystem.Event_EnginePowerUpdate.RemoveListener(EngineChange);
+        engineSystem.Event_EnginePowerUpdate-=EngineChange;
     }
 
     private void FixedUpdate()

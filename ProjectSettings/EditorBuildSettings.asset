@@ -4,7 +4,16 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Client/Scenes/MainMenu.unity
+    guid: b1a75120873063443843028bf0565266
+  - enabled: 1
+    path: Assets/Client/Scenes/TestScene.unity
+    guid: c850ee8c3b14cc8459e7e186857cf567
+  - enabled: 1
+    path: Assets/Client/Scenes/BotsFabricAndPolygon.unity
+    guid: 3f5590d909bbf704fa186e3136ed8937
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
       guid: d8b117589b72f9a41a77df6cfdf387c8, type: 2}

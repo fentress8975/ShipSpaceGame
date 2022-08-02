@@ -34,10 +34,10 @@ public class RotationHandler : MonoBehaviour
 
     public void Initialization(Ship ship)
     {
-        m_Rigidbody = ship.GetComponent<Rigidbody>();
+        m_Rigidbody = ship.m_RigidBody;
         engineSystem = (EngineSystem)ship.GetSystem(SystemType.Engine);
         m_fRotationVelocity = engineSystem.GetEngineRotationSpeed();
-        engineSystem.Event_EnginePowerUpdate.AddListener(EngineChange);
+        engineSystem.Event_EnginePowerUpdate+=EngineChange;
 
         InputsControl.instance.Event_MousePosition.AddListener(RotationCalculator);
 
@@ -61,7 +61,7 @@ public class RotationHandler : MonoBehaviour
     private void OnDestroy()
     {
         InputsControl.instance.Event_MousePosition.RemoveListener(RotationCalculator);
-        engineSystem.Event_EnginePowerUpdate.RemoveListener(EngineChange);
+        engineSystem.Event_EnginePowerUpdate-=EngineChange;
     }
 
     private void RotationCalculator(Vector2 x)

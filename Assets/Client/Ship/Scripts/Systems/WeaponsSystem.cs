@@ -30,6 +30,7 @@ namespace ShipSystem
             m_Module = new ShipWeapon(moduleSO);
 
             m_Projectiles = new GameObject("Projectiles");
+            m_Projectiles.transform.parent = transform;
             m_ProjectilePool = gameObject.AddComponent<ObjectPooling>();
             m_ProjectilePool.Initialization(m_Module.m_ModuleSO.m_Projectile,
                                             m_iProjectilesLifeTime * Mathf.RoundToInt(m_Module.m_ModuleSO.m_fFireRate / 60) + 1,

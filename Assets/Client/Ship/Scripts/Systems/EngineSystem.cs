@@ -1,5 +1,6 @@
 ﻿using ShipModule;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,8 +10,10 @@ namespace ShipSystem
     {
         public event IShipSystem.ModuleHealthUpdate Event_HealthUpdate;
         public event IShipSystem.ModuleEfficiencyUpdate Event_EfficiencyUpdate;
-        public UnityEvent<float> Event_EnginePowerUpdate;
-        public UnityEvent<float> Event_EngineRotationSpeedUpdate;
+        public delegate void EnginePowerHandler(float power);
+        public delegate void EngineRotationHandler(float rotation);
+        public event EnginePowerHandler Event_EnginePowerUpdate;
+        public event EngineRotationHandler Event_EngineRotationSpeedUpdate;
 
         private ShipEngine m_Module;
 

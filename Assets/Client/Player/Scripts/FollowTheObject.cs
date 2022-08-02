@@ -3,6 +3,7 @@
 
 public class FollowTheObject : MonoBehaviour
 {
+    [SerializeField]
     private GameObject m_GOTarget;
     private Vector3 m_Offset;
 
